@@ -1,8 +1,6 @@
-﻿@model List<Turebi>
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="container">
 <div style="display:flex; flex-direction: column; align-items: center; margin-top: 20px;">
     <button class="hh5" style="font-size: 26px; ">ყველა ტურისტული სერვისი ერთ სივრცეში</button>
     <button class="hh5" style="font-size: 13px">
@@ -87,47 +85,5 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
-
 </div>
 </div>
-</div>
-
- <div class="row">
-    <div class="col-4">
-        <h1 style="font-size:30px">დღის შეთავაზებები</h1>
-    </div>
-    <div class="col-5">
-        <a asp-controller="Home" asp-action="Add"><i class="bi bi-plus-circle-fill" style="font-size:25px"></i></a>
-    </div>
-</div>
-<div>
-
-    <div id="productCarousel" class="carousel slide">
-        <div class="carousel-inner">
-            @{
-                int itemIndex = 0;
-                foreach (var product in Model)
-                {
-                    var activeClass = itemIndex == 0 ? "active" : "";
-                    <div class="carousel-item @activeClass">
-                        <img src="/turebi/@product.image_name" class="d-block w-100" alt="@product.Name">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>@product.Name</h5>
-                            <p>@product.Price.ToString("C")</p>
-                        </div>
-                    </div>
-                    itemIndex++;
-                }
-            }
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-</div>
-    

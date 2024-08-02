@@ -1,4 +1,4 @@
-﻿namespace TravelTo.Models
+namespace TravelTo.Models
 {
     public class ErrorViewModel
     {
