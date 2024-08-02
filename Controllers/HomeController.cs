@@ -1,32 +1,74 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TravelTo.Data;
+using TravelTo.Dto;
 using TravelTo.Models;
 
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDataContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDataContext context,IWebHostEnvironment webHostEnvironment)
         {
-            _logger = logger;
+            _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var turebi = _context.Turebi.ToList();
+
+
+            return View(turebi);
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Add()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
+        [HttpPost]
+        public IActionResult Add(TurebiDto turebi)
+        {
+            if (turebi.image == null)
+            {
+                ModelState.AddModelError("image", "image is requered as hel");
+            }
+
+            if (ModelState.IsValid)
+            {
+                string wwwrootpath = webHostEnvironment.WebRootPath;
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
+                string productPath = Path.Combine(wwwrootpath, "turebi");
+                if (!Directory.Exists(productPath))
+                {
+                    Directory.CreateDirectory(productPath);
+                }
+                using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                {
+                    turebi.image.CopyTo(fileStream);
+                }
+                var namdvili_turi = new Turebi()
+                {
+                    Name = turebi.Name,
+                    Description = turebi.Description,
+                    Price = turebi.Price,
+                    image_name = filename
+
+                };
+                _context.Add(namdvili_turi);
+                _context.SaveChanges();
+                return RedirectToAction("index");
+            }
+            return View();
+        }
+
     }
-}
+    }
+

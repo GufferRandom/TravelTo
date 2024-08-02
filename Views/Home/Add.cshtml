@@ -1,0 +1,27 @@
+﻿@using TravelTo.Dto
+@model TurebiDto
+<form method="post" enctype="multipart/form-data">
+<div class="form">
+    <div class="container">
+        <div class="row pb-2">
+            <h2 class="text-primary">Add Turi</h2>
+        </div>
+        <label>Turi Name</label>
+        <input asp-for=Name class="form-control" />
+        <label>Price</label>
+        <input asp-for=Price class="form-control" />
+        <label>Description</label>
+        <input asp-for=Description class="form-control" />
+        <label>Photo</label>
+       <input asp-for=image class="form-control" />
+
+        <div class="row pt-4">
+            <div class="col-6">
+              <button type="submit" class="btn-outline-primary form-control">Add Turi</button>
+        </div>
+        <div class="col-6 text-end">
+          <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary form-control">Return To Mtavari List</a>
+    </div>
+</div>
+
+</form>
