@@ -7,7 +7,7 @@
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class seed : Migration
+    public partial class Seed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
