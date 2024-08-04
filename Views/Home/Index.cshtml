@@ -110,7 +110,10 @@
                 {
                     var activeClass = itemIndex == 0 ? "active" : "";
                     <div class="carousel-item @activeClass">
-                        <img src="/turebi/@product.image_name" class="d-block w-100" alt="@product.Name">
+
+                        <a asp-action="GetTuri" asp-route-id="@product.id">
+                        <img src="/turebi/@product.image_name" class="d-block w-100" alt="@product.Name" />
+                        </a>
                         <div class="carousel-caption d-none d-md-block">
                             <h5>@product.Name</h5>
                             <p>@product.Price.ToString("C")</p>

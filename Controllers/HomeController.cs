@@ -68,7 +68,11 @@ namespace TravelTo.Controllers
             }
             return View();
         }
-
+        public IActionResult GetTuri(int id)
+        {
+            var get_turi=_context.Turebi.Where(x=>x.id==id).FirstOrDefault();
+            return View(get_turi);
+        }
     }
     }
 
