@@ -41,9 +41,36 @@ body {
 .hh5 {
     background: none;
     border: none;
-    color: lightgreen
+    color: #17B169
 }
-.hh5:hover {
-    transition-duration: 0.2s;
-    color: darkgreen;
+    .hh5:hover {
+        transition: linear;
+        transition-duration: 0.2s;
+        color: #00563B;
+    }
+.btn-primary {
+    border: none;
+    color: black;
+    background-color: white;
+}
+.btn-secondary {
+    border: none;
+    color: #546E7A;
+    background-color: white;
+}
+.btn-lg:hover {
+    background-color: red;
+}
+.oa:hover {
+    background-color: forestgreen;
+}
+
+.ta:hover {
+    background-color: rebeccapurple;
+}
+.ka:hover {
+    background-color: orange;
+}
+.fa:hover {
+    background-color:deepskyblue;
 }

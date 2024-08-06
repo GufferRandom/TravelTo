@@ -5,8 +5,21 @@
 <div class="container">
 <div style="display:flex; flex-direction: column; align-items: center; margin-top: 20px;">
     <button class="hh5" style="font-size: 26px; ">ყველა ტურისტული სერვისი ერთ სივრცეში</button>
-    <button class="hh5" style="font-size: 13px">
+    <button class="hh5" style="font-size: 13px;">
         მოითხოვეთ ყველა სერვისი ერთ სივრცეში
+    </button>
+</div>
+<div style="margin-top: 30px; width: 800px; margin-left: 50px; border-block-style:solid; border-color: dimgrey">
+    <button type="button" class="btn btn-primary btn-lg">ავიაბილეთები</button>
+    <button type="button" class="btn btn-secondary btn-lg oa">ტურები</button>
+    <button type="button" class="btn btn-primary btn-lg ka">სასტუმრო</button>
+    <button type="button" class="btn btn-secondary btn-lg ta">ტრანსფერი</button>
+    <button type="button" class="btn btn-secondary btn-lg fa" style="margin-top: 4px">სავიზო მხარდაჭერა</button>
+</div>
+<div style="display:flex; flex-direction: column; align-items: center; margin-top: 20px;">
+    <button class="hh5" style="font-size: 26px; ">დღის შეთავაზება</button>
+    <button class="hh5" style="font-size: 13px">
+        ყველას ნახვა
     </button>
 </div>
 <div style="display:flex">
@@ -90,12 +103,13 @@
 
 </div>
 </div>
-</div>
 
- <div class="row">
-    <div class="col-4">
-        <h1 style="font-size:30px">დღის შეთავაზებები</h1>
-    </div>
+<div style="display:flex; flex-direction: column; align-items: center; margin-top: 60px;">
+    <button class="hh5" style="font-size: 26px; ">ტოპ შეთავაზებები</button>
+    <button class="hh5" style="font-size: 13px;">
+       ყველა ტური საზღვარგარეთ
+    </button>
+</div>
     <div class="col-5">
         <a asp-controller="Home" asp-action="Add"><i class="bi bi-plus-circle-fill" style="font-size:25px"></i></a>
     </div>
@@ -112,7 +126,7 @@
                     <div class="carousel-item @activeClass">
 
                         <a asp-action="GetTuri" asp-route-id="@product.id">
-                        <img src="/turebi/@product.image_name" class="d-block w-100" alt="@product.Name" />
+                            <img src="/turebi/@product.image_name" class="d-block w-100" alt="@product.Name" />
                         </a>
                         <div class="carousel-caption d-none d-md-block">
                             <h5>@product.Name</h5>
@@ -133,4 +147,3 @@
         </button>
     </div>
 </div>
-    
