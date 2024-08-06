@@ -1,0 +1,30 @@
+﻿@using TravelTo.Dto
+@model TurebiDto
+<form  method="post" enctype="multipart/form-data">
+    <div class="form">
+        <div class="container">
+            <div class="row pb-2">
+                <h2 class="text-primary">Edit Turi</h2>
+            </div>
+            <label>Turi Name</label>
+            <input asp-for=Name class="form-control" />
+            <label>Price</label>
+            <input asp-for=Price class="form-control" />
+            <label>Description</label>
+            <input asp-for=Description class="form-control" />
+            <for
+            <div class="form-group">
+                <label>Photo</label>
+                <input type="file" asp-for="image" value="@ViewData["img_name"]" class="form-control" />
+                 <img src="~/turebi/@ViewData["img_name"]" alt="Current Image" class="img-thumbnail mt-2" />
+            </div>
+            <div class="row pt-4">
+                <div class="col-6">
+                    <button type="submit" class="btn-outline-primary form-control">Edit Turi</button>
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary form-control">Return To Mtavari List</a>
+                </div>
+            </div>
+            </div>
+</form>
