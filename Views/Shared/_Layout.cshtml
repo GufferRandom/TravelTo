@@ -38,14 +38,11 @@
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" style="display: flex">
-                    <input class="form-control mr-sm-2 search" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0 s" type="submit">Search</button>
-                    <button class="btn btn-outline-success my-2 my-sm-0 s" type="button">Sign Up</button>
-                    <button class="btn btn-outline-success my-2 my-sm-0 s" type="button">Sign In</button>
+                    <partial name="_LoginPartial"/>
                 </form>
             </div>
         </nav>
-    </heade>
+    </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
