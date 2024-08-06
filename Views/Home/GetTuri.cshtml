@@ -1,6 +1,25 @@
 ﻿@model Turebi
-<h1>@Model.Name</h1>
-<img src="~/turebi/@Model.image_name" />
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1>@Model.Name</h1>
+        </div>
+    
+        <div class="col-6">
+            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-primary">
+            <i class="bi bi-pencil-square" style="font-size:25px"></i>
+            </a>
+            <a asp-action="Delete" asp-route-id="@Model.id" class="btn btn-outline-danger">
+            <i class="bi bi-trash3-fill" style="font-size:25px"></i>
+            </a>
+        </div>
+        
+    </div>
+   
+    <img src="~/turebi/@Model.image_name" />
+
+</div>
+
 <h2>Price:@Model.Price $</h2>
 <h1>Description Tho </h1>
 <h4>@Model.Description</h4>
