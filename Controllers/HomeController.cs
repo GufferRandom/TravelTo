@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -17,7 +18,6 @@ namespace TravelTo.Controllers
             _context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
-
         public IActionResult Index()
         {
             var turebi = _context.Turebi.ToList();
@@ -25,7 +25,6 @@ namespace TravelTo.Controllers
 
             return View(turebi);
         }
-
         public IActionResult Privacy()
         {
             return View();
@@ -34,7 +33,9 @@ namespace TravelTo.Controllers
         {
             return View();
         }
+
         [HttpPost]
+        [Authorize]
         public IActionResult Add(TurebiDto turebi)
         {
             if (turebi.image == null)

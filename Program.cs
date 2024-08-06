@@ -10,10 +10,17 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        var configuration = builder.Configuration;
+        builder.Services.AddAuthentication().AddGoogle(googleOptions => 
+        {
+            googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+            googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
 
+        });
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
+
         builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection")
             ));
