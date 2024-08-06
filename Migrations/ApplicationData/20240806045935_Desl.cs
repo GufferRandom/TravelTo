@@ -4,10 +4,10 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace TravelTo.Migrations
+namespace TravelTo.Migrations.ApplicationData
 {
     /// <inheritdoc />
-    public partial class Seed : Migration
+    public partial class Desl : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
