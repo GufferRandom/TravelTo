@@ -87,18 +87,21 @@ namespace TravelTo.Controllers
         public IActionResult Edit(int id,TurebiDto turebi) {
             var get_turi = _context.Turebi.Where(x => x.id == id).FirstOrDefault();
             string wwwrootpath = webHostEnvironment.WebRootPath;
-            string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
-            string productPath = Path.Combine(wwwrootpath, "turebi");
-            if (!Directory.Exists(productPath))
+            if (turebi.image != null)
             {
-                Directory.CreateDirectory(productPath);
-            }
-            using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
-            {
-                turebi.image.CopyTo(fileStream);
-            }
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
+                string productPath = Path.Combine(wwwrootpath, "turebi");
+                if (!Directory.Exists(productPath))
+                {
+                    Directory.CreateDirectory(productPath);
+                }
+                using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                {
+                    turebi.image.CopyTo(fileStream);
+                }
+                get_turi.image_name = filename;
+            };
             get_turi.Name = turebi.Name;
-            get_turi.image_name =filename;
             get_turi.Price= turebi.Price;
             get_turi.Description = turebi.Description;
             if(ModelState.IsValid)

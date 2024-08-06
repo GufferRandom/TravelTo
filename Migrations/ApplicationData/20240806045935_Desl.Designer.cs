@@ -11,8 +11,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations.ApplicationData
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240805111821_MigrationName")]
-    partial class MigrationName
+    [Migration("20240806045935_Desl")]
+    partial class Desl
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
