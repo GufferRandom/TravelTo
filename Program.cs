@@ -21,7 +21,7 @@ internal class Program
             builder.Configuration.GetConnectionString("UserCon")
             ));
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UsersDbContext>();
-
+        builder.Services.AddRazorPages();
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -38,10 +38,10 @@ internal class Program
         app.UseRouting();
 
         app.UseAuthorization();
-
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.MapRazorPages();
 
         app.Run();
     }
