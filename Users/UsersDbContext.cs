@@ -6,9 +6,9 @@ using TravelTo.Models;
 
 namespace TravelTo.Users
 {
-    public class UsersDbContext : IdentityDbContext<IdentityUser>
+    public class UsersDbContext : IdentityDbContext<User>
     {
-        public UsersDbContext(DbContextOptions options) : base(options)
+        public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
         {
         }
     }

@@ -11,12 +11,12 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
-        builder.Services.AddAuthentication().AddGoogle(googleOptions => 
-        {
-            googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-            googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+        //builder.Services.AddAuthentication().AddGoogle(googleOptions => 
+        //{
+        //    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+        //    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
 
-        });
+        //});
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
@@ -27,10 +27,11 @@ internal class Program
         builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("UserCon")
             ));
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UsersDbContext>();
+        
+        builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<UsersDbContext>();
         builder.Services.AddRazorPages();
         var app = builder.Build();
-
+        
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
