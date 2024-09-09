@@ -5,7 +5,7 @@ using System.Diagnostics;
 using TravelTo.Data;
 using TravelTo.Dto;
 using TravelTo.Models;
-
+using System.IO;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -35,7 +35,6 @@ namespace TravelTo.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Add(TurebiDto turebi)
         {
             if (turebi.image == null)
@@ -112,6 +111,21 @@ namespace TravelTo.Controllers
                 return RedirectToAction("Index");
             }
                 return View();
+
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            
+                var tobedeletedTur = _context.Turebi.Where(u => u.id == id).FirstOrDefault();
+            string wwwpath = webHostEnvironment.WebRootPath;
+            string name = tobedeletedTur.image_name;
+            string Full_Image_Url = Path.Combine(wwwpath, "turebi", name);
+            System.IO.File.Delete(Full_Image_Url);
+           
+            _context.Remove(tobedeletedTur);
+                _context.SaveChanges();
+            return RedirectToAction("Index");
 
         }
 
