@@ -11,8 +11,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations.ApplicationData
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240806045935_Desl")]
-    partial class Desl
+    [Migration("20240910123114_daeiyps")]
+    partial class daeiyps
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,41 @@ namespace TravelTo.Migrations.ApplicationData
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TravelTo.Models.Company", b =>
+                {
+                    b.Property<int>("Company_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Company_Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("owner")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Company_Id");
+
+                    b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Company_Id = 1,
+                            Name = "BOG"
+                        },
+                        new
+                        {
+                            Company_Id = 2,
+                            Name = "TBC"
+                        });
+                });
+
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.Property<int>("id")
@@ -32,8 +67,12 @@ namespace TravelTo.Migrations.ApplicationData
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<int>("Company_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -48,12 +87,15 @@ namespace TravelTo.Migrations.ApplicationData
 
                     b.HasKey("id");
 
-                    b.ToTable("Turebi");
+                    b.HasIndex("Company_Id");
+
+                    b.ToTable("Turebis");
 
                     b.HasData(
                         new
                         {
                             id = 1,
+                            Company_Id = 1,
                             Description = "aq iyo batoni wyali romelmac wyali dalia",
                             Name = "Antarqtida",
                             Price = 5.9900000000000002,
@@ -62,19 +104,37 @@ namespace TravelTo.Migrations.ApplicationData
                         new
                         {
                             id = 2,
+                            Company_Id = 2,
                             Description = "tbilo tibifli",
                             Name = "Tbilisi",
                             Price = 15.99,
-                            image_name = "65878_1.jpg"
+                            image_name = "59564_1.jpg"
                         },
                         new
                         {
                             id = 3,
+                            Company_Id = 2,
                             Description = "parizelta dedaqali",
                             Name = "Parizi",
                             Price = 6.9900000000000002,
                             image_name = "59564_1.jpg"
                         });
+                });
+
+            modelBuilder.Entity("TravelTo.Models.Turebi", b =>
+                {
+                    b.HasOne("TravelTo.Models.Company", "Company")
+                        .WithMany("Turebi")
+                        .HasForeignKey("Company_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("TravelTo.Models.Company", b =>
+                {
+                    b.Navigation("Turebi");
                 });
 #pragma warning restore 612, 618
         }

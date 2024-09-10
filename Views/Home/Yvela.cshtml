@@ -1,0 +1,35 @@
+﻿@model List<Turebi>;
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12 text-center">
+
+            <h2>
+                ყველა ტური
+            </h2>
+        </div>
+    </div>
+    @foreach (var i in Model)
+    {
+        <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id" class="btn btn-group">
+
+            <div style="width:400px">
+
+                <img src="~/turebi/@i.image_name" width="400px" height="300px" />
+
+                <div class="row">
+
+                    <div class="col-md-6 text-start">
+                        <h2>@i.Name</h2>
+
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <h3>დეტალების ნახვა</h3>
+
+                    </div>
+                </div>
+
+            </div>
+        </a>
+    }
+</div>
