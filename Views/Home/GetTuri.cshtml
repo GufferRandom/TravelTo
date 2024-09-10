@@ -1,26 +1,29 @@
 ﻿@model Turebi
-<div class="container">
-    <div class="row">
-        <div class="col-6">
+<div class="container" style="width:900px">
+    <div class="row pt-4">
+        <div class="col-4 text-start">
             <h1>@Model.Name</h1>
         </div>
     
-        <div class="col-6">
+        <div class="col-4 text-center">
             <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-primary">
             <i class="bi bi-pencil-square" style="font-size:25px"></i>
             </a>
+            </div>
+
+            <div class="col-4 text-end">
+
             <form method="post" asp-action="Delete" asp-route-id="@Model.id">
                 <button  class="btn btn-outline-danger" type="Submit">
                     <i class="bi bi-trash3-fill" style="font-size:25px"></i>
                     </button>
             </form>
             
-            </a>
         </div>
         
     </div>
    
-    <img src="~/turebi/@Model.image_name" />
+    <img src="~/turebi/@Model.image_name" width="900px" height="600px"/>
 
 </div>
 

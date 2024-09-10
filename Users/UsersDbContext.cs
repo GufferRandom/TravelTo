@@ -11,5 +11,6 @@ namespace TravelTo.Users
         public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
         {
         }
+
     }
 }

@@ -13,14 +13,14 @@ namespace TravelTo.Controllers
         private readonly ApplicationDataContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public HomeController(ApplicationDataContext context,IWebHostEnvironment webHostEnvironment)
+        public HomeController(ApplicationDataContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            var turebi = _context.Turebi.ToList();
+            var turebi = _context.Turebis.ToList();
 
 
             return View(turebi);
@@ -71,21 +71,23 @@ namespace TravelTo.Controllers
         }
         public IActionResult GetTuri(int id)
         {
-            var get_turi=_context.Turebi.Where(x=>x.id==id).FirstOrDefault();
+            var get_turi = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
             return View(get_turi);
         }
-        [HttpGet,DisplayName("Edit")]
-        public IActionResult Edit(int id) {
+        [HttpGet, DisplayName("Edit")]
+        public IActionResult Edit(int id)
+        {
 
-            var get_turi2 = _context.Turebi.Where(x => x.id == id).FirstOrDefault();
-           ViewData["img_name"] = get_turi2.image_name;
-           var get_turi_dto= new TurebiDto() { Name=get_turi2.Name,Description=get_turi2.Description,Price=get_turi2.Price };
+            var get_turi2 = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
+            ViewData["img_name"] = get_turi2.image_name;
+            var get_turi_dto = new TurebiDto() { Name = get_turi2.Name, Description = get_turi2.Description, Price = get_turi2.Price };
 
             return View(get_turi_dto);
         }
         [HttpPost]
-        public IActionResult Edit(int id,TurebiDto turebi) {
-            var get_turi = _context.Turebi.Where(x => x.id == id).FirstOrDefault();
+        public IActionResult Edit(int id, TurebiDto turebi)
+        {
+            var get_turi = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
             string wwwrootpath = webHostEnvironment.WebRootPath;
             if (turebi.image != null)
             {
@@ -102,31 +104,36 @@ namespace TravelTo.Controllers
                 get_turi.image_name = filename;
             };
             get_turi.Name = turebi.Name;
-            get_turi.Price= turebi.Price;
+            get_turi.Price = turebi.Price;
             get_turi.Description = turebi.Description;
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Update(get_turi);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-                return View();
+            return View();
 
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            
-                var tobedeletedTur = _context.Turebi.Where(u => u.id == id).FirstOrDefault();
+
+            var tobedeletedTur = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
             string wwwpath = webHostEnvironment.WebRootPath;
             string name = tobedeletedTur.image_name;
             string Full_Image_Url = Path.Combine(wwwpath, "turebi", name);
             System.IO.File.Delete(Full_Image_Url);
-           
+
             _context.Remove(tobedeletedTur);
-                _context.SaveChanges();
+            _context.SaveChanges();
             return RedirectToAction("Index");
 
+        }
+        public IActionResult Yvela()
+        {
+            List<Turebi> getting_turs = _context.Turebis.ToList();
+            return View(getting_turs);
         }
 
     }
