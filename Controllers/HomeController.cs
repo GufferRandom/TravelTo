@@ -6,6 +6,8 @@ using TravelTo.Data;
 using TravelTo.Dto;
 using TravelTo.Models;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.CodeAnalysis.Elfie.Extensions;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -133,6 +135,38 @@ namespace TravelTo.Controllers
         public IActionResult Yvela()
         {
             List<Turebi> getting_turs = _context.Turebis.ToList();
+            return View(getting_turs);
+        }
+
+        
+        public IActionResult Zebna(string names,string selected) {
+           if(names == null && selected !=null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u=>u.Name == selected).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                return View(getting_turs1);
+
+            }
+            if(selected == null &&names!=null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == names).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                return View(getting_turs1);
+            }
+            if (names == null && selected == null)
+            {
+                var getting_turs1 = _context.Turebis.ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                return RedirectToAction("yvela");
+            }
+            var getting_turs = _context.Turebis.Where(u=>u.Name == selected && u.Name==names).ToList();
+           
+            
+            var getting_full_vals=_context.Turebis.Select(u=>u.Name).ToList();
+            ViewBag.turebi = getting_full_vals;
             return View(getting_turs);
         }
 
