@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TravelTo.Data;
 using TravelTo.Models;
-using TravelTo.Users;
 
 internal class Program
 {
@@ -24,11 +23,12 @@ internal class Program
         builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection")
             ));
-        builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
-            builder.Configuration.GetConnectionString("UserCon")
-            ));
+        builder.Services.AddTransient<azrze_ar_var_mara_imedia_imushavebs>();
+        //builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
+        //    builder.Configuration.GetConnectionString("UserCon")
+        //    ));
         
-        builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<UsersDbContext>();
+        builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDataContext>();
         builder.Services.AddRazorPages();
         var app = builder.Build();
         
