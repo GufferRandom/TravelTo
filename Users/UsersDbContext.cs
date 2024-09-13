@@ -8,7 +8,7 @@ namespace TravelTo.Users
 {
     public class UsersDbContext : IdentityDbContext<IdentityUser>
     {
-        public UsersDbContext(DbContextOptions options) : base(options)
+        public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
         {
         }
     }
