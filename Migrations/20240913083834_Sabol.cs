@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class ExtendedUser : Migration
+    public partial class Sabol : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,6 +54,21 @@ namespace TravelTo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Companies",
+                columns: table => new
+                {
+                    Company_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    owner = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Companies", x => x.Company_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,6 +177,44 @@ namespace TravelTo.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Turebis",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    image_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Company_Id = table.Column<int>(type: "int", nullable: true),
+                    User_id = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Turebis", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Turebis_AspNetUsers_User_id",
+                        column: x => x.User_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Turebis_Companies_Company_Id",
+                        column: x => x.Company_Id,
+                        principalTable: "Companies",
+                        principalColumn: "Company_Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Turebis",
+                columns: new[] { "id", "Company_Id", "Description", "Name", "Price", "User_id", "image_name" },
+                values: new object[,]
+                {
+                    { 1, null, "aq iyo batoni wyali romelmac wyali dalia", "Antarqtida", 5.9900000000000002, null, "31394_1.jpg" },
+                    { 2, null, "tbilo tibifli", "Tbilisi", 15.99, null, "59564_1.jpg" },
+                    { 3, null, "parizelta dedaqali", "Parizi", 6.9900000000000002, null, "59564_1.jpg" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -198,6 +253,16 @@ namespace TravelTo.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Turebis_Company_Id",
+                table: "Turebis",
+                column: "Company_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Turebis_User_id",
+                table: "Turebis",
+                column: "User_id");
         }
 
         /// <inheritdoc />
@@ -219,10 +284,16 @@ namespace TravelTo.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Turebis");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
         }
     }
 }

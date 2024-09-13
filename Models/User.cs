@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TravelTo.Models
 {
@@ -9,6 +10,10 @@ namespace TravelTo.Models
         public string Last_Name { get;set;}
         public string City { get; set;} 
         public string Phone { get; set; }
+        
+        public ICollection<Turebi>? Favorite_Turs { get; set; }
+        
+
 
     }
 }

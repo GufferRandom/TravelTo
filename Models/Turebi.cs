@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,8 +17,11 @@ namespace TravelTo.Models
         [MaxLength(200)]
         public string? Description { get; set; }
         public string? image_name { get; set; }
-        public int Company_Id { get; set; }
+        public int? Company_Id { get; set; }
         [ForeignKey("Company_Id")]
-        public Company Company { get;set; }
+        public Company? Company { get;set; }
+        public string? User_id {  get; set; }
+        [ForeignKey("User_id")]
+        public User? Users { get; set; }
     }
 }

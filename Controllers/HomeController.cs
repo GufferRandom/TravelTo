@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -8,17 +8,24 @@ using TravelTo.Models;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.Elfie.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Client;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Security.Claims;
 namespace TravelTo.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ApplicationDataContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly SignInManager<User> _signInManager;
 
-        public HomeController(ApplicationDataContext context, IWebHostEnvironment webHostEnvironment)
+        public HomeController(ApplicationDataContext context, IWebHostEnvironment webHostEnvironment, SignInManager<User> signInManager)
         {
             _context = context;
             this.webHostEnvironment = webHostEnvironment;
+            _signInManager = signInManager;
         }
         public IActionResult Index()
         {
@@ -138,17 +145,18 @@ namespace TravelTo.Controllers
             return View(getting_turs);
         }
 
-        
-        public IActionResult Zebna(string names,string selected) {
-           if(names == null && selected !=null)
+
+        public IActionResult Zebna(string names, string selected)
+        {
+            if (names == null && selected != null)
             {
-                var getting_turs1 = _context.Turebis.Where(u=>u.Name == selected).ToList();
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == selected).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
                 return View(getting_turs1);
 
             }
-            if(selected == null &&names!=null)
+            if (selected == null && names != null)
             {
                 var getting_turs1 = _context.Turebis.Where(u => u.Name == names).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
@@ -162,14 +170,63 @@ namespace TravelTo.Controllers
                 ViewBag.turebi = getting_full_vals1;
                 return RedirectToAction("yvela");
             }
-            var getting_turs = _context.Turebis.Where(u=>u.Name == selected && u.Name==names).ToList();
-           
-            
-            var getting_full_vals=_context.Turebis.Select(u=>u.Name).ToList();
+            var getting_turs = _context.Turebis.Where(u => u.Name == selected && u.Name == names).ToList();
+
+
+            var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
             ViewBag.turebi = getting_full_vals;
             return View(getting_turs);
         }
 
+        public IActionResult ShoppingCart()
+        {
+            if(_signInManager.IsSignedIn(User))
+            {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                  var get_user_favs =_context.Users.Include(u => u.Favorite_Turs).FirstOrDefault(u=>u.Id==userid);
+
+                  return View(get_user_favs);
+            }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ShoppingCart(int  id)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                
+                var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user_turs = _context.Users.Include(u=>u.Favorite_Turs).FirstOrDefault(u=>u.Id==userid);
+
+                if (user_turs.Favorite_Turs == null)
+                {
+                    user_turs.Favorite_Turs = new List<Turebi>();
+                }
+                if (user_turs.Favorite_Turs.Any(u => u.id == id))
+                {
+                    TempData["Error"] = "ტური უკვე არი დამატებული კალათაში";
+
+                }
+                else
+                {
+                user_turs.Favorite_Turs.Add(getting);
+                _context.SaveChanges();
+                TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
+
+                }
+                return Redirect(Request.Headers["Referer"].ToString());
+
+            }
+            else
+            {
+            TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
+            return Redirect(Request.Headers["Referer"].ToString());
+
+            }
+
+        }
+       
     }
 }
 

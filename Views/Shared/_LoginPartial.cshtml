@@ -6,6 +6,11 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+        <span>fav_items</span>
+
+        <li class="nav-item">
+            <a asp-controller="Home" asp-action="ShoppingCart"> <i class="bi bi-cart2" style="font-size:25px"></i></a>
+        </li>
     <li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
     </li>

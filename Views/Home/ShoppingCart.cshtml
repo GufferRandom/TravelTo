@@ -1,4 +1,4 @@
-﻿@model List<Turebi>;
+﻿@model ICollection<Turebi>;
 
 <div class="grid-container">
     <div class="row">
@@ -10,34 +10,15 @@
             </h2>
         </div>
     </div>
-    <form method="post" asp-controller="Home" asp-action="Zebna">
-
-   
-    <div class="grid-item" style="grid-row: 1/4">
-    <div style="width:400px;" >
-        <input style="width:300px;position:relative;" type="search" name="names" />
-
-            <button type="submit" class="btn btn-outline-secondary">
-                    <i class="bi bi-search" style="font-size:20px"></i>
-           </button>
-
-            <label>ლოკაციები</label>
-
-
-            <select class="form-select form-select-sm" aria-label="Small select example" name="selected" >
-
-                <option value="">აირჩიე ლოკაცია</option>
-                @foreach(var i in ViewBag.turebi)
-                {
-                    <option value="@i">@i</option>
-
-                }
-            </select>
-    </div>     
+@if(Model==null){
     
-    </div>
-    </form>
-    @foreach (var i in Model)
+    <h1>თქვენ ჯერ არ გაქვთ დამატებული კალათაში ტური</h1>
+
+}
+else{
+
+
+       foreach (var i in Model)
     {
         <div class="card mb-3 w-100" style="">
             <div class="row g-0">
@@ -67,4 +48,6 @@
 
         </div>
     }
+}
+
 </div>
