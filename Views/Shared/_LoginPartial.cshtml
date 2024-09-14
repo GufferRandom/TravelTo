@@ -6,8 +6,10 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-        <span>fav_items</span>
-
+        <span>
+            @ViewBag.howmany
+        </span>
+       
         <li class="nav-item">
             <a asp-controller="Home" asp-action="ShoppingCart"> <i class="bi bi-cart2" style="font-size:25px"></i></a>
         </li>

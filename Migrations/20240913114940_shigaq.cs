@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class Sabol : Migration
+    public partial class shigaq : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -187,17 +187,11 @@ namespace TravelTo.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     image_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Company_Id = table.Column<int>(type: "int", nullable: true),
-                    User_id = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Company_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Turebis", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Turebis_AspNetUsers_User_id",
-                        column: x => x.User_id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Turebis_Companies_Company_Id",
                         column: x => x.Company_Id,
@@ -205,14 +199,62 @@ namespace TravelTo.Migrations
                         principalColumn: "Company_Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TurebiUser",
+                columns: table => new
+                {
+                    Favorite_Tursid = table.Column<int>(type: "int", nullable: false),
+                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TurebiUser", x => new { x.Favorite_Tursid, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_TurebiUser_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TurebiUser_Turebis_Favorite_Tursid",
+                        column: x => x.Favorite_Tursid,
+                        principalTable: "Turebis",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAndTurebi",
+                columns: table => new
+                {
+                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Turebi_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAndTurebi", x => new { x.Turebi_Id, x.User_Id });
+                    table.ForeignKey(
+                        name: "FK_UserAndTurebi_AspNetUsers_User_Id",
+                        column: x => x.User_Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAndTurebi_Turebis_Turebi_Id",
+                        column: x => x.Turebi_Id,
+                        principalTable: "Turebis",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Turebis",
-                columns: new[] { "id", "Company_Id", "Description", "Name", "Price", "User_id", "image_name" },
+                columns: new[] { "id", "Company_Id", "Description", "Name", "Price", "image_name" },
                 values: new object[,]
                 {
-                    { 1, null, "aq iyo batoni wyali romelmac wyali dalia", "Antarqtida", 5.9900000000000002, null, "31394_1.jpg" },
-                    { 2, null, "tbilo tibifli", "Tbilisi", 15.99, null, "59564_1.jpg" },
-                    { 3, null, "parizelta dedaqali", "Parizi", 6.9900000000000002, null, "59564_1.jpg" }
+                    { 1, null, "aq iyo batoni wyali romelmac wyali dalia", "Antarqtida", 5.9900000000000002, "31394_1.jpg" },
+                    { 2, null, "tbilo tibifli", "Tbilisi", 15.99, "59564_1.jpg" },
+                    { 3, null, "parizelta dedaqali", "Parizi", 6.9900000000000002, "59564_1.jpg" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -260,9 +302,14 @@ namespace TravelTo.Migrations
                 column: "Company_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Turebis_User_id",
-                table: "Turebis",
-                column: "User_id");
+                name: "IX_TurebiUser_UsersId",
+                table: "TurebiUser",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAndTurebi_User_Id",
+                table: "UserAndTurebi",
+                column: "User_Id");
         }
 
         /// <inheritdoc />
@@ -284,13 +331,19 @@ namespace TravelTo.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Turebis");
+                name: "TurebiUser");
+
+            migrationBuilder.DropTable(
+                name: "UserAndTurebi");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Turebis");
 
             migrationBuilder.DropTable(
                 name: "Companies");

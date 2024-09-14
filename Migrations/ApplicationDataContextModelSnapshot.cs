@@ -205,17 +205,12 @@ namespace TravelTo.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("User_id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("image_name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
                     b.HasIndex("Company_Id");
-
-                    b.HasIndex("User_id");
 
                     b.ToTable("Turebis");
 
@@ -327,6 +322,36 @@ namespace TravelTo.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("TravelTo.Models.UserAndTurebiMap", b =>
+                {
+                    b.Property<int?>("Turebi_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("User_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Turebi_Id", "User_Id");
+
+                    b.HasIndex("User_Id");
+
+                    b.ToTable("UserAndTurebi");
+                });
+
+            modelBuilder.Entity("TurebiUser", b =>
+                {
+                    b.Property<int>("Favorite_Tursid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Favorite_Tursid", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("TurebiUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -384,13 +409,41 @@ namespace TravelTo.Migrations
                         .WithMany("Turebi")
                         .HasForeignKey("Company_Id");
 
-                    b.HasOne("TravelTo.Models.User", "Users")
-                        .WithMany("Favorite_Turs")
-                        .HasForeignKey("User_id");
-
                     b.Navigation("Company");
+                });
 
-                    b.Navigation("Users");
+            modelBuilder.Entity("TravelTo.Models.UserAndTurebiMap", b =>
+                {
+                    b.HasOne("TravelTo.Models.Turebi", "turebi")
+                        .WithMany("UserAndTurebiMapT")
+                        .HasForeignKey("Turebi_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelTo.Models.User", "User")
+                        .WithMany("UserAndTurebiMapU")
+                        .HasForeignKey("User_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("turebi");
+                });
+
+            modelBuilder.Entity("TurebiUser", b =>
+                {
+                    b.HasOne("TravelTo.Models.Turebi", null)
+                        .WithMany()
+                        .HasForeignKey("Favorite_Tursid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelTo.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TravelTo.Models.Company", b =>
@@ -398,9 +451,14 @@ namespace TravelTo.Migrations
                     b.Navigation("Turebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.Turebi", b =>
+                {
+                    b.Navigation("UserAndTurebiMapT");
+                });
+
             modelBuilder.Entity("TravelTo.Models.User", b =>
                 {
-                    b.Navigation("Favorite_Turs");
+                    b.Navigation("UserAndTurebiMapU");
                 });
 #pragma warning restore 612, 618
         }
