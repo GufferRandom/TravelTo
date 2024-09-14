@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240913114940_shigaq")]
-    partial class shigaq
+    [Migration("20240914081614_imeid")]
+    partial class imeid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -340,21 +340,6 @@ namespace TravelTo.Migrations
                     b.ToTable("UserAndTurebi");
                 });
 
-            modelBuilder.Entity("TurebiUser", b =>
-                {
-                    b.Property<int>("Favorite_Tursid")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Favorite_Tursid", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("TurebiUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -432,21 +417,6 @@ namespace TravelTo.Migrations
                     b.Navigation("User");
 
                     b.Navigation("turebi");
-                });
-
-            modelBuilder.Entity("TurebiUser", b =>
-                {
-                    b.HasOne("TravelTo.Models.Turebi", null)
-                        .WithMany()
-                        .HasForeignKey("Favorite_Tursid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelTo.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TravelTo.Models.Company", b =>
