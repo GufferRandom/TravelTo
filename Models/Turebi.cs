@@ -21,7 +21,6 @@ namespace TravelTo.Models
         [ForeignKey("Company_Id")]
         public Company? Company { get;set; }
        
-        public ICollection<User>? Users { get; set; }
         public ICollection<UserAndTurebiMap>? UserAndTurebiMapT { get; }
     }
 }

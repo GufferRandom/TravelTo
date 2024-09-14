@@ -11,7 +11,6 @@ namespace TravelTo.Models
         public string City { get; set;} 
         public string Phone { get; set; }
         
-        public ICollection<Turebi>? Favorite_Turs { get; set; }
         public ICollection<UserAndTurebiMap>? UserAndTurebiMapU { get; }
 
 

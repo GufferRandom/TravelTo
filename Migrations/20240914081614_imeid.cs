@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class shigaq : Migration
+    public partial class imeid : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -200,30 +200,6 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TurebiUser",
-                columns: table => new
-                {
-                    Favorite_Tursid = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TurebiUser", x => new { x.Favorite_Tursid, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_TurebiUser_AspNetUsers_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TurebiUser_Turebis_Favorite_Tursid",
-                        column: x => x.Favorite_Tursid,
-                        principalTable: "Turebis",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserAndTurebi",
                 columns: table => new
                 {
@@ -302,11 +278,6 @@ namespace TravelTo.Migrations
                 column: "Company_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TurebiUser_UsersId",
-                table: "TurebiUser",
-                column: "UsersId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserAndTurebi_User_Id",
                 table: "UserAndTurebi",
                 column: "User_Id");
@@ -329,9 +300,6 @@ namespace TravelTo.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "TurebiUser");
 
             migrationBuilder.DropTable(
                 name: "UserAndTurebi");
