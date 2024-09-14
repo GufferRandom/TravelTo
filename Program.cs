@@ -23,7 +23,6 @@ internal class Program
         builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection")
             ));
-        builder.Services.AddTransient<azrze_ar_var_mara_imedia_imushavebs>();
         //builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
         //    builder.Configuration.GetConnectionString("UserCon")
         //    ));

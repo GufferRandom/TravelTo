@@ -12,9 +12,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Client;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Security.Claims;
+using System.Net;
 namespace TravelTo.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         private readonly ApplicationDataContext _context;
@@ -27,12 +28,19 @@ namespace TravelTo.Controllers
             this.webHostEnvironment = webHostEnvironment;
             _signInManager = signInManager;
         }
+        
         public IActionResult Index()
         {
             var turebi = _context.Turebis.ToList();
-
-
-            return View(turebi);
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
+                                      .Select(u => u.turebi)
+                                      .ToList().Count();
+                ViewBag.howmany = get_user_favs;
+            }
+                return View(turebi);
         }
         public IActionResult Privacy()
         {
@@ -180,39 +188,37 @@ namespace TravelTo.Controllers
 
         public IActionResult ShoppingCart()
         {
-            if(_signInManager.IsSignedIn(User))
+            if (_signInManager.IsSignedIn(User))
             {
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                  var get_user_favs =_context.Users.Include(u => u.Favorite_Turs).FirstOrDefault(u=>u.Id==userid);
-
-                  return View(get_user_favs);
+                var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
+                                      .Select(u => u.turebi)
+                                      .ToList();
+                
+                return View(get_user_favs);
             }
             return View();
         }
         [HttpPost]
-        public IActionResult ShoppingCart(int  id)
+        public IActionResult ShoppingCart(int id)
         {
             if (_signInManager.IsSignedIn(User))
             {
-                
                 var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user_turs = _context.Users.Include(u=>u.Favorite_Turs).FirstOrDefault(u=>u.Id==userid);
-
-                if (user_turs.Favorite_Turs == null)
-                {
-                    user_turs.Favorite_Turs = new List<Turebi>();
-                }
-                if (user_turs.Favorite_Turs.Any(u => u.id == id))
+                var new_enty = new UserAndTurebiMap { Turebi_Id = id,User_Id=userid };
+                if (_context.UserAndTurebi.Where(u => u.User_Id == userid)
+                                      .Select(u => u.turebi)
+                                       .Any(u => u.id == id))
                 {
                     TempData["Error"] = "ტური უკვე არი დამატებული კალათაში";
 
                 }
                 else
                 {
-                user_turs.Favorite_Turs.Add(getting);
-                _context.SaveChanges();
-                TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
+                    _context.UserAndTurebi.Add(new_enty);
+                    _context.SaveChanges();
+                    TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
 
                 }
                 return Redirect(Request.Headers["Referer"].ToString());
@@ -220,13 +226,33 @@ namespace TravelTo.Controllers
             }
             else
             {
-            TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
-            return Redirect(Request.Headers["Referer"].ToString());
+                TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
+                return Redirect(Request.Headers["Referer"].ToString());
 
             }
+            
+            
 
         }
-       
+        public IActionResult AmoshlaKalatidan(int id)
+        {
+            var get_tur = _context.Turebis.Where(u => u.id == id).Select(u=>u.id).FirstOrDefault();
+            var user_Id  = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var kide_get = _context.UserAndTurebi.Where(u => u.User_Id == user_Id && u.Turebi_Id == u.Turebi_Id).FirstOrDefault();
+            if(kide_get == null)
+            {
+                TempData["SomeKindOfError"] = "რაღაცა ერრორია";    
+                return RedirectToAction("index");
+
+            }
+            _context.UserAndTurebi.Remove(kide_get);
+            _context.SaveChanges();
+            TempData["sec"] = "turi warmatebit amoishala biwoo";
+            return Redirect(Request.Headers["Referer"].ToString());
+
+        }
+
+
     }
 }
 

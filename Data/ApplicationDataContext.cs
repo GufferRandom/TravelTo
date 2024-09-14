@@ -15,6 +15,7 @@ namespace TravelTo.Data
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<Turebi> Turebis { get; set; }
+        public DbSet<UserAndTurebiMap> UserAndTurebi{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,9 +28,13 @@ namespace TravelTo.Data
                 new Turebi { id = 2,Name = "Tbilisi", Description = "tbilo tibifli", Price = 15.99, image_name = "59564_1.jpg" },
                 new Turebi { id = 3, Name = "Parizi", Description = "parizelta dedaqali", Price = 6.99, image_name = "59564_1.jpg" }
                 );
-          
+
+            modelBuilder.Entity<UserAndTurebiMap>().HasKey(u => new { u.Turebi_Id, u.User_Id });
             modelBuilder.Entity<Turebi>().HasOne(u=>u.Company).WithMany(u=>u.Turebi).HasForeignKey(u=>u.Company_Id);
-            modelBuilder.Entity<Turebi>().HasOne(u=>u.Users).WithMany(u=>u.Favorite_Turs).HasForeignKey(u=>u.User_id);
+            modelBuilder.Entity<UserAndTurebiMap>().HasOne(u=>u.turebi).WithMany(u=>u.UserAndTurebiMapT).HasForeignKey(u=>u.Turebi_Id);
+            modelBuilder.Entity<UserAndTurebiMap>().HasOne(u=>u.User).WithMany(u=>u.UserAndTurebiMapU).HasForeignKey(u=>u.User_Id);
+        
         }
+
     }
 }
