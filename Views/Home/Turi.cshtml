@@ -1,0 +1,27 @@
+﻿@using TravelTo.Dto;
+@model Turebi2Dto;
+<form method="post" enctype="multipart/form-data">
+    <div class="form">
+        <div class="container">
+            <div class="row pb-2">
+                <h2 class="text-primary">ტურის დამატება</h2>
+            </div>
+            <label>ტურის სახელი</label>
+            <input asp-for=Name class="form-control" />
+            <label>ღირებულება ერთ კაცზე</label>
+            <input asp-for="Price" class="form-control" />
+            <label>აღწერა</label>
+            <input asp-for=Description class="form-control" />
+            <label>მიამაგრეთ ფოტო</label>
+            <input asp-for=Image class="form-control" />
+
+            <div class="row pt-4">
+                <div class="col-6">
+                    <button type="submit" class="btn-outline-primary form-control">დაამატეთ ტური</button>
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary form-control">დაბრუნება მთავარ გვერდზე</a>
+                </div>
+            </div>
+
+</form>
