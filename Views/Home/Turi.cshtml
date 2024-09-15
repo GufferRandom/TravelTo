@@ -1,5 +1,5 @@
 ﻿@using TravelTo.Dto;
-@model Turebi2Dto;
+@model TurebiDto;
 <form method="post" enctype="multipart/form-data">
     <div class="form">
         <div class="container">
@@ -9,11 +9,11 @@
             <label>ტურის სახელი</label>
             <input asp-for=Name class="form-control" />
             <label>ღირებულება ერთ კაცზე</label>
-            <input asp-for="Price" class="form-control" />
+            <input asp-for=Price class="form-control" />
             <label>აღწერა</label>
             <input asp-for=Description class="form-control" />
             <label>მიამაგრეთ ფოტო</label>
-            <input asp-for=Image class="form-control" />
+            <input asp-for=image class="form-control" />
 
             <div class="row pt-4">
                 <div class="col-6">
