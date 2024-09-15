@@ -44,11 +44,11 @@
 <div class="owl-carousel owl-theme" style="margin-left: 25px">
     @{
         int index = 0;
-        foreach (var product1 in ViewBag.turebi2)
+        foreach (var product1 in Model)
         {
             <div style="display: flex; flex-direction: column ">
                 <div class="item">
-                    <img  src="/turebi2/@product1.Image_name" style="width: 384px; border-radius: 5px; height: 384px; margin-top: 10px ;margin-left: 10px" alt="img">
+                    <img  src="/turebi/@product1.image_name" style="width: 384px; border-radius: 5px; height: 384px; margin-top: 10px ;margin-left: 10px" alt="img">
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                     <h4>@product1.Name</h4>

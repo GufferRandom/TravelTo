@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\ApplicationData\" />
+    <Folder Include="Migrations\TurebiData\" />
     <Folder Include="wwwroot\turebi2\" />
   </ItemGroup>
 

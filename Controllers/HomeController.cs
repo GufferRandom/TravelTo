@@ -10,25 +10,21 @@ namespace TravelTo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly TurebiDataContext _context1;
+        
         private readonly ApplicationDataContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public HomeController(TurebiDataContext context1
-            , ApplicationDataContext context, IWebHostEnvironment webHostEnvironment)
+        public HomeController(ApplicationDataContext context, IWebHostEnvironment webHostEnvironment)
         {
-            _context1 = context1;
             _context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            var turebi = _context.Turebi.ToList();
+            var Turebi = _context.Turebi.ToList();
             
-            var getting_turebi2=_context1.turebi2s.ToList();
-            ViewBag.turebi2 = getting_turebi2;
 
-            return View(turebi);
+            return View(Turebi);
         }
         public IActionResult Privacy()
         {
@@ -44,9 +40,9 @@ namespace TravelTo.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult Turi(Turebi2Dto turebi2)
+        public IActionResult Turi(TurebiDto Turebi)
         {
-            if (turebi2.Image == null)
+            if (Turebi.image == null)
             {
                 ModelState.AddModelError("Image", "Image is Requered");
 
@@ -54,27 +50,27 @@ namespace TravelTo.Controllers
             if (ModelState.IsValid)
             {
                 string rootpath = webHostEnvironment.WebRootPath;
-                string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi2.Image.FileName);
-                string productfile = Path.Combine(rootpath, "turebi2");
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(Turebi.image.FileName);
+                string productfile = Path.Combine(rootpath, "turebi");
                 if (!Directory.Exists(productfile))
                 {
                     Directory.CreateDirectory(productfile);
                 }
                 using (var file = new FileStream(Path.Combine(productfile, filename), FileMode.Create))
                 {
-                    turebi2.Image.CopyTo(file);
+                    Turebi.image.CopyTo(file);
 
                 }
-                var Turi = new Turebi2()
+                var Turi = new Turebi()
                 {
-                    Name = turebi2.Name,
-                    Price = turebi2.Price,
-                    Description = turebi2.Description,
-                    Image_name = filename
+                    Name = Turebi.Name,
+                    Price = Turebi.Price,
+                    Description = Turebi.Description,
+                    image_name = filename
 
                 };
-                _context1.Add(Turi);
-                _context1.SaveChanges();
+                _context.Add(Turi);
+                _context.SaveChanges();
                 return RedirectToAction("index");
             }
             return RedirectToAction("Index");
@@ -83,9 +79,9 @@ namespace TravelTo.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(TurebiDto turebi)
+        public IActionResult Add(TurebiDto Turebi)
         {
-            if (turebi.image == null)
+            if (Turebi.image == null)
             {
                 ModelState.AddModelError("image", "image is requered as hel");
             }
@@ -93,21 +89,21 @@ namespace TravelTo.Controllers
             if (ModelState.IsValid)
             {
                 string wwwrootpath = webHostEnvironment.WebRootPath;
-                string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
-                string productPath = Path.Combine(wwwrootpath, "turebi");
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(Turebi.image.FileName);
+                string productPath = Path.Combine(wwwrootpath, "Turebi");
                 if (!Directory.Exists(productPath))
                 {
                     Directory.CreateDirectory(productPath);
                 }
                 using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                 {
-                    turebi.image.CopyTo(fileStream);
+                    Turebi.image.CopyTo(fileStream);
                 }
                 var namdvili_turi = new Turebi()
                 {
-                    Name = turebi.Name,
-                    Description = turebi.Description,
-                    Price = turebi.Price,
+                    Name = Turebi.Name,
+                    Description = Turebi.Description,
+                    Price = Turebi.Price,
                     image_name = filename
 
                 };
@@ -133,27 +129,27 @@ namespace TravelTo.Controllers
             return View(get_turi_dto);
         }
         [HttpPost]
-        public IActionResult Edit(int id, TurebiDto turebi)
+        public IActionResult Edit(int id, TurebiDto Turebi)
         {
             var get_turi = _context.Turebi.Where(x => x.id == id).FirstOrDefault();
             string wwwrootpath = webHostEnvironment.WebRootPath;
-            if (turebi.image != null)
+            if (Turebi.image != null)
             {
-                string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
-                string productPath = Path.Combine(wwwrootpath, "turebi");
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(Turebi.image.FileName);
+                string productPath = Path.Combine(wwwrootpath, "Turebi");
                 if (!Directory.Exists(productPath))
                 {
                     Directory.CreateDirectory(productPath);
                 }
                 using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                 {
-                    turebi.image.CopyTo(fileStream);
+                    Turebi.image.CopyTo(fileStream);
                 }
                 get_turi.image_name = filename;
             };
-            get_turi.Name = turebi.Name;
-            get_turi.Price = turebi.Price;
-            get_turi.Description = turebi.Description;
+            get_turi.Name = Turebi.Name;
+            get_turi.Price = Turebi.Price;
+            get_turi.Description = Turebi.Description;
             if (ModelState.IsValid)
             {
                 _context.Update(get_turi);
