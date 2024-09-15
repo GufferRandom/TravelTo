@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using TravelTo.Data;
 using TravelTo.Models;
-using TravelTo.Users;
 
 internal class Program
 {
@@ -12,27 +11,20 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
-        builder.Services.AddAuthentication().AddGoogle(googleOptions => 
-        {
-            googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-            googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+        //builder.Services.AddAuthentication().AddGoogle(googleOptions => 
+        //{
+        //    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+        //    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
 
-        });
+        //});
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection")
             ));
-        builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
-            builder.Configuration.GetConnectionString("UserCon")
-            ));
-        builder.Services.AddDbContext<TurebiDataContext>(options => options.UseSqlServer(
-                builder.Configuration.GetConnectionString("TurebiCon")
-            ));
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<UsersDbContext>();
+    
+     
         builder.Services.AddRazorPages();
         var app = builder.Build();
 
