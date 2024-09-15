@@ -1,16 +1,58 @@
 
-        using (var scope = app.Services.CreateScope())
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TravelTo.Data;
+using TravelTo.Models;
+
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        var configuration = builder.Configuration;
+        //builder.Services.AddAuthentication().AddGoogle(googleOptions => 
+        //{
+        //    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+        //    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+
+        //});
+        // Add services to the container.
+        builder.Services.AddControllersWithViews();
+        builder.Services.AddRazorPages();
+
+        builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
+            builder.Configuration.GetConnectionString("DefaultConnection")
+            ));
+        //builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
+        //    builder.Configuration.GetConnectionString("UserCon")
+        //    ));
+        
+        builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDataContext>();
+        builder.Services.AddRazorPages();
+        var app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+        if (!app.Environment.IsDevelopment())
         {
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var roles = new[] { "Admin", "Manager", "User" };
-            foreach (var role in roles) 
-            {
-                if (!await roleManager.RoleExistsAsync(role))
-                {
-                    await roleManager.CreateAsync(new IdentityRole(role));
-                }
-            }
+            app.UseExceptionHandler("/Home/Error");
+            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseHsts();
         }
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roles = new[] { "Admin", "Manager", "User" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
         using (var scope = app.Services.CreateScope())
         {
             var UserManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
