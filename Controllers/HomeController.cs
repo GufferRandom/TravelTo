@@ -13,6 +13,7 @@ using Microsoft.Identity.Client;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Security.Claims;
 using System.Net;
+using Humanizer;
 namespace TravelTo.Controllers
 {
 
@@ -154,8 +155,40 @@ namespace TravelTo.Controllers
         }
 
 
-        public IActionResult Zebna(string names, string selected)
+        public IActionResult Zebna(string names, string selected,string min,string max)
         {
+            double Max = Convert.ToDouble(max);
+            double Min = Convert.ToDouble(min);
+            if (names == null && selected != null && min != null && max != null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == selected && u.Price > Min && u.Price < Max).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                return View(getting_turs1);
+
+            }
+
+            if (selected == null && names != null && min != null && max != null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == names && u.Price > Min && u.Price < Max).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                return View(getting_turs1);
+            }
+            if (names == null && selected == null && min == null && max == null)
+            {
+                var getting_turs1 = _context.Turebis.ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                return RedirectToAction("yvela");
+            }
+            if (names == null && selected == null && min != null && max != null)
+            {
+                var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
+                var get_tur = _context.Turebis.Where(u => u.Price > Min && u.Price < Max).ToList();
+                ViewBag.turebi = getting_turs1;
+                return View(get_tur);
+            }
             if (names == null && selected != null)
             {
                 var getting_turs1 = _context.Turebis.Where(u => u.Name == selected).ToList();
@@ -179,8 +212,6 @@ namespace TravelTo.Controllers
                 return RedirectToAction("yvela");
             }
             var getting_turs = _context.Turebis.Where(u => u.Name == selected && u.Name == names).ToList();
-
-
             var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
             ViewBag.turebi = getting_full_vals;
             return View(getting_turs);
