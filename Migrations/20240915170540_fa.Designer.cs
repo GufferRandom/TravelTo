@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240914081614_imeid")]
-    partial class imeid
+    [Migration("20240915170540_fa")]
+    partial class fa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -241,6 +241,46 @@ namespace TravelTo.Migrations
                             Name = "Parizi",
                             Price = 6.9900000000000002,
                             image_name = "59564_1.jpg"
+                        },
+                        new
+                        {
+                            id = 4,
+                            Description = "მაგარიი პონტიიი",
+                            Name = "Los-Angeles, CA",
+                            Price = 15555.0,
+                            image_name = "ee2aa1e4-37d6-41e1-a3b5-ee7d35f0202d.jfif"
+                        },
+                        new
+                        {
+                            id = 5,
+                            Description = "მაგარიი პონტიიი",
+                            Name = "Italy",
+                            Price = 12341.0,
+                            image_name = "bffe2b9f-956c-41a5-a72e-12b08c899a45.jfif"
+                        },
+                        new
+                        {
+                            id = 6,
+                            Description = "მაგარიი პონტიიი",
+                            Name = "Brazil",
+                            Price = 15111.0,
+                            image_name = "b373e51c-0ba1-4f3b-887d-3499cb200d3c.jpg"
+                        },
+                        new
+                        {
+                            id = 7,
+                            Description = "მაგარიი პონტიიი",
+                            Name = "Denmark",
+                            Price = 19000.0,
+                            image_name = "f521cee9-6c84-4a02-8f75-9800f0002a53.jfif"
+                        },
+                        new
+                        {
+                            id = 8,
+                            Description = "მაგარიი პონტიიი",
+                            Name = "Spain",
+                            Price = 23000.0,
+                            image_name = "6d4ea991-f9a5-4ec6-8550-0e4e02e5ab4c.jfif"
                         });
                 });
 
@@ -253,7 +293,6 @@ namespace TravelTo.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -268,11 +307,9 @@ namespace TravelTo.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("First_Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Last_Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -293,7 +330,6 @@ namespace TravelTo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")

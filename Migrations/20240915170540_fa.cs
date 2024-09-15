@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class imeid : Migration
+    public partial class fa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,10 +32,10 @@ namespace TravelTo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    First_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Last_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    First_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Last_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -230,7 +230,12 @@ namespace TravelTo.Migrations
                 {
                     { 1, null, "aq iyo batoni wyali romelmac wyali dalia", "Antarqtida", 5.9900000000000002, "31394_1.jpg" },
                     { 2, null, "tbilo tibifli", "Tbilisi", 15.99, "59564_1.jpg" },
-                    { 3, null, "parizelta dedaqali", "Parizi", 6.9900000000000002, "59564_1.jpg" }
+                    { 3, null, "parizelta dedaqali", "Parizi", 6.9900000000000002, "59564_1.jpg" },
+                    { 4, null, "მაგარიი პონტიიი", "Los-Angeles, CA", 15555.0, "ee2aa1e4-37d6-41e1-a3b5-ee7d35f0202d.jfif" },
+                    { 5, null, "მაგარიი პონტიიი", "Italy", 12341.0, "bffe2b9f-956c-41a5-a72e-12b08c899a45.jfif" },
+                    { 6, null, "მაგარიი პონტიიი", "Brazil", 15111.0, "b373e51c-0ba1-4f3b-887d-3499cb200d3c.jpg" },
+                    { 7, null, "მაგარიი პონტიიი", "Denmark", 19000.0, "f521cee9-6c84-4a02-8f75-9800f0002a53.jfif" },
+                    { 8, null, "მაგარიი პონტიიი", "Spain", 23000.0, "6d4ea991-f9a5-4ec6-8550-0e4e02e5ab4c.jfif" }
                 });
 
             migrationBuilder.CreateIndex(

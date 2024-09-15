@@ -252,7 +252,6 @@ namespace TravelTo.Controllers
                     TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
 
                 }
-                return Redirect(Request.Headers["Referer"].ToString());
 
             }
             else
@@ -261,8 +260,10 @@ namespace TravelTo.Controllers
                 return Redirect(Request.Headers["Referer"].ToString());
 
             }
-            
-            
+            return Redirect(Request.Headers["Referer"].ToString());
+
+
+
 
         }
         public IActionResult AmoshlaKalatidan(int id)

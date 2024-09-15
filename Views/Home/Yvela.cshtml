@@ -1,10 +1,10 @@
 ﻿@model List<Turebi>;
 
 
-<div class="grid-container">
+<div class="grid-container" style="margin-top:50px">
     <div class="row">
 
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center" style="margin-top:50px">
 
             <span class="text-danger">@TempData["Failed"]</span>
             <span class="text-success">@TempData["Success"]</span>
@@ -20,7 +20,7 @@
 
         <div class="grid-item" style="grid-row: 1/4">
             <div style="width:400px;">
-                <input style="width:300px;position:relative;" type="search" name="names" />
+                <input style="width:300px;position:relative; margin-top:30px;" type="search" name="names" />
 
                 <button type="submit" class="btn btn-outline-secondary">
                     <i class="bi bi-search" style="font-size:20px"></i>
@@ -56,6 +56,7 @@
                 </div>
 
         </div>
+
     </form>
     @foreach (var i in Model)
     {
