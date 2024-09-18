@@ -1,32 +1,58 @@
 ﻿@model Turebi
-<div class="container" style="width:900px">
-    <div class="row pt-4">
-        <div class="col-4 text-start">
-            <h1>@Model.Name</h1>
-        </div>
-    
-        <div class="col-4 text-center">
-            <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-outline-primary">
-            <i class="bi bi-pencil-square" style="font-size:25px"></i>
-            </a>
+
+<span class="text-danger">@TempData["Failed"]</span>
+<span class="text-success">@TempData["Success"]</span>
+<span class="text-danger">@TempData["Error"]</span>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+                <img class="card-img-top mb-5 mb-md-0" src="~/turebi/@Model.image_name" alt="..." />
             </div>
+            <div class="col-md-6">
+                <div class="small mb-1 text-secondary">კომპანია:@Model.Company.Name</div>
+                <h1 class="display-5 fw-bolder">@Model.Name</h1>
+                <div class="fs-5 mb-5">
+                    <span>$@Model.Price</span>
+                </div>
+                <p class="lead">@Model.Description</p>
+                <div class="d-flex">
+                    <form method="post" asp-controller="Home" asp-action="ShoppingCart" asp-route-id="@Model.id" name="form1">
+                        <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
+                    </form>
 
-            <div class="col-4 text-end">
+                </div>
+            </div>
+</section>
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+    </section>
+        <h2 class="fw-bolder mb-4">მსგავსი პროდუქტები</h2>
 
-            <form method="post" asp-action="Delete" asp-route-id="@Model.id">
-                <button  class="btn btn-outline-danger" type="Submit">
-                    <i class="bi bi-trash3-fill" style="font-size:25px"></i>
-                    </button>
-            </form>
-            
+<div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="carousel-item active ">
+            <div class="col-12 row">
+                <div class="col-6" style="background-color: yellow; height: 10vh;"></div>
+                <div class="col-6 " style="background-color: blue; height: 10vh;"></div>
+            </div>
         </div>
-        
+        <div class="carousel-item">
+            <div class="col-12 row">
+                <div class="col-6" style="background-color: red; height: 10vh;"></div>
+                <div class="col-6 " style="background-color: green; height: 10vh;"></div>
+            </div>
+        </div>
     </div>
-   
-    <img src="~/turebi/@Model.image_name" width="900px" height="600px"/>
-
 </div>
+<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+</button>
+  </div>
 
-<h2>Price:@Model.Price $</h2>
-<h1>Description Tho </h1>
-<h4>@Model.Description</h4>
+

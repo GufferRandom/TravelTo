@@ -1,10 +1,10 @@
 ﻿@model List<Turebi>;
 
 
-<div class="grid-container" style="margin-top:50px">
+<div class="grid-container" >
     <div class="row">
 
-        <div class="col-md-12 text-center" style="margin-top:50px">
+        <div class="col-md-12 text-center" >
 
             <span class="text-danger">@TempData["Failed"]</span>
             <span class="text-success">@TempData["Success"]</span>
@@ -60,27 +60,37 @@
     </form>
     @foreach (var i in Model)
     {
+
         <div class="card mb-3 w-100" style="">
+            
             <div class="row g-0">
+                
                 <div class="col-md-4">
+        
                     <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id">
 
                         <img src="~/turebi/@i.image_name" class="img-fluid rounded-start" alt="..." style=" object-fit: cover; width: 100%;
     height: 200px">
                     </a>
+        
                 </div>
+
                 <div class="col-md-8">
 
                     <div class="card-body">
-                        <small class="text-body-secondary"></small>
+                    
+                        <span class="text-secondary">კომპანია:@i.Company.Name</span>
                         <h5 class="card-title">@i.Name</h5>
+                        
                         <p class="card-text">@i.Description</p>
                         <p class="card-text"><small class="text-body-secondary">@i.Price</small></p>
                         <form method="post" asp-controller="Home" asp-action="ShoppingCart" asp-route-id="@i.id" name="form1">
                             <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
                         </form>
                     </div>
+                    
                 </div>
+
             </div>
         </div>
     }

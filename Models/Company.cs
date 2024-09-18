@@ -6,7 +6,7 @@ namespace TravelTo.Models
     {
         [Key]
         public int Company_Id { get;set; }
-        public string Name { get;set; }
+        public string? Name { get;set; }
         public string? description{ get;set; }
         public string? owner { get; set; }   
 
