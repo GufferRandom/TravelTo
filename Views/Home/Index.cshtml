@@ -49,9 +49,12 @@
         int index = 0;
         foreach (var product1 in Model)
         {
-            <div style="display: flex; flex-direction: column ">
+            <div style="display: flex; flex-direction: column;align-items:center">
                 <div class="item">
-                    <img src="/turebi/@product1.image_name" style="width: 384px; border-radius: 5px; height: 384px; margin-top: 10px ;margin-left: 10px" alt="img">
+                    <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@product1.id">
+
+                <img src="/turebi/@product1.image_name" style="width: 384px; border-radius: 5px; height: 384px; margin: 10px ;" alt="img">
+                    </a>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                     <h4>@product1.Name</h4>
@@ -82,100 +85,32 @@ else
 
 
 
-<div style="display: flex; margin-left: 95px">
-    <div id="productCarousel" style="width: 400px; height: 400px; margin-left: 20px;" class="carousel slide">
-        <div class="carousel-inner" style="margin-left: 30px">
-            @{
-                int itemIndex = 0;
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var i in Model)
+            {
+                <div class="carousel-item @(Model.First() == i ? "active" : "")">
+                    <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id">
 
-                foreach (var product in Model)
-                {
-                    var activeClass = itemIndex == 0 ? "active" : "";
-                    <div class="carousel-item @activeClass">
-
-                        <a asp-action="GetTuri" asp-route-id="@product.id">
-                            <img src="/turebi/@product.image_name" style="width: 384px; height: 384px" class="d-block w-100" alt="@product.Name" />
-                        </a>
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>@product.Name</h5>
-                            <p>@product.Price.ToString("C")</p>
-                        </div>
+                    <img src="~/turebi/@i.image_name" style="width:600px;height:800px" class="d-block w-100" alt="@i.Name">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>@i.Name</h5>
+                        <p>@i.Description</p>
                     </div>
-                    itemIndex++;
-                }
+                </div>
             }
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-    <div id="productCarousel1" style="width: 400px; height: 400px; margin-left: 20px;" class="carousel slide">
-        <div class="carousel-inner" style="margin-left: 30px">
-            @{
-                int itemIndex1 = 0;
-                foreach (var product in Model)
-                {
-                    var activeClass = itemIndex1 == 0 ? "active" : "";
-                    <div class="carousel-item @activeClass">
 
-                        <a asp-action="GetTuri" asp-route-id="@product.id">
-                            <img src="/turebi/@product.image_name" style="width: 384px; height: 384px" class="d-block w-100" alt="@product.Name" />
-                        </a>
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>@product.Name</h5>
-                            <p>@product.Price.ToString("C")</p>
-                        </div>
-                    </div>
-                    itemIndex1++;
-                }
-            }
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel1" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel1" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-    <div id="productCarousel2" style="width: 400px; height: 400px; margin-left: 20px;" class="carousel slide">
-        <div class="carousel-inner" style="margin-left: 30px">
-            @{
-                int itemIndex2 = 0;
-                foreach (var product in Model)
-                {
-                    var activeClass = itemIndex2 == 0 ? "active" : "";
-                    <div class="carousel-item @activeClass">
-
-                        <a asp-action="GetTuri" asp-route-id="@product.id">
-                            <img src="/turebi/@product.image_name" style="width: 384px; height: 384px" class="d-block w-100" alt="@product.Name" />
-                        </a>
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>@product.Name</h5>
-                            <p>@product.Price.ToString("C")</p>
-                        </div>
-                    </div>
-                    itemIndex2++;
-                }
-            }
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel2" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel2" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-</div>
 }

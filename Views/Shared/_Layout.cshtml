@@ -15,7 +15,7 @@
 
 </head>
 <body style="background-color: #f8f9fa">
-    <header class="headermain">
+    <header class="header main">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a asp-action="Index" class="navbar-brand"  style="margin-left: 30px">TravelTo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,10 +27,11 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#"> <span class="sr-only">მთავარი</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a asp-controller="Home" asp-action="Yvela" class="btn btn-secondary">
-                            ტურები
-                        </a>
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="Home" asp-action="Yvela">
+                        ტურები
+
+                        </a>   
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

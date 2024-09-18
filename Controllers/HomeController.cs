@@ -89,7 +89,10 @@ namespace TravelTo.Controllers
         }
         public IActionResult GetTuri(int id)
         {
-            var get_turi = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
+            var get_turi = _context.Turebis.Where(x => x.id == id).Include(x=>x.Company).FirstOrDefault();
+            var yvela_tur = _context.Turebis.ToList();
+            yvela_tur.Remove(get_turi);
+            ViewBag.yvela_tur=yvela_tur;
             return View(get_turi);
         }
         [HttpGet, DisplayName("Edit")]
@@ -150,7 +153,7 @@ namespace TravelTo.Controllers
         }
         public IActionResult Yvela()
         {
-            List<Turebi> getting_turs = _context.Turebis.ToList();
+            List<Turebi> getting_turs = _context.Turebis.Include("Company").ToList();
             return View(getting_turs);
         }
 
