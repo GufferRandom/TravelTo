@@ -75,8 +75,6 @@ internal class Program
                 await UserManager.CreateAsync(user, password);
                 await UserManager.AddToRoleAsync(user, "Admin");
             }
-
-
         }
         app.Run();
     }
