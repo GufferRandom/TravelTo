@@ -29,7 +29,7 @@ namespace TravelTo.Controllers
             this.webHostEnvironment = webHostEnvironment;
             _signInManager = signInManager;
         }
-        
+
         public IActionResult Index()
         {
             var turebi = _context.Turebis.ToList();
@@ -41,7 +41,7 @@ namespace TravelTo.Controllers
                                       .ToList().Count();
                 ViewBag.howmany = get_user_favs;
             }
-                return View(turebi);
+            return View(turebi);
         }
         public IActionResult Privacy()
         {
@@ -89,10 +89,10 @@ namespace TravelTo.Controllers
         }
         public IActionResult GetTuri(int id)
         {
-            var get_turi = _context.Turebis.Where(x => x.id == id).Include(x=>x.Company).FirstOrDefault();
+            var get_turi = _context.Turebis.Where(x => x.id == id).Include(x => x.Company).FirstOrDefault();
             var yvela_tur = _context.Turebis.ToList();
             yvela_tur.Remove(get_turi);
-            ViewBag.yvela_tur=yvela_tur;
+            ViewBag.yvela_tur = yvela_tur;
             return View(get_turi);
         }
         [HttpGet, DisplayName("Edit")]
@@ -154,42 +154,91 @@ namespace TravelTo.Controllers
         public IActionResult Yvela()
         {
             List<Turebi> getting_turs = _context.Turebis.Include("Company").ToList();
+            var getting_company = _context.Companies.ToList();
+            ViewBag.company = getting_company;
             return View(getting_turs);
         }
 
 
-        public IActionResult Zebna(string names, string selected,string min,string max)
+        public IActionResult Zebna(string names, string selected, string min, string max, string kompania)
         {
             double Max = Convert.ToDouble(max);
             double Min = Convert.ToDouble(min);
-            if (names == null && selected != null && min != null && max != null)
+            if (names == null && selected != null && min != null && max != null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected && u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u=>u.Name).ToList();
+                ViewBag.company= get_company_name;
+                return View(getting_turs1);
+
+            }
+
+            if (selected == null && names != null && min != null && max != null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == names && u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                return View(getting_turs1);
+            }
+            if (names == null && selected == null && min == null && max == null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Company.Name == kompania).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                return View(getting_turs1);
+
+            }
+            if (names == null && selected == null && min != null && max != null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
+                var get_tur = _context.Turebis.Include(u => u.Company).Where(u => u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
+                ViewBag.turebi = getting_turs1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                return View(get_tur);
+            }
+
+            if (names == null && selected != null && min != null && max != null && kompania == null)
             {
                 var getting_turs1 = _context.Turebis.Where(u => u.Name == selected && u.Price > Min && u.Price < Max).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
                 return View(getting_turs1);
 
             }
-
-            if (selected == null && names != null && min != null && max != null)
+            if (selected == null && names != null && min != null && max != null && kompania == null)
             {
                 var getting_turs1 = _context.Turebis.Where(u => u.Name == names && u.Price > Min && u.Price < Max).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
                 return View(getting_turs1);
             }
-            if (names == null && selected == null && min == null && max == null)
+            if (names == null && selected == null && min == null && max == null && kompania == null)
             {
                 var getting_turs1 = _context.Turebis.ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
                 return RedirectToAction("yvela");
             }
-            if (names == null && selected == null && min != null && max != null)
+            if (names == null && selected == null && min != null && max != null && kompania == null)
             {
                 var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
                 var get_tur = _context.Turebis.Where(u => u.Price > Min && u.Price < Max).ToList();
                 ViewBag.turebi = getting_turs1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
                 return View(get_tur);
             }
             if (names == null && selected != null)
@@ -197,6 +246,8 @@ namespace TravelTo.Controllers
                 var getting_turs1 = _context.Turebis.Where(u => u.Name == selected).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
                 return View(getting_turs1);
 
             }
@@ -205,6 +256,8 @@ namespace TravelTo.Controllers
                 var getting_turs1 = _context.Turebis.Where(u => u.Name == names).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
                 return View(getting_turs1);
             }
             if (names == null && selected == null)
@@ -212,11 +265,14 @@ namespace TravelTo.Controllers
                 var getting_turs1 = _context.Turebis.ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
                 return RedirectToAction("yvela");
             }
             var getting_turs = _context.Turebis.Where(u => u.Name == selected && u.Name == names).ToList();
             var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
             ViewBag.turebi = getting_full_vals;
+         
             return View(getting_turs);
         }
 
@@ -228,7 +284,7 @@ namespace TravelTo.Controllers
                 var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
                                       .Select(u => u.turebi)
                                       .ToList();
-                
+
                 return View(get_user_favs);
             }
             return View();
@@ -236,11 +292,13 @@ namespace TravelTo.Controllers
         [HttpPost]
         public IActionResult ShoppingCart(int id)
         {
+            var refererUrl = Request.Headers["Referer"].ToString();
+            Console.WriteLine($"Referer URL: {refererUrl}");
             if (_signInManager.IsSignedIn(User))
             {
                 var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var new_enty = new UserAndTurebiMap { Turebi_Id = id,User_Id=userid };
+                var new_enty = new UserAndTurebiMap { Turebi_Id = id, User_Id = userid };
                 if (_context.UserAndTurebi.Where(u => u.User_Id == userid)
                                       .Select(u => u.turebi)
                                        .Any(u => u.id == id))
@@ -271,12 +329,12 @@ namespace TravelTo.Controllers
         }
         public IActionResult AmoshlaKalatidan(int id)
         {
-            var get_tur = _context.Turebis.Where(u => u.id == id).Select(u=>u.id).FirstOrDefault();
-            var user_Id  = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var get_tur = _context.Turebis.Where(u => u.id == id).Select(u => u.id).FirstOrDefault();
+            var user_Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var kide_get = _context.UserAndTurebi.Where(u => u.User_Id == user_Id && u.Turebi_Id == u.Turebi_Id).FirstOrDefault();
-            if(kide_get == null)
+            if (kide_get == null)
             {
-                TempData["SomeKindOfError"] = "რაღაცა ერრორია";    
+                TempData["SomeKindOfError"] = "რაღაცა ერრორია";
                 return RedirectToAction("index");
 
             }
@@ -286,6 +344,8 @@ namespace TravelTo.Controllers
             return Redirect(Request.Headers["Referer"].ToString());
 
         }
+        
+
 
 
     }

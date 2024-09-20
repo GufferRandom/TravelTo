@@ -1,16 +1,15 @@
-﻿@model Turebi
-
-<span class="text-danger">@TempData["Failed"]</span>
-<span class="text-success">@TempData["Success"]</span>
-<span class="text-danger">@TempData["Error"]</span>
+﻿
 <section class="py-5">
+    <span class="text-danger">@TempData["Failed"]</span>
+    <span class="text-success">@TempData["Success"]</span>
+    <span class="text-danger">@TempData["Error"]</span>
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
-                <img class="card-img-top mb-5 mb-md-0" src="~/turebi/@Model.image_name" alt="..." />
+                <img class="card-img-top mb-5 mb-md-0" src="~/turebi/@Model.image_name" alt="@Model.Name - Image" />
             </div>
             <div class="col-md-6">
-                <div class="small mb-1 text-secondary">კომპანია:@Model.Company.Name</div>
+                <div class="small mb-1 text-secondary">კომპანია: @Model.Company.Name</div>
                 <h1 class="display-5 fw-bolder">@Model.Name</h1>
                 <div class="fs-5 mb-5">
                     <span>$@Model.Price</span>
@@ -20,39 +19,39 @@
                     <form method="post" asp-controller="Home" asp-action="ShoppingCart" asp-route-id="@Model.id" name="form1">
                         <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
                     </form>
-
                 </div>
-            </div>
-</section>
-<section class="py-5 bg-light">
-    <div class="container px-4 px-lg-5 mt-5">
-    </section>
-        <h2 class="fw-bolder mb-4">მსგავსი პროდუქტები</h2>
-
-<div id="carouselExample" class="carousel slide">
-    <div class="carousel-inner">
-        <div class="carousel-item active ">
-            <div class="col-12 row">
-                <div class="col-6" style="background-color: yellow; height: 10vh;"></div>
-                <div class="col-6 " style="background-color: blue; height: 10vh;"></div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="col-12 row">
-                <div class="col-6" style="background-color: red; height: 10vh;"></div>
-                <div class="col-6 " style="background-color: green; height: 10vh;"></div>
             </div>
         </div>
     </div>
-</div>
-<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-</button>
-<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-</button>
-  </div>
+</section>
+<section class="py-5 bg-light">
 
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">მსგავსი პროდუქტები</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var i in ViewBag.yvela_tur as List<Turebi>)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <img class="card-img-top" style="height:150px" src="~/turebi/@i.image_name" alt="..." />
+                        <div class="card-body p-4">
+
+                            <div class="text-center">
+                                <h5 class="fw-bolder">@i.Name</h5>
+                                $@i.Price
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id">
+                                        დეტალურად
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
 

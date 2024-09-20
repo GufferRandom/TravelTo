@@ -33,6 +33,17 @@
 
                 }
             </select>
+                <label style="margin-top:10px; margin-bottom:5px">კომპანია</label>
+                <select class="form-select form-select-sm" aria-label="Small select example" name="selected">
+
+                    <option value="">აირჩიეთ კომპანია</option>
+                    @foreach (var i in ViewBag.company)
+                    {
+                        <option value="@i">@i</option>
+
+                    }
+                
+                </select>
                 <span>Min</span>
                 <div class="input-group">
 
@@ -70,7 +81,9 @@
                         <h5 class="card-title">@i.Name</h5>
                         <p class="card-text">@i.Description</p>
                         <p class="card-text"><small class="text-body-secondary">@i.Price</small></p>
-                        <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
+                        <form method="post" asp-controller="Home" asp-action="ShoppingCart" asp-route-id="@i.id" name="form2">
+                            <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
+                        </form>
 
                     </div>
 
