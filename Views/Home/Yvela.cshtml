@@ -1,7 +1,4 @@
-﻿@model List<Turebi>;
-
-
-<div class="grid-container" >
+﻿<div class="grid-container" >
     <div class="row">
         <div class="col-md-12 text-center" >
             <span class="text-danger">@TempData["Failed"]</span>
@@ -31,15 +28,15 @@
                     <i class="bi bi-search" style="font-size:20px"></i>
                 </button>
                 <label>ლოკაციები</label>
-                <select class="form-select form-select-sm" aria-label="Small select example" name="selected">
+                <select id="selectedqveyana" class="form-select form-select-sm" aria-label="Small select example" name="selected">
                     <option value="">აირჩიე ქვეყანა</option>
-                    @foreach (var i in Model)
-                    {
+                            @foreach (var i in Model)
+                        {
                         <option value="@i.Name" name="choice">@i.Name</option>
                     }
                 </select>
                 <label style="margin-top:10px;margin-bottom:5px">კომპანია</label>
-                <select class="form-select form-select-sm" aria-label="Small select example" name="kompania">
+                <select id="selectedkompania" class="form-select form-select-sm" aria-label="Small select example" name="kompania">
                     <option value="">აირჩიე კომპანია</option>
                     @foreach (var i in ViewBag.company)
                     {
