@@ -9,6 +9,8 @@ namespace TravelTo.Models
         public string? Name { get;set; }
         public string? description{ get;set; }
         public string? owner { get; set; }   
+        public string? img_name { get; set; }
+
 
         public ICollection<Turebi> Turebi{ get; set; }
 

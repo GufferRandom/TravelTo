@@ -1,0 +1,25 @@
+﻿@model List<Company>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2>ყველა კომპანია</h2>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var company in Model)
+    {
+        <div class="col">
+            <div class="card">
+                <a asp-controller="Home" asp-action="Get_Kompania" asp-route-id="@company.Company_Id">
+
+                <img src="~/companiebi/@company.img_name" class="card-img-top" style="width:600px; height:400px;">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">@company.Name</h5>
+                    <p class="card-text">@company.description</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
