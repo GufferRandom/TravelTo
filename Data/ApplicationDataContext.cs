@@ -22,10 +22,10 @@ namespace TravelTo.Data
 
 
             modelBuilder.Entity<Company>().HasData(
-                new Company { Company_Id = 1, owner = "gela", description = "saswauli kompania romelic arasdros iarsebs", Name = "TBCKVADRO" },
-                new Company { Company_Id = 2, owner = "NEKA", description = "raxdeba sh", Name = "neee" },
-                new Company { Company_Id = 3, owner = "NAK", description = "imedia", Name = "bog" },
-                new Company { Company_Id = 4, owner = "bark", description = "iarsebs", Name = "naga" }
+                new Company { Company_Id = 1, owner = "gela", description = "saswauli kompania romelic arasdros iarsebs", Name = "TBCKVADRO" ,img_name= "tbc_image.png" },
+                new Company { Company_Id = 2, owner = "NEKA", description = "raxdeba sh", Name = "liberti", img_name="liberti_img.png" },
+                new Company { Company_Id = 3, owner = "NAK", description = "imedia", Name = "bog",img_name= "bog_image.png" },
+                new Company { Company_Id = 4, owner = "bark", description = "iarsebs", Name = "kripto",img_name= "credit_bank.png" }
                 );
             modelBuilder.Entity<Turebi>().HasData(
                 new Turebi { id = 1, Name = "Antarqtida", Description = "aq iyo batoni wyali romelmac wyali dalia", Price = 5.99, image_name = "31394_1.jpg",Company_Id=1 },

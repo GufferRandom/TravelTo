@@ -34,7 +34,7 @@
     @if (User.IsInRole("Admin"))
     {
         <div class="col-5" style="width: 22px">
-            <a asp-controller="Home" asp-action="Turi"><i class="bi bi-plus-circle-fill" style="font-size:25px"></i></a>
+            <a asp-controller="Home" asp-action="Add"><i class="bi bi-plus-circle-fill" style="font-size:25px"></i></a>
         </div>
     }
     else
@@ -76,15 +76,42 @@
 </div>
 @if (User.IsInRole("Admin"))
 {
-    <div class="col-5">
-        <a asp-controller="Home" asp-action="Add"><i class="bi bi-plus-circle-fill" style="font-size:25px"></i></a>
+    <a asp-controller="Home" asp-action="Add">
+        <i class="bi bi-plus-circle-fill" style="font-size:25px"></i>
+    </a>
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        
+        <div class="carousel-inner">
+            @foreach (var i in Model)
+            {
+                <div class="carousel-item @(Model.First() == i ? "active" : "")">
+                    <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id">
+
+                        <img src="~/turebi/@i.image_name" style="width:600px;height:800px" class="d-block w-100" alt="@i.Name">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>@i.Name</h5>
+                        <p>@i.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
+
+       
+
 }
 else
 {
-
-
-
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             @foreach (var i in Model)

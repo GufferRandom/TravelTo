@@ -14,7 +14,13 @@
         <input asp-for=Description class="form-control" />
         <label>Photo</label>
        <input asp-for=image class="form-control" />
-
+            <select class="form-select form-select-sm mt-4 pt-2" aria-label="Small select example" name="kompania">
+                <option value="">აირჩიე კომპანია</option>
+                @foreach (var i in ViewBag.company )
+                {
+                    <option value="@i.Name">@i.Name</option>
+                }
+            </select>
         <div class="row pt-4">
             <div class="col-6">
               <button type="submit" class="btn-outline-primary form-control">Add Turi</button>

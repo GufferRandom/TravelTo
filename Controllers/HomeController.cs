@@ -50,11 +50,14 @@ namespace TravelTo.Controllers
         }
         public IActionResult Add()
         {
+            var gettin_company = _context.Companies.ToList();
+
+            ViewBag.company = gettin_company;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(TurebiDto turebi)
+        public IActionResult Add(TurebiDto turebi,string kompania)
         {
             if (turebi.image == null)
             {
@@ -74,14 +77,18 @@ namespace TravelTo.Controllers
                 {
                     turebi.image.CopyTo(fileStream);
                 }
+                int company_id = _context.Companies.Where(u=>u.Name== kompania).
+                                                        Select(u=>u.Company_Id).
+                                                        FirstOrDefault();
                 var namdvili_turi = new Turebi()
                 {
                     Name = turebi.Name,
                     Description = turebi.Description,
                     Price = turebi.Price,
-                    image_name = filename
-
+                    image_name = filename,
+                    Company_Id = company_id,
                 };
+
                 _context.Add(namdvili_turi);
                 _context.SaveChanges();
                 return RedirectToAction("index");
@@ -336,7 +343,6 @@ namespace TravelTo.Controllers
 
             return View(getting_turs);
         }
-
         public IActionResult ShoppingCart()
         {
             if (_signInManager.IsSignedIn(User))
@@ -380,13 +386,8 @@ namespace TravelTo.Controllers
             {
                 TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
                 return Redirect(Request.Headers["Referer"].ToString());
-
             }
             return Redirect(Request.Headers["Referer"].ToString());
-
-
-
-
         }
         public IActionResult AmoshlaKalatidan(int id)
         {
@@ -423,6 +424,19 @@ namespace TravelTo.Controllers
         public IActionResult SaxeliKlebadoba() {
             TempData["Saxeliklebadoba"] = true;
             return RedirectToAction("Yvela");
+        }
+        public IActionResult Yvela_Kompania()
+        {
+            var comapniebi = _context.Companies.ToList();
+            return View(comapniebi);
+        }
+        public IActionResult Get_Kompania(int id)
+        {
+            
+            var get_company = _context.Companies.FirstOrDefault(u => u.Company_Id == id);
+            var turebi_kompaniebis = _context.Turebis.Where(u => u.Company_Id == id).ToList();
+            ViewBag.yvela_tur = turebi_kompaniebis;
+            return View(get_company);
         }
 
 

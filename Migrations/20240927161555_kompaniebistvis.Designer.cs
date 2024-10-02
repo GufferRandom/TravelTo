@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelTo.Data;
 
@@ -11,9 +12,11 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240927161555_kompaniebistvis")]
+    partial class kompaniebistvis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +200,7 @@ namespace TravelTo.Migrations
                             Company_Id = 2,
                             Name = "liberti",
                             description = "raxdeba sh",
-                            img_name = "liberti_img.png",
+                            img_name = "liberti_img",
                             owner = "NEKA"
                         },
                         new
@@ -205,7 +208,7 @@ namespace TravelTo.Migrations
                             Company_Id = 3,
                             Name = "bog",
                             description = "imedia",
-                            img_name = "bog_image.png",
+                            img_name = "bog_image",
                             owner = "NAK"
                         },
                         new
@@ -213,7 +216,7 @@ namespace TravelTo.Migrations
                             Company_Id = 4,
                             Name = "kripto",
                             description = "iarsebs",
-                            img_name = "credit_bank.png",
+                            img_name = "credit_bank",
                             owner = "bark"
                         });
                 });
