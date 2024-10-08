@@ -15,9 +15,9 @@ using System.Security.Claims;
 using System.Net;
 using Humanizer;
 using Newtonsoft.Json;
+using System.Drawing.Printing;
 namespace TravelTo.Controllers
 {
-
     public class HomeController : Controller
     {
         private readonly ApplicationDataContext _context;
@@ -30,7 +30,6 @@ namespace TravelTo.Controllers
             this.webHostEnvironment = webHostEnvironment;
             _signInManager = signInManager;
         }
-
         public IActionResult Index()
         {
             var turebi = _context.Turebis.ToList();
@@ -159,18 +158,67 @@ namespace TravelTo.Controllers
             return RedirectToAction("Index");
 
         }
-        public IActionResult Yvela()
+        public IActionResult Yvela(int page_id)
         {
+            int lenght_of_turebi = _context.Turebis.Count();
+            int size = 5;
+            int ramdeni_gverdi = (int)Math.Ceiling(lenght_of_turebi / 5.0);
+            int darchenili = lenght_of_turebi - ramdeni_gverdi;
+			var getti_company = _context.Companies.ToList();
+			int current_page = page_id;
+			ViewBag.current_page = current_page;
+			if (page_id == 0) {
+                ViewBag.current_page = 1;
+            }
+			if (page_id == 0)
+            {
+				ViewBag.company = getti_company;
+				ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+				ViewBag.current_page = 1;
+                var skipee = _context.Turebis.Take(size).ToList();
+                return View(skipee);
+
+			}
+			var skipe = _context.Turebis.Skip((page_id - 1) * size).Take(size).ToList();
+            ViewBag.ramdeni_gverdi = ramdeni_gverdi;
             if (TempData["fasizrda"] != null)
             {
                 var gettin_company = _context.Companies.ToList();
-                List<Turebi> getting_turs = _context.Turebis.Include("Company").OrderBy(x => x.Price).ToList();
-                ViewBag.company = gettin_company;
+                
+				if (page_id == 0)
+				{
+					ViewBag.current_page = 1;
+
+					var skipee = _context.Turebis.Include("Company").OrderBy(x => x.Price).Skip((page_id - 1) * size).Take(size).ToList();
+                  ViewBag.company = gettin_company;
+					ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+
+					return View(skipee);
+
+				}
+                List<Turebi> getting_turs = _context.Turebis.Include("Company").OrderBy(x => x.Price).Skip((page_id - 1) * size).Take(size).ToList();
+				int current_page3 = page_id;
+				ViewBag.current_page = current_page3;
+
+				ViewBag.company = gettin_company;
+                
                 return View(getting_turs);
             }
             if (TempData["faziklebadoba"] != null)
             {
-                var gettin_company = _context.Companies.ToList();
+				var gettin_company = _context.Companies.ToList();
+
+				if (page_id == 0)
+				{
+					ViewBag.current_page = 1;
+					var skipee = _context.Turebis.Include("Company").OrderByDescending(x => x.Price).Skip((page_id - 1) * size).Take(size).ToList();
+					ViewBag.company = gettin_company;
+					ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+
+					return View(skipee);
+
+				}
+
                 List<Turebi> getting_turs = _context.Turebis.Include("Company").OrderByDescending(x=>x.Price).ToList();
                 ViewBag.company = gettin_company;
                 return View(getting_turs);
@@ -178,19 +226,48 @@ namespace TravelTo.Controllers
             if (TempData["Saxelizrda"] != null)
             {
                 var gettin_company = _context.Companies.ToList();
-                List<Turebi> getting_turs = _context.Turebis.Include("Company").OrderBy(x => x.Name).ToList();
+				if (page_id == 0)
+				{
+					ViewBag.current_page = 1;
+
+					var skipee = _context.Turebis.Include("Company").OrderBy(x => x.Name).Take(size).ToList();
+					ViewBag.company = gettin_company;
+					ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+
+					return View(skipee);
+
+				}
+				List<Turebi> getting_turs = _context.Turebis.Include("Company").OrderBy(x => x.Name).ToList();
                 ViewBag.company = gettin_company;
                 return View(getting_turs);
             }
             if (TempData["Saxeliklebadoba"] != null)
             {
                 var gettin_company = _context.Companies.ToList();
-                List<Turebi> getting_turs = _context.Turebis.Include("Company").OrderByDescending(x => x.Name).ToList();
+				if (page_id == 0)
+				{
+					ViewBag.current_page = 1;
+
+					var skipee = _context.Turebis.Include("Company").OrderByDescending(x => x.Name).Take(size).ToList();
+					ViewBag.company = gettin_company;
+					ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+
+					return View(skipee);
+
+				}
+				List<Turebi> getting_turs = _context.Turebis.Include("Company").OrderByDescending(x => x.Name).ToList();
                 ViewBag.company = gettin_company;
                 return View(getting_turs);
             }
             var getting_company = _context.Companies.ToList();
-            List<Turebi> gettin_turs = _context.Turebis.Include("Company").ToList();
+			if (page_id == 0)
+			{
+				var skipee = _context.Turebis.Include("Company").Take(size).ToList();
+				ViewBag.company = getting_company;
+				ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+				return View(skipee);
+			}
+			List<Turebi> gettin_turs = _context.Turebis.Include("Company").Skip((page_id - 1) * size).Take(size).ToList();
             ViewBag.company = getting_company;
             return View(gettin_turs);
         }
