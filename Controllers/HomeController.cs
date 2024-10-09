@@ -141,13 +141,12 @@ namespace TravelTo.Controllers
 				return RedirectToAction("Index");
 			}
 			return View();
-
 		}
 		[HttpPost]
 		public IActionResult Delete(int id)
 		{
-
-			var tobedeletedTur = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
+			var tobedeletedTur = _context.Turebis.Include("Company").Where(u => u.id == id).FirstOrDefault();
+			var temp = tobedeletedTur;
 			string wwwpath = webHostEnvironment.WebRootPath;
 			string name = tobedeletedTur.image_name;
 			string Full_Image_Url = Path.Combine(wwwpath, "turebi", name);
@@ -155,6 +154,9 @@ namespace TravelTo.Controllers
 
 			_context.Remove(tobedeletedTur);
 			_context.SaveChanges();
+			
+			TempData["WarmatebitWaishala"] = $"ტური წარმატებით წაიშალა სახელად {temp.Name} მწარმოებელი კომპანია: {temp.Company.Name}";
+			
 			return RedirectToAction("Index");
 
 		}
