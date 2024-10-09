@@ -24,11 +24,19 @@ internal class Program
         builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection")
             ));
-        //builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
-        //    builder.Configuration.GetConnectionString("UserCon")
-        //    ));
+		builder.Services.AddDistributedMemoryCache();
 
-        builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDataContext>();
+		builder.Services.AddSession(options =>
+		{
+			options.IdleTimeout = TimeSpan.FromSeconds(10);
+			options.Cookie.HttpOnly = true;
+			options.Cookie.IsEssential = true;
+		});
+		//builder.Services.AddDbContext<UsersDbContext>(options => options.UseSqlServer(
+		//    builder.Configuration.GetConnectionString("UserCon")
+		//    ));
+
+		builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDataContext>();
         builder.Services.AddRazorPages();
         var app = builder.Build();
 
@@ -45,7 +53,9 @@ internal class Program
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.MapControllerRoute(
+		app.UseSession();
+
+		app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapRazorPages();
