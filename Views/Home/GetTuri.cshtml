@@ -1,13 +1,45 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+
+@model Turebi;
+@inject UserManager<User> UserManager;
 <section class="py-5">
     <span class="text-danger">@TempData["Failed"]</span>
     <span class="text-success">@TempData["Success"]</span>
     <span class="text-danger">@TempData["Error"]</span>
     <div class="container px-4 px-lg-5 my-5">
+        @if (User.IsInRole("Admin"))
+        {
+            
+        <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.id">
+            <i class="bi bi-pencil-square btn btn-outline-primary" style="font-size:20px"></i>
+        </a>
+        <form asp-controller="Home" asp-action="Delete" asp-route-id="@Model.id">
+                <i type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="bi bi-x-square-fill btn btn-outline-danger" style="font-size:20px"></i>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">ნამვდილად გსურთ წაშლა?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-danger">
+                            გაფრთხილება!! თუ ამას წაშლით უკან ვეღარ დააბრუნებთ
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">დახურვა</button>
+                            <button type="submit"  class="btn btn-danger">წაშლა</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        }
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
                 <img class="card-img-top mb-5 mb-md-0" src="~/turebi/@Model.image_name" alt="@Model.Name - Image" />
             </div>
+
             <div class="col-md-6">
                 <span class="text-secondary">
                     კომპანია: 
