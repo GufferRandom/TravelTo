@@ -109,11 +109,12 @@ namespace TravelTo.Controllers
 			var get_turi2 = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
 			ViewData["img_name"] = get_turi2.image_name;
 			var get_turi_dto = new TurebiDto() { Name = get_turi2.Name, Description = get_turi2.Description, Price = get_turi2.Price };
-
+			var companies = _context.Companies.Select(x=>x.Name).ToList();
+			ViewBag.companies = companies;
 			return View(get_turi_dto);
 		}
 		[HttpPost]
-		public IActionResult Edit(int id, TurebiDto turebi)
+		public IActionResult Edit(int id, TurebiDto turebi,string kompania)
 		{
 			var get_turi = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
 			string wwwrootpath = webHostEnvironment.WebRootPath;
@@ -134,6 +135,8 @@ namespace TravelTo.Controllers
 			get_turi.Name = turebi.Name;
 			get_turi.Price = turebi.Price;
 			get_turi.Description = turebi.Description;
+			var get_compani = _context.Companies.Where(x=>x.Name == kompania).FirstOrDefault();
+			get_turi.Company = get_compani;
 			if (ModelState.IsValid)
 			{
 				_context.Update(get_turi);
