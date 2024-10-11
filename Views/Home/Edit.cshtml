@@ -18,6 +18,13 @@
                 <input type="file" asp-for=image value="@ViewData["img_name"]" class="form-control" />
                  <img src="~/turebi/@ViewData["img_name"]" alt="Current Image" class="img-thumbnail mt-2" />
             </div>
+               <select class="form-select form-select-sm mt-4 pt-2" aria-label="Small select example" name="kompania">
+                <option value="">აირჩიე კომპანია</option>
+                    @foreach (var i in ViewBag.companies)
+                    {
+                        <option value="@i">@i</option>
+                    }
+            </select>
             <div class="row pt-4">
                 <div class="col-6">
                     <button type="submit" class="btn-outline-primary form-control">Edit Turi</button>
