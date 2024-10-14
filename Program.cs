@@ -20,10 +20,18 @@ internal class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
-
-        builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
+        if (string.IsNullOrEmpty(builder.Configuration.GetConnectionString("UserIsME"))) {
+         builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection")
             ));
+        }
+        else
+        {
+            builder.Services.AddDbContext<ApplicationDataContext>(options =>
+            options.UseInMemoryDatabase("UserMe"));
+
+        }
+       
 		builder.Services.AddDistributedMemoryCache();
 
 		builder.Services.AddSession(options =>
