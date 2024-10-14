@@ -18,22 +18,33 @@
             მოითხოვეთ ყველა სერვისი ერთ სივრცეში
         </button>
     </div>
-    <div style="margin-top: 30px; background-color: white; margin-right: 40px; border-radius: 15px; width: 1290px; border-style: solid; border-width: 0.1px; border-color: dimgrey">
-        <button type="button" class="btn btn-primary btn-lg">ავიაბილეთები</button>
 
-        <a asp-controller="Home" asp-action="Yvela" class="btn btn-secondary btn-lg oa">
-            ტურები
-        </a>
-        <button type="button" class="btn btn-primary btn-lg ka">სასტუმრო</button>
-        <button type="button" class="btn btn-secondary btn-lg ta">ტრანსფერი</button>
-        <button type="button" class="btn btn-secondary btn-lg fa" style="margin-top: 4px">სავიზო მხარდაჭერა</button>
+    <div class="container mt-3">
+        <div class="row justify-content-center" style="background-color: white; border-radius: 15px; border: 0.1px solid dimgrey; padding: 20px;">
+            <div class="col-6 col-sm-auto mb-2">
+                <button type="button" class="btn btn-primary btn-lg w-100">ავიაბილეთები</button>
+            </div>
+            <div class="col-6 col-sm-auto mb-2">
+                <a asp-controller="Home" asp-action="Yvela" class="btn btn-secondary btn-lg w-100">ტურები</a>
+            </div>
+            <div class="col-6 col-sm-auto mb-2">
+                <button type="button" class="btn btn-primary btn-lg w-100">სასტუმრო</button>
+            </div>
+            <div class="col-6 col-sm-auto mb-2">
+                <button type="button" class="btn btn-secondary btn-lg w-100">ტრანსფერი</button>
+            </div>
+            <div class="col-6 col-sm-auto mb-2">
+                <button type="button" class="btn btn-secondary btn-lg w-100">სავიზო მხარდაჭერა</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <button class="hh5" style="font-size: 26px;">დღის შეთავაზება</button>
+            <br>
+            <button class="hh5" style="font-size: 13px;">ყველას ნახვა</button>
+        </div>
     </div>
-    <div style="display:flex; flex-direction: column; align-items: center; margin-top: 20px;">
-        <button class="hh5" style="font-size: 26px; ">დღის შეთავაზება</button>
-        <button class="hh5" style="font-size: 13px">
-            ყველას ნახვა
-        </button>
-    </div>
+
     @if (User.IsInRole("Admin"))
     {
         <div class="col-5" style="width: 22px">
@@ -82,15 +93,14 @@
     <a asp-controller="Home" asp-action="Add">
         <i class="bi bi-plus-circle-fill" style="font-size:25px"></i>
     </a>
+
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-        
         <div class="carousel-inner">
             @foreach (var i in Model)
             {
                 <div class="carousel-item @(Model.First() == i ? "active" : "")">
                     <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id">
-
-                        <img src="~/turebi/@i.image_name" style="width:600px;height:800px" class="d-block w-100" alt="@i.Name">
+                        <img src="~/turebi/@i.image_name" class="d-block w-100 img-fluid" alt="@i.Name" style="max-height: 80vh; object-fit: cover">
                     </a>
                     <div class="carousel-caption d-none d-md-block">
                         <h5>@i.Name</h5>
@@ -121,12 +131,11 @@ else
             {
                 <div class="carousel-item @(Model.First() == i ? "active" : "")">
                     <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id">
-
-                    <img src="~/turebi/@i.image_name" style="width:600px;height:800px" class="d-block w-100" alt="@i.Name">
+                        <img src="~/turebi/@i.image_name" class="d-block w-100 img-fluid" alt="@i.Name" style="max-height: 80vh; object-fit: cover;">
                     </a>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>@i.Name</h5>
-                        <p>@i.Description</p>
+                    <div class="carousel-caption d-block" style="bottom: 20px; background-color: rgba(0, 0, 0, 0.7); padding: 10px; border-radius: 5px;">
+                        <h5 style="font-size: 1.2rem;">@i.Name</h5> <!-- Adjusted font size -->
+                        <p style="font-size: 0.9rem;">@i.Description</p> <!-- Adjusted font size -->
                     </div>
                 </div>
             }
@@ -141,6 +150,5 @@ else
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
 
 }
