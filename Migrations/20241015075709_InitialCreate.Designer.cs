@@ -12,15 +12,15 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240927163754_ex")]
-    partial class ex
+    [Migration("20241015075709_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -261,7 +261,7 @@ namespace TravelTo.Migrations
                             Description = "aq iyo batoni wyali romelmac wyali dalia",
                             Name = "Antarqtida",
                             Price = 5.9900000000000002,
-                            image_name = "31394_1.jpg"
+                            image_name = "antarqtida.jpg"
                         },
                         new
                         {
@@ -270,7 +270,7 @@ namespace TravelTo.Migrations
                             Description = "tbilo tibifli",
                             Name = "Tbilisi",
                             Price = 15.99,
-                            image_name = "59564_1.jpg"
+                            image_name = "Tbilisi.jpg"
                         },
                         new
                         {
@@ -279,7 +279,7 @@ namespace TravelTo.Migrations
                             Description = "parizelta dedaqali",
                             Name = "Parizi",
                             Price = 6.9900000000000002,
-                            image_name = "59564_1.jpg"
+                            image_name = "Parizi.jfif"
                         },
                         new
                         {
@@ -288,7 +288,7 @@ namespace TravelTo.Migrations
                             Description = "მაგარიი პონტიიი",
                             Name = "Los-Angeles, CA",
                             Price = 15555.0,
-                            image_name = "ee2aa1e4-37d6-41e1-a3b5-ee7d35f0202d.jfif"
+                            image_name = "Los-AngelesCa.jfif"
                         },
                         new
                         {
@@ -297,7 +297,7 @@ namespace TravelTo.Migrations
                             Description = "მაგარიი პონტიიი",
                             Name = "Italy",
                             Price = 12341.0,
-                            image_name = "bffe2b9f-956c-41a5-a72e-12b08c899a45.jfif"
+                            image_name = "Italy.png"
                         },
                         new
                         {
@@ -306,7 +306,7 @@ namespace TravelTo.Migrations
                             Description = "მაგარიი პონტიიი",
                             Name = "Brazil",
                             Price = 15111.0,
-                            image_name = "b373e51c-0ba1-4f3b-887d-3499cb200d3c.jpg"
+                            image_name = "Brazil.jfif"
                         },
                         new
                         {
@@ -315,7 +315,7 @@ namespace TravelTo.Migrations
                             Description = "მაგარიი პონტიიი",
                             Name = "Denmark",
                             Price = 19000.0,
-                            image_name = "f521cee9-6c84-4a02-8f75-9800f0002a53.jfif"
+                            image_name = "Denmark.jfif"
                         },
                         new
                         {
@@ -324,7 +324,7 @@ namespace TravelTo.Migrations
                             Description = "მაგარიი პონტიიი",
                             Name = "Spain",
                             Price = 23000.0,
-                            image_name = "6d4ea991-f9a5-4ec6-8550-0e4e02e5ab4c.jfif"
+                            image_name = "Spain.jfif"
                         });
                 });
 

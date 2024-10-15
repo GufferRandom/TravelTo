@@ -28,14 +28,14 @@ namespace TravelTo.Data
                 new Company { Company_Id = 4, owner = "bark", description = "iarsebs", Name = "kripto",img_name= "credit_bank.png" }
                 );
             modelBuilder.Entity<Turebi>().HasData(
-                new Turebi { id = 1, Name = "Antarqtida", Description = "aq iyo batoni wyali romelmac wyali dalia", Price = 5.99, image_name = "31394_1.jpg",Company_Id=1 },
-                new Turebi { id = 2, Name = "Tbilisi", Description = "tbilo tibifli", Price = 15.99, image_name = "59564_1.jpg" ,Company_Id = 3 },
-                new Turebi { id = 3, Name = "Parizi", Description = "parizelta dedaqali", Price = 6.99, image_name = "59564_1.jpg" , Company_Id = 2 },
-                new Turebi { id = 4, Name = "Los-Angeles, CA", Description = "მაგარიი პონტიიი", Price = 15555, image_name = "ee2aa1e4-37d6-41e1-a3b5-ee7d35f0202d.jfif", Company_Id = 4 },
-                new Turebi { id = 5, Name = "Italy", Description = "მაგარიი პონტიიი", Price = 12341, image_name = "bffe2b9f-956c-41a5-a72e-12b08c899a45.jfif", Company_Id = 1 },
-                new Turebi { id = 6, Name = "Brazil", Description = "მაგარიი პონტიიი", Price = 15111, image_name = "b373e51c-0ba1-4f3b-887d-3499cb200d3c.jpg", Company_Id = 2 },
-                new Turebi { id = 7, Name = "Denmark", Description = "მაგარიი პონტიიი", Price = 19000, image_name = "f521cee9-6c84-4a02-8f75-9800f0002a53.jfif", Company_Id = 4 },
-                new Turebi { id = 8, Name = "Spain", Description = "მაგარიი პონტიიი", Price = 23000, image_name = "6d4ea991-f9a5-4ec6-8550-0e4e02e5ab4c.jfif", Company_Id = 3 }
+                new Turebi { id = 1, Name = "Antarqtida", Description = "aq iyo batoni wyali romelmac wyali dalia", Price = 5.99, image_name = "antarqtida.jpg",Company_Id=1 },
+                new Turebi { id = 2, Name = "Tbilisi", Description = "tbilo tibifli", Price = 15.99, image_name = "Tbilisi.jpg", Company_Id = 3 },
+                new Turebi { id = 3, Name = "Parizi", Description = "parizelta dedaqali", Price = 6.99, image_name = "Parizi.jfif", Company_Id = 2 },
+                new Turebi { id = 4, Name = "Los-Angeles, CA", Description = "მაგარიი პონტიიი", Price = 15555, image_name = "Los-AngelesCa.jfif", Company_Id = 4 },
+                new Turebi { id = 5, Name = "Italy", Description = "მაგარიი პონტიიი", Price = 12341, image_name = "Italy.png", Company_Id = 1 },
+                new Turebi { id = 6, Name = "Brazil", Description = "მაგარიი პონტიიი", Price = 15111, image_name = "Brazil.jfif", Company_Id = 2 },
+                new Turebi { id = 7, Name = "Denmark", Description = "მაგარიი პონტიიი", Price = 19000, image_name = "Denmark.jfif", Company_Id = 4 },
+                new Turebi { id = 8, Name = "Spain", Description = "მაგარიი პონტიიი", Price = 23000, image_name = "Spain.jfif", Company_Id = 3 }
                 );
 
 
