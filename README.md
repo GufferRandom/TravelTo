@@ -24,7 +24,7 @@ Go to the project directory
 
 Update appsettings.json
 
-#Note that this is important step
+# Note that this is important step
 Open appsettings.json and Change "UseSqlite" :"False" to "UseSqlite":"True" 
 ```bash
 nano appsettings.json
