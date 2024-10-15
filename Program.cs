@@ -21,19 +21,19 @@ internal class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
-        if (string.IsNullOrEmpty(builder.Configuration.GetConnectionString("UserIsME"))) {
-         builder.Services.AddDbContext<ApplicationDataContext>(options => options.UseSqlServer(
-            builder.Configuration.GetConnectionString("DefaultConnection")
-            ));
+        if (string.IsNullOrEmpty(builder.Configuration.GetConnectionString("UserIsME")))
+        {
+            builder.Services.AddDbContext<ApplicationDataContext>(options =>
+                options.UseInMemoryDatabase("InMemoryDatabase"));
         }
         else
         {
             builder.Services.AddDbContext<ApplicationDataContext>(options =>
-            options.UseInMemoryDatabase("UserMe"));
-
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
         }
-       
-		builder.Services.AddDistributedMemoryCache();
+
+
+        builder.Services.AddDistributedMemoryCache();
 
 		builder.Services.AddSession(options =>
 		{
@@ -48,13 +48,21 @@ internal class Program
 		builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDataContext>();
         builder.Services.AddRazorPages();
         var app = builder.Build();
-        if (!string.IsNullOrEmpty(builder.Configuration.GetConnectionString("UserIsME"))){
-
-        using (var serviceScope = app.Services.CreateScope())
+        if (string.IsNullOrEmpty(builder.Configuration.GetConnectionString("UserIsME")))
         {
-            var context = serviceScope.ServiceProvider.GetService<ApplicationDataContext>();
-            SeedingData.Seed(context);
-        }
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    SeedingData.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
+                }
+            }
         }
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
