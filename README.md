@@ -19,7 +19,7 @@ Clone My project
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd TravelTo
 ```
 
 Update appsettings.json
