@@ -6,6 +6,7 @@ namespace TravelTo.Data
     {
         public static void Seed(ApplicationDataContext context)
         {
+            context.Database.EnsureCreated();
             context.Companies.AddRange(
             new Company { Company_Id = 1, owner = "gela", description = "saswauli kompania romelic arasdros iarsebs", Name = "TBCKVADRO", img_name = "tbc_image.png" },
             new Company { Company_Id = 2, owner = "NEKA", description = "raxdeba sh", Name = "liberti", img_name = "liberti_img.png" },
