@@ -1,4 +1,5 @@
 
+using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,7 +48,14 @@ internal class Program
 		builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDataContext>();
         builder.Services.AddRazorPages();
         var app = builder.Build();
+        if (!string.IsNullOrEmpty(builder.Configuration.GetConnectionString("UserIsME"))){
 
+        using (var serviceScope = app.Services.CreateScope())
+        {
+            var context = serviceScope.ServiceProvider.GetService<ApplicationDataContext>();
+            SeedingData.Seed(context);
+        }
+        }
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
@@ -58,12 +66,13 @@ internal class Program
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
+       
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
 		app.UseSession();
-
-		app.MapControllerRoute(
+       
+        app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapRazorPages();
