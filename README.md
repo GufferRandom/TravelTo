@@ -24,7 +24,7 @@ Go to the project directory
 
 Update appsettings.json
 
-  Open appsettings.json and Change "UsqSqlLite" :"False" to "UseSqlLite":"True" 
+  Open appsettings.json and Change "UseSqlite" :"False" to "UseSqlite":"True" 
 
 bash
 ```bash
