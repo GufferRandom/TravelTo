@@ -3,7 +3,7 @@ in this project frond and back is mixed together working on new project where ba
 
 
 
-## Run Locally
+## Run Locally Deb Based Linux
 
 First of all net sdk is needed and ef tools to install it 
 
