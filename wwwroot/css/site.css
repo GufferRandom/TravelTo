@@ -143,7 +143,6 @@ body {
     margin-left: 5px;
 }
 
-/* Owl Carousel Custom CSS */
 .owl-nav {
     position: absolute;
     top: 50%;
@@ -166,8 +165,6 @@ body {
 .owl-next {
     right: -20px;
 }
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .product-image {
         height: 200px;
