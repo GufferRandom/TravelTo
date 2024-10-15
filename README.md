@@ -30,6 +30,13 @@ bash
 ```bash
 nano appsettings.json
 ```
+delete migrations 
+
+```bash
+rm Migrations/*
+```
+
+
 add migrations and update database 
 
 ```bash
