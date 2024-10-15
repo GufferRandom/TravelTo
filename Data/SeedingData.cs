@@ -10,10 +10,9 @@ namespace TravelTo.Data
             using (var context = new ApplicationDataContext(
                 serviceProvider.GetRequiredService<DbContextOptions<ApplicationDataContext>>()))
             {
-                // Check if the database already has data
                 if (context.Turebis.Any() || context.Companies.Any())
                 {
-                    return;   // Database has been seeded
+                    return;   
                 }
 
 
