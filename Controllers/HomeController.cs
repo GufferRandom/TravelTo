@@ -448,6 +448,10 @@ namespace TravelTo.Controllers
 			ViewBag.yvela_tur = turebi_kompaniebis;
 			return View(get_company);
 		}
+		public IActionResult Contact()
+		{
+			return View();
+		}
 
 
 	}
