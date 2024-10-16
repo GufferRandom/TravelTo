@@ -1,4 +1,6 @@
-﻿<div class="container">
+﻿@using TravelTo.Models
+@model ContactPerson
+<div class="container">
     <div class="row">
             <h2  class="text-center text-success fw-bold m-4">ჩვენს შესახებ</h2>
         <div class="col-md-6">
@@ -24,29 +26,37 @@
         
         <div class="col-md-6">
             <h3 class="text-secondary" style="margin-bottom:30px">დაგვიკავშირდით</h3>
-            <form class="row g-3">
+            <form class="row g-3" method="post">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Giorgi">
-                    <label for="floatingInput" style="margin-left:10px">სახელი</label>
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Giorgi" asp-for="@Model.First_Name">
+                    <label for="floatingInput" style="margin-left:10px" asp-for="@Model.First_Name">სახელი</label>
+                    <span asp-validation-for="@Model.First_Name"></span>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="FloatingGvari" placeholder="GARIANTISHVILIO">
+                    <input type="text" class="form-control" id="FloatingGvari" placeholder="GARIANTISHVILIO" asp-for="@Model.Last_Name">
                     <label for="FloatingGvari" style="margin-left:10px">გვარი</label>
+                    <span asp-validation-for="@Model.Last_Name"></span>
+
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="FloatingTelefoni" placeholder="99559559595">
+                    <input type="text" class="form-control" id="FloatingTelefoni" placeholder="99559559595" asp-for="@Model.Telephoni">
                     <label for="FloatingTelefoni" style="margin-left:10px">ტელეფონი</label>
+                    <span asp-validation-for="@Model.Telephoni"></span>
+
                 </div>
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="Floatinggmail" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="Floatinggmail" placeholder="name@example.com" asp-for="@Model.gmail">
                     <label for="Floatinggmail" style="margin-left:10px">ელ-ფოსტა</label>
+                    <span asp-validation-for="@Model.gmail"></span>
                 </div>
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="დატოვე შეტყობინება" id="floatingShetyobineba" style="height: 100px"></textarea>
+                    <textarea class="form-control" placeholder="დატოვე შეტყობინება" id="floatingShetyobineba" style="height: 100px" asp-for="@Model.Messege"></textarea>
                     <label for="floatingShetyobineba">შეტყობინება</label>
+
                 </div>
+
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-success" type="submit">დაკონტაქტება</button>
+                    <button class="btn btn-success" type="submit" asp-controller="Home" asp-action="Contact">დაკონტაქტება</button>
                 </div>
             </form>
         </div>

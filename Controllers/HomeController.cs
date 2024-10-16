@@ -367,7 +367,6 @@ namespace TravelTo.Controllers
 		public IActionResult ShoppingCart(int id)
 		{
 			var refererUrl = Request.Headers["Referer"].ToString();
-			Console.WriteLine($"Referer URL: {refererUrl}");
 			if (_signInManager.IsSignedIn(User))
 			{
 				var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
@@ -450,6 +449,19 @@ namespace TravelTo.Controllers
 		}
 		public IActionResult Contact()
 		{
+			return View();
+		}
+		[HttpPost]
+		public IActionResult Contact(ContactPerson person)
+		{
+			if (_context.ContactiUndat.Any(x => x.First_Name == person.First_Name && x.Last_Name==person.Last_Name && x.Telephoni == person.Telephoni)) {
+				TempData["Warning"] = "ukve gagzavnili gaqvt tqveni sakontaqto infromacia"; 
+				return Redirect(Request.Headers["Referer"].ToString());
+			};
+			
+			_context.Add(person);
+			_context.SaveChanges();
+			TempData["Successfull"] = "warmatebit gaigzavna tqveni kontaqti";
 			return View();
 		}
 

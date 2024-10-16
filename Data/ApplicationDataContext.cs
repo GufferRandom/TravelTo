@@ -15,6 +15,7 @@ namespace TravelTo.Data
 
         public DbSet<Turebi> Turebis { get; set; }
         public DbSet<UserAndTurebiMap> UserAndTurebi{ get; set; }
+        public DbSet<ContactPerson> ContactiUndat { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
