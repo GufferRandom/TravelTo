@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20241016151539_vnaxotaba")]
-    partial class vnaxotaba
+    [Migration("20241017100002_jaaj")]
+    partial class jaaj
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20241015075709_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241017102113_migraciasxva")]
+    partial class migraciasxva
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,6 +218,172 @@ namespace TravelTo.Migrations
                             description = "iarsebs",
                             img_name = "credit_bank.png",
                             owner = "bark"
+                        });
+                });
+
+            modelBuilder.Entity("TravelTo.Models.ContactPerson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("First_Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Last_Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Messege")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Telephoni")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<string>("gmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContactiUndat");
+                });
+
+            modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Fasi")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Lokacia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nomer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Owner")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("gmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sastumroebis");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini",
+                            Fasi = 100,
+                            Lokacia = "Dedamiwis Centri",
+                            Name = "Robotiqsi",
+                            gmail = "gmail@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa",
+                            Fasi = 50,
+                            Lokacia = "AntarqtidaOnTop",
+                            Name = "Antarqtida",
+                            gmail = "antarqtida@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu .",
+                            Fasi = 75,
+                            Lokacia = "Tbilisi City Center",
+                            Name = "Tbilisi",
+                            gmail = "tbilisi@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.",
+                            Fasi = 60,
+                            Lokacia = "Kutaisi Historical Area",
+                            Name = "Kutaisi",
+                            gmail = "kutaisi@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti .",
+                            Fasi = 80,
+                            Lokacia = "Batumi Boulevard",
+                            Name = "Batumi",
+                            gmail = "batumi@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.",
+                            Fasi = 40,
+                            Lokacia = "Mtskheta Old Town",
+                            Name = "Mtskheta",
+                            gmail = "mtskheta@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja",
+                            Fasi = 30,
+                            Lokacia = "Zugdidi Park",
+                            Name = "Zugdidi",
+                            gmail = "zugdidi@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.",
+                            Fasi = 45,
+                            Lokacia = "Gori Fortress",
+                            Name = "Gori",
+                            gmail = "gori@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.",
+                            Fasi = 55,
+                            Lokacia = "Telavi Wine Region",
+                            Name = "Telavi",
+                            gmail = "telavi@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Signagi signagi signagi es xom signagia azrze ar var ra  davwero amazec amitomac signagi signagia.",
+                            Fasi = 65,
+                            Lokacia = "Signagi Hilltop",
+                            Name = "Signagi",
+                            gmail = "signagi@gmail.com"
                         });
                 });
 

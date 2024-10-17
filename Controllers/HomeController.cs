@@ -458,10 +458,18 @@ namespace TravelTo.Controllers
 				TempData["Warning"] = "ukve gagzavnili gaqvt tqveni sakontaqto infromacia"; 
 				return Redirect(Request.Headers["Referer"].ToString());
 			};
-			
+			if (ModelState.IsValid)
+			{
+
 			_context.Add(person);
 			_context.SaveChanges();
 			TempData["Successfull"] = "warmatebit gaigzavna tqveni kontaqti";
+			}
+
+            return View();
+		}
+		public IActionResult Sastumroebi()
+		{
 			return View();
 		}
 

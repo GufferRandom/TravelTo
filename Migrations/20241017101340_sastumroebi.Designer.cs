@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelTo.Data;
 
@@ -11,9 +12,11 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20241017101340_sastumroebi")]
+    partial class sastumroebi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,10 +265,6 @@ namespace TravelTo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Fasi")
                         .HasColumnType("int");
 
@@ -290,98 +289,6 @@ namespace TravelTo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sastumroebis");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini",
-                            Fasi = 100,
-                            Lokacia = "Dedamiwis Centri",
-                            Name = "Robotiqsi",
-                            gmail = "gmail@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa",
-                            Fasi = 50,
-                            Lokacia = "AntarqtidaOnTop",
-                            Name = "Antarqtida",
-                            gmail = "antarqtida@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu .",
-                            Fasi = 75,
-                            Lokacia = "Tbilisi City Center",
-                            Name = "Tbilisi",
-                            gmail = "tbilisi@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.",
-                            Fasi = 60,
-                            Lokacia = "Kutaisi Historical Area",
-                            Name = "Kutaisi",
-                            gmail = "kutaisi@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti .",
-                            Fasi = 80,
-                            Lokacia = "Batumi Boulevard",
-                            Name = "Batumi",
-                            gmail = "batumi@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.",
-                            Fasi = 40,
-                            Lokacia = "Mtskheta Old Town",
-                            Name = "Mtskheta",
-                            gmail = "mtskheta@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja",
-                            Fasi = 30,
-                            Lokacia = "Zugdidi Park",
-                            Name = "Zugdidi",
-                            gmail = "zugdidi@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.",
-                            Fasi = 45,
-                            Lokacia = "Gori Fortress",
-                            Name = "Gori",
-                            gmail = "gori@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.",
-                            Fasi = 55,
-                            Lokacia = "Telavi Wine Region",
-                            Name = "Telavi",
-                            gmail = "telavi@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Signagi signagi signagi es xom signagia azrze ar var ra  davwero amazec amitomac signagi signagia.",
-                            Fasi = 65,
-                            Lokacia = "Signagi Hilltop",
-                            Name = "Signagi",
-                            gmail = "signagi@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
