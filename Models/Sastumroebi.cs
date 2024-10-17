@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace TravelTo.Models
 {
     public class Sastumroebi
@@ -21,5 +22,9 @@ namespace TravelTo.Models
         public string Lokacia { get; set; }
         public string? Nomer {  get; set; }
         public string? Owner { get; set; }
+       
+        public int Tvisebebis_Sastumroebis_Id { get; set; }
+        [ForeignKey("Tvisebebis_Sastumroebis_Id")]
+        public List<TvisebebiSastumroebis> Tvisebebis_Sastumroebi {  get; set; }
     }
 }

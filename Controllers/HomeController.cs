@@ -87,7 +87,6 @@ namespace TravelTo.Controllers
 					image_name = filename,
 					Company_Id = company_id,
 				};
-
 				_context.Add(namdvili_turi);
 				_context.SaveChanges();
 				return RedirectToAction("index");
@@ -105,7 +104,6 @@ namespace TravelTo.Controllers
 		[HttpGet, DisplayName("Edit")]
 		public IActionResult Edit(int id)
 		{
-
 			var get_turi2 = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
 			ViewData["img_name"] = get_turi2.image_name;
 			var get_turi_dto = new TurebiDto() { Name = get_turi2.Name, Description = get_turi2.Description, Price = get_turi2.Price };
@@ -460,20 +458,16 @@ namespace TravelTo.Controllers
 			};
 			if (ModelState.IsValid)
 			{
-
 			_context.Add(person);
 			_context.SaveChanges();
 			TempData["Successfull"] = "warmatebit gaigzavna tqveni kontaqti";
 			}
-
             return View();
 		}
 		public IActionResult Sastumroebi()
 		{
 			return View();
 		}
-
-
 	}
 }
 
