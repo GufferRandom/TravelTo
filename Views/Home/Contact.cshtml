@@ -2,24 +2,6 @@
 @model ContactPerson
 
 <div class="container">
-
-
-    @if (ViewBag.stacki != null)
-    {
-            @foreach (var item in ViewBag.stacki)
-            {
-
-                <span>
-                    <a asp-controller="Home" asp-action="PovnaValue" asp-route-value=@item>
-
-                    /@item
-                </a>
-
-            </span>
-            }
-
-
-    }
     <div class="row">
             <h2  class="text-center text-success fw-bold m-4">ჩვენს შესახებ</h2>
         <div class="col-md-6">

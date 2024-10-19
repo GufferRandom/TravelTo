@@ -17,6 +17,8 @@ using Humanizer;
 using Newtonsoft.Json;
 using System.Drawing.Printing;
 using System.Collections;
+using Microsoft.AspNetCore.Components.RenderTree;
+using Mono.TextTemplating;
 namespace TravelTo.Controllers
 {
 	public class HomeController : Controller
@@ -444,17 +446,10 @@ namespace TravelTo.Controllers
 			var get_company = _context.Companies.FirstOrDefault(u => u.Company_Id == id);
 			var turebi_kompaniebis = _context.Turebis.Where(u => u.Company_Id == id);
 			ViewBag.yvela_tur = turebi_kompaniebis;
-			return View(get_company);
-		}
-		public IActionResult Contact()
-		{
-			var something = Request.Headers["Referer"].ToString();
-			var sxva = something.Split('/');
-			Stack webstack = new Stack();
-			for (int i = sxva.Length-1; i >1; i--) {
-				webstack.Push(sxva[i]);
-			Console.WriteLine(sxva[i]);}
-			ViewBag.stacki = webstack;
+            return View(get_company);
+        }
+        public IActionResult Contact()
+        {
 			return View();
 		}
 		[HttpPost]
@@ -476,10 +471,7 @@ namespace TravelTo.Controllers
 		{
 			return View();
 		}
-		public IActionResult PovnaValue(string value)
-		{
-			return RedirectToAction(value);
-		}
+		
 	}
 }
 
