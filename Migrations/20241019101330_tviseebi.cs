@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class kide : Migration
+    public partial class tviseebi : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -101,8 +101,7 @@ namespace TravelTo.Migrations
                     gmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Lokacia = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nomer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tvisebebis_Sastumroebis_Id = table.Column<int>(type: "int", nullable: false)
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -238,10 +237,11 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TvisebebiSastumroebis",
+                name: "TvisebebiDaSastumroebi",
                 columns: table => new
                 {
-                    Tviseba_Id = table.Column<int>(type: "int", nullable: false),
+                    Tviseba_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Wifi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ufaso_avtosadgomi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     otaxi_aramweveltaTvis = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -259,14 +259,14 @@ namespace TravelTo.Migrations
                     bagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     samrecxao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Shinauri_cxovelebis_dashveba = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tvisebebis_Sastumroebis_Id = table.Column<int>(type: "int", nullable: false)
+                    Sastumros_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TvisebebiSastumroebis", x => x.Tviseba_Id);
+                    table.PrimaryKey("PK_TvisebebiDaSastumroebi", x => x.Tviseba_Id);
                     table.ForeignKey(
-                        name: "FK_TvisebebiSastumroebis_Sastumroebis_Tviseba_Id",
-                        column: x => x.Tviseba_Id,
+                        name: "FK_TvisebebiDaSastumroebi_Sastumroebis_Sastumros_Id",
+                        column: x => x.Sastumros_Id,
                         principalTable: "Sastumroebis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -309,19 +309,19 @@ namespace TravelTo.Migrations
 
             migrationBuilder.InsertData(
                 table: "Sastumroebis",
-                columns: new[] { "Id", "Description", "Fasi", "Lokacia", "Name", "Nomer", "Owner", "Tvisebebis_Sastumroebis_Id", "gmail" },
+                columns: new[] { "Id", "Description", "Fasi", "Lokacia", "Name", "Nomer", "Owner", "gmail" },
                 values: new object[,]
                 {
-                    { 1, "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", 100, "Dedamiwis Centri", "Robotiqsi", null, null, 0, "gmail@gmail.com" },
-                    { 2, "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", 50, "AntarqtidaOnTop", "Antarqtida", null, null, 0, "antarqtida@gmail.com" },
-                    { 3, "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu .", 75, "Tbilisi City Center", "Tbilisi", null, null, 0, "tbilisi@gmail.com" },
-                    { 4, "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", 60, "Kutaisi Historical Area", "Kutaisi", null, null, 0, "kutaisi@gmail.com" },
-                    { 5, "Batumi bautmi bautmi zfgva zgva zgva meti meti meti .", 80, "Batumi Boulevard", "Batumi", null, null, 0, "batumi@gmail.com" },
-                    { 6, "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", 40, "Mtskheta Old Town", "Mtskheta", null, null, 0, "mtskheta@gmail.com" },
-                    { 7, "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", 30, "Zugdidi Park", "Zugdidi", null, null, 0, "zugdidi@gmail.com" },
-                    { 8, "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", 45, "Gori Fortress", "Gori", null, null, 0, "gori@gmail.com" },
-                    { 9, "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", 55, "Telavi Wine Region", "Telavi", null, null, 0, "telavi@gmail.com" },
-                    { 10, "Signagi signagi signagi es xom signagia azrze ar var ra  davwero amazec amitomac signagi signagia.", 65, "Signagi Hilltop", "Signagi", null, null, 0, "signagi@gmail.com" }
+                    { 1, "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", 100, "Dedamiwis Centri", "Robotiqsi", null, null, "gmail@gmail.com" },
+                    { 2, "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", 50, "AntarqtidaOnTop", "Antarqtida", null, null, "antarqtida@gmail.com" },
+                    { 3, "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu .", 75, "Tbilisi City Center", "Tbilisi", null, null, "tbilisi@gmail.com" },
+                    { 4, "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", 60, "Kutaisi Historical Area", "Kutaisi", null, null, "kutaisi@gmail.com" },
+                    { 5, "Batumi bautmi bautmi zfgva zgva zgva meti meti meti .", 80, "Batumi Boulevard", "Batumi", null, null, "batumi@gmail.com" },
+                    { 6, "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", 40, "Mtskheta Old Town", "Mtskheta", null, null, "mtskheta@gmail.com" },
+                    { 7, "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", 30, "Zugdidi Park", "Zugdidi", null, null, "zugdidi@gmail.com" },
+                    { 8, "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", 45, "Gori Fortress", "Gori", null, null, "gori@gmail.com" },
+                    { 9, "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", 55, "Telavi Wine Region", "Telavi", null, null, "telavi@gmail.com" },
+                    { 10, "Signagi signagi signagi es xom signagia azrze ar var ra  davwero amazec amitomac signagi signagia.", 65, "Signagi Hilltop", "Signagi", null, null, "signagi@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -384,6 +384,11 @@ namespace TravelTo.Migrations
                 column: "Company_Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TvisebebiDaSastumroebi_Sastumros_Id",
+                table: "TvisebebiDaSastumroebi",
+                column: "Sastumros_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAndTurebi_User_Id",
                 table: "UserAndTurebi",
                 column: "User_Id");
@@ -411,7 +416,7 @@ namespace TravelTo.Migrations
                 name: "ContactiUndat");
 
             migrationBuilder.DropTable(
-                name: "TvisebebiSastumroebis");
+                name: "TvisebebiDaSastumroebi");
 
             migrationBuilder.DropTable(
                 name: "UserAndTurebi");
