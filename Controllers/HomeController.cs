@@ -469,7 +469,11 @@ namespace TravelTo.Controllers
 		}
 		public IActionResult Sastumroebi()
 		{
-			return View();
+			var sastumroebi = _context.Sastumroebis.ToList();
+			var type = typeof(TvisebebiSastumroebis);
+			var sastumroebis_tvisebebi =type.GetProperties().Select(p=>p.Name).ToList();
+			ViewBag.tvisebebi=sastumroebis_tvisebebi;
+			return View(sastumroebi);
 		}
 		
 	}
