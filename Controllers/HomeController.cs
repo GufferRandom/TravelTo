@@ -475,7 +475,6 @@ namespace TravelTo.Controllers
 			ViewBag.tvisebebi=sastumroebis_tvisebebi;
 			return View(sastumroebi);
 		}
-		
 	}
 }
 
