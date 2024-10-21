@@ -24,41 +24,56 @@
                 </ul>
             </div>
             <div style="width:400px;">
-                <input style="width:300px;position:relative; margin-top:30px;" type="search" name="names" />
-                <button type="submit" class="btn btn-outline-secondary">
-                    <i class="bi bi-search" style="font-size:20px"></i>
-                </button>
-                <label>ლოკაციები</label>
-                <select class="form-select form-select-sm" aria-label="Small select example" name="selected">
-                    <option value="">აირჩიე ქვეყანა</option>
-                    @foreach (var i in Model)
-                    {
-                        <option value="@i.Name" name="choice">@i.Name</option>
-                    }
-                </select>
-                <label style="margin-top:10px;margin-bottom:5px">კომპანია</label>
-                <select class="form-select form-select-sm" aria-label="Small select example" name="kompania">
-                    <option value="">აირჩიე კომპანია</option>
-                    @foreach (var i in ViewBag.company as List<string>)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
-                <span>Min</span>
-                <div class="input-group">
-                    <span class="input-group-text">$</span>
-                    <span class="input-group-text">0.00</span>
-                    <input type="string" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="min">
-                </div>
-                <span>Max</span>
-                <div class="input-group" style="margin-bottom:20px">
-                    <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="max">
-                    <span class="input-group-text">$</span>
-                    <span class="input-group-text">0.00</span>
-                </div>
+                <form>
+                    <div style="display: flex; align-items: center; margin-top: 30px;">
+                        <input style="width: 300px; margin-right: 10px;"
+                               class="form-control" list="datalistOptions" id="exampleDataList"
+                               type="search" name="names" placeholder="Type to search...">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="bi bi-search" style="font-size:20px"></i>
+                        </button>
+                    </div>
+                    <datalist id="datalistOptions">
+                        @foreach (var i in Model)
+                        {
+                            <option value="@i.Name">@i.Name</option>
+                        }
+                    </datalist>
+                    <label for="selectedqveyana">ლოკაციები</label>
+                    <select id="selectedqveyana" class="form-select form-select-sm" aria-label="Small select example" name="selected">
+                        <option value="">აირჩიე ქვეყანა</option>
+                        @foreach (var i in Model)
+                        {
+                            <option name="choice"  value="@i.Name">@i.Name</option>
+                        }
+                    </select>
+
+                    <label for="kompania" style="margin-top:10px;margin-bottom:5px">კომპანია</label>
+                    <select id="kompania" class="form-select form-select-sm" aria-label="Small select example" name="kompania">
+                        <option value="">აირჩიე კომპანია</option>
+                        @foreach (var i in ViewBag.company as List<string>)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+
+                    <span>Min</span>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="min" min="0">
+                    </div>
+
+                    <span>Max</span>
+                    <div class="input-group" style="margin-bottom:20px">
+                        <input type="number" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="max" min="0">
+                        <span class="input-group-text">$</span>
+                    </div>
+                </form>
             </div>
+
         </div>
     </form>
+    
     @foreach (var i in Model)
     {
         <div class="card mb-3 w-100" style="">
