@@ -297,8 +297,8 @@ namespace TravelTo.Migrations
                             Id = 1,
                             Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini",
                             Fasi = 100,
-                            Lokacia = "Dedamiwis Centri",
-                            Name = "Robotiqsi",
+                            Lokacia = "Robotiqsi",
+                            Name = "Robotiqsi Grand Hotel",
                             gmail = "gmail@gmail.com"
                         },
                         new
@@ -306,17 +306,17 @@ namespace TravelTo.Migrations
                             Id = 2,
                             Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa",
                             Fasi = 50,
-                            Lokacia = "AntarqtidaOnTop",
-                            Name = "Antarqtida",
+                            Lokacia = "Antarqtida",
+                            Name = "Antarqtida Luxury Suites",
                             gmail = "antarqtida@gmail.com"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu .",
+                            Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.",
                             Fasi = 75,
-                            Lokacia = "Tbilisi City Center",
-                            Name = "Tbilisi",
+                            Lokacia = "Tbilisi",
+                            Name = "Tbilisi City Hotel",
                             gmail = "tbilisi@gmail.com"
                         },
                         new
@@ -324,17 +324,17 @@ namespace TravelTo.Migrations
                             Id = 4,
                             Description = "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.",
                             Fasi = 60,
-                            Lokacia = "Kutaisi Historical Area",
-                            Name = "Kutaisi",
+                            Lokacia = "Kutaisi",
+                            Name = "Kutaisi Boutique Hotel",
                             gmail = "kutaisi@gmail.com"
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti .",
+                            Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.",
                             Fasi = 80,
-                            Lokacia = "Batumi Boulevard",
-                            Name = "Batumi",
+                            Lokacia = "Batumi",
+                            Name = "Batumi Beach Resort",
                             gmail = "batumi@gmail.com"
                         },
                         new
@@ -342,8 +342,8 @@ namespace TravelTo.Migrations
                             Id = 6,
                             Description = "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.",
                             Fasi = 40,
-                            Lokacia = "Mtskheta Old Town",
-                            Name = "Mtskheta",
+                            Lokacia = "Mtskheta",
+                            Name = "Mtskheta Heritage Inn",
                             gmail = "mtskheta@gmail.com"
                         },
                         new
@@ -351,8 +351,8 @@ namespace TravelTo.Migrations
                             Id = 7,
                             Description = "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja",
                             Fasi = 30,
-                            Lokacia = "Zugdidi Park",
-                            Name = "Zugdidi",
+                            Lokacia = "Zugdidi",
+                            Name = "Zugdidi Park Hotel",
                             gmail = "zugdidi@gmail.com"
                         },
                         new
@@ -360,8 +360,8 @@ namespace TravelTo.Migrations
                             Id = 8,
                             Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.",
                             Fasi = 45,
-                            Lokacia = "Gori Fortress",
-                            Name = "Gori",
+                            Lokacia = "Gori",
+                            Name = "Gori Fortress Hotel",
                             gmail = "gori@gmail.com"
                         },
                         new
@@ -369,17 +369,17 @@ namespace TravelTo.Migrations
                             Id = 9,
                             Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.",
                             Fasi = 55,
-                            Lokacia = "Telavi Wine Region",
-                            Name = "Telavi",
+                            Lokacia = "Telavi",
+                            Name = "Telavi Wine Hotel",
                             gmail = "telavi@gmail.com"
                         },
                         new
                         {
                             Id = 10,
-                            Description = "Signagi signagi signagi es xom signagia azrze ar var ra  davwero amazec amitomac signagi signagia.",
+                            Description = "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.",
                             Fasi = 65,
-                            Lokacia = "Signagi Hilltop",
-                            Name = "Signagi",
+                            Lokacia = "Signagi",
+                            Name = "Signagi Hilltop Hotel",
                             gmail = "signagi@gmail.com"
                         });
                 });
