@@ -22,7 +22,7 @@ namespace TravelTo.Models
         public string Lokacia { get; set; }
         public string? Nomer {  get; set; }
         public string? Owner { get; set; }
-
+        public string? image_name { get; set; }
         public List<TvisebebiSastumroebis> Tvisebebis_Sastumroebi {  get; set; }
     }
 }
