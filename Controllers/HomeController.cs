@@ -444,7 +444,7 @@ namespace TravelTo.Controllers
 		{
 
 			var get_company = _context.Companies.FirstOrDefault(u => u.Company_Id == id);
-			var turebi_kompaniebis = _context.Turebis.Where(u => u.Company_Id == id);
+			var turebi_kompaniebis = _context.Turebis.Where(u => u.Company_Id == id).ToList();
 			ViewBag.yvela_tur = turebi_kompaniebis;
             return View(get_company);
         }
@@ -474,6 +474,13 @@ namespace TravelTo.Controllers
 			var sastumroebis_tvisebebi =type.GetProperties().Select(p=>p.Name).ToList();
 			ViewBag.tvisebebi=sastumroebis_tvisebebi;
 			return View(sastumroebi);
+		}
+		public IActionResult GetSastumro(int id)
+		{
+			var sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
+			ViewBag.yvelasastumro = _context.Sastumroebis.Where(x=>x.Id!=id).ToList();
+			
+			return View(sastumro);
 		}
 	}
 }
