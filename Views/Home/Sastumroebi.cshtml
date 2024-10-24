@@ -80,3 +80,20 @@
         </div>
     </div>
 </div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        <li class="page-item  @(ViewBag.current_page != 1 ? "" :"disabled")">
+            <a class="page-link" asp-controller="Home" asp-action="Sastumroebi">Previous</a>
+        </li>
+        
+        @for(int i = 1; i <= ViewBag.ramdeni_gverdi; i++)
+        {
+        <li class="page-item @(ViewBag.current_page ==i ? "active":"")">
+                <a class="page-link" asp-controller="Home" asp-action="Sastumroebi" asp-route-page_id="@i">@i</a>
+            </li> 
+        }
+        <li class="page-item  @(ViewBag.current_page != ViewBag.ramdeni_gverdi ? "" :"disabled")">
+            <a class="page-link" asp-controller="Home" asp-action="Sastumroebi" asp-route-page_id="@(ViewBag.current_page+1)">Next</a>
+        </li>
+    </ul>
+</nav>

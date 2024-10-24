@@ -19,6 +19,8 @@ using System.Drawing.Printing;
 using System.Collections;
 using Microsoft.AspNetCore.Components.RenderTree;
 using Mono.TextTemplating;
+using System.Runtime.InteropServices;
+using Microsoft.CodeAnalysis;
 namespace TravelTo.Controllers
 {
 	public class HomeController : Controller
@@ -467,13 +469,22 @@ namespace TravelTo.Controllers
 			}
             return View();
 		}
-		public IActionResult Sastumroebi()
+		public IActionResult Sastumroebi(int page_id =1)
 		{
 			var sastumroebi = _context.Sastumroebis.ToList();
 			var type = typeof(TvisebebiSastumroebis);
-			var sastumroebis_tvisebebi =type.GetProperties().Select(p=>p.Name).ToList();
+			var tito_size = 5;
+			var size = sastumroebi.Count();
+         
+            var skiP = _context.Sastumroebis.Skip((page_id- 1) * tito_size).Take(tito_size).ToList();
+
+            var sastumroebis_tvisebebi =type.GetProperties().Select(p=>p.Name).ToList();
 			ViewBag.tvisebebi=sastumroebis_tvisebebi;
-			return View(sastumroebi);
+            var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
+            ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+			var current_page = page_id;
+			ViewBag.current_page = current_page;
+            return View(skiP);
 		}
 		public IActionResult GetSastumro(int id)
 		{
