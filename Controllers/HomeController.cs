@@ -484,6 +484,19 @@ namespace TravelTo.Controllers
             ViewBag.ramdeni_gverdi = ramdeni_gverdi;
 			var current_page = page_id;
 			ViewBag.current_page = current_page;
+			var get_http_ses = HttpContext.Session.GetString("SortinCompania");
+			switch (get_http_ses)
+			{
+				case "FasiZrdaCompania":
+					break;
+				case "FasiKlebadobaCompania":
+					break;
+				case "SaxeliZrdaKompania":
+					break;
+				case "SaxeliKlebadobaKompania":
+					break;
+
+            }
             return View(skiP);
 		}
 		public IActionResult GetSastumro(int id)
@@ -492,6 +505,28 @@ namespace TravelTo.Controllers
 			ViewBag.yvelasastumro = _context.Sastumroebis.Where(x=>x.Id!=id).ToList();
 			
 			return View(sastumro);
+		}
+
+
+		public IActionResult FasiZrdaCompania()
+		{
+			HttpContext.Session.SetString("SortinCompania", "FasiZrdaCompania");
+			return RedirectToAction("Sastumroebi");
+		}
+		public IActionResult FasiKlebadobaCompania()
+		{
+			HttpContext.Session.SetString("SortinCompania", "FasiKlebadobaCompania");
+			return RedirectToAction("Sastumroebi");
+		}
+		public IActionResult SaxeliZrdaCompania()
+		{
+			HttpContext.Session.SetString("SortinCompania", "SaxeliZrdaKompania");
+			return RedirectToAction("Sastumroebi");
+		}
+		public IActionResult SaxeliKlebadobaKompania()
+		{
+			HttpContext.Session.SetString("SortinCompania", "SaxeliKlebadobaKompania");
+			return RedirectToAction("Sastumroebi");
 		}
 	}
 }
