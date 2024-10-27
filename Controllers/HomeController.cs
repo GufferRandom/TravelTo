@@ -476,7 +476,7 @@ namespace TravelTo.Controllers
 			var tito_size = 5;
 			var size = sastumroebi.Count();
          
-            var skiP = _context.Sastumroebis.Skip((page_id- 1) * tito_size).Take(tito_size).ToList();
+            var skiP = _context.Sastumroebis.ToList();
 
             var sastumroebis_tvisebebi =type.GetProperties().Select(p=>p.Name).ToList();
 			ViewBag.tvisebebi=sastumroebis_tvisebebi;
@@ -485,18 +485,25 @@ namespace TravelTo.Controllers
 			var current_page = page_id;
 			ViewBag.current_page = current_page;
 			var get_http_ses = HttpContext.Session.GetString("SortinCompania");
+			
 			switch (get_http_ses)
 			{
 				case "FasiZrdaCompania":
+                    skiP=skiP.OrderBy(u => u.Fasi).ToList();
 					break;
 				case "FasiKlebadobaCompania":
+					skiP=skiP.OrderByDescending(u => u.Fasi).ToList();
 					break;
-				case "SaxeliZrdaKompania":
+				case "SaxeliZrdaCompania":
+					skiP =skiP.OrderBy(u => u.Name).ToList();
 					break;
 				case "SaxeliKlebadobaKompania":
+					skiP = skiP.OrderByDescending(u=>u.Name).ToList();
 					break;
-
+                default:
+                    break;
             }
+			skiP =skiP.Skip((page_id-1)* tito_size).Take(tito_size).ToList();
             return View(skiP);
 		}
 		public IActionResult GetSastumro(int id)
@@ -520,7 +527,7 @@ namespace TravelTo.Controllers
 		}
 		public IActionResult SaxeliZrdaCompania()
 		{
-			HttpContext.Session.SetString("SortinCompania", "SaxeliZrdaKompania");
+			HttpContext.Session.SetString("SortinCompania", "SaxeliZrdaCompania");
 			return RedirectToAction("Sastumroebi");
 		}
 		public IActionResult SaxeliKlebadobaKompania()

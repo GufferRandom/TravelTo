@@ -51,7 +51,8 @@ namespace TravelTo.Data
 		  new Sastumroebi { Id = 9, Lokacia = "Telavi", Fasi = 55, Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", gmail = "telavi@gmail.com", Name = "Telavi Wine Hotel" ,image_name="9.jpg"},
 		  new Sastumroebi { Id = 10, Lokacia = "Signagi", Fasi = 65, Description = "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", gmail = "signagi@gmail.com", Name = "Signagi Hilltop Hotel",image_name="10.jpg" }
 	  );
-
+            modelBuilder.Entity<TvisebebiSastumroebis>().HasData(
+                new TvisebebiSastumroebis { });
 			modelBuilder.Entity<UserAndTurebiMap>().HasKey(u => new { u.Turebi_Id, u.User_Id });
             modelBuilder.Entity<Turebi>().HasOne(u => u.Company).WithMany(u => u.Turebi).HasForeignKey(u => u.Company_Id);
             modelBuilder.Entity<UserAndTurebiMap>().HasOne(u => u.turebi).WithMany(u => u.UserAndTurebiMapT).HasForeignKey(u => u.Turebi_Id);
