@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20241021053001_vnaxot")]
-    partial class vnaxot
+    [Migration("20241028154656_help")]
+    partial class help
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -286,11 +286,20 @@ namespace TravelTo.Migrations
                     b.Property<string>("Owner")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Tviseba_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("gmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("image_name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Tviseba_Id")
+                        .IsUnique();
 
                     b.ToTable("Sastumroebis");
 
@@ -302,7 +311,9 @@ namespace TravelTo.Migrations
                             Fasi = 100,
                             Lokacia = "Robotiqsi",
                             Name = "Robotiqsi Grand Hotel",
-                            gmail = "gmail@gmail.com"
+                            Tviseba_Id = 1,
+                            gmail = "gmail@gmail.com",
+                            image_name = "1.jpeg"
                         },
                         new
                         {
@@ -311,7 +322,9 @@ namespace TravelTo.Migrations
                             Fasi = 50,
                             Lokacia = "Antarqtida",
                             Name = "Antarqtida Luxury Suites",
-                            gmail = "antarqtida@gmail.com"
+                            Tviseba_Id = 2,
+                            gmail = "antarqtida@gmail.com",
+                            image_name = "2.jpg"
                         },
                         new
                         {
@@ -320,7 +333,9 @@ namespace TravelTo.Migrations
                             Fasi = 75,
                             Lokacia = "Tbilisi",
                             Name = "Tbilisi City Hotel",
-                            gmail = "tbilisi@gmail.com"
+                            Tviseba_Id = 3,
+                            gmail = "tbilisi@gmail.com",
+                            image_name = "3.jpg"
                         },
                         new
                         {
@@ -329,7 +344,9 @@ namespace TravelTo.Migrations
                             Fasi = 60,
                             Lokacia = "Kutaisi",
                             Name = "Kutaisi Boutique Hotel",
-                            gmail = "kutaisi@gmail.com"
+                            Tviseba_Id = 4,
+                            gmail = "kutaisi@gmail.com",
+                            image_name = "4.webp"
                         },
                         new
                         {
@@ -338,7 +355,9 @@ namespace TravelTo.Migrations
                             Fasi = 80,
                             Lokacia = "Batumi",
                             Name = "Batumi Beach Resort",
-                            gmail = "batumi@gmail.com"
+                            Tviseba_Id = 5,
+                            gmail = "batumi@gmail.com",
+                            image_name = "5.jpg"
                         },
                         new
                         {
@@ -347,7 +366,9 @@ namespace TravelTo.Migrations
                             Fasi = 40,
                             Lokacia = "Mtskheta",
                             Name = "Mtskheta Heritage Inn",
-                            gmail = "mtskheta@gmail.com"
+                            Tviseba_Id = 6,
+                            gmail = "mtskheta@gmail.com",
+                            image_name = "6.jpg"
                         },
                         new
                         {
@@ -356,7 +377,9 @@ namespace TravelTo.Migrations
                             Fasi = 30,
                             Lokacia = "Zugdidi",
                             Name = "Zugdidi Park Hotel",
-                            gmail = "zugdidi@gmail.com"
+                            Tviseba_Id = 7,
+                            gmail = "zugdidi@gmail.com",
+                            image_name = "7.jpg"
                         },
                         new
                         {
@@ -365,7 +388,9 @@ namespace TravelTo.Migrations
                             Fasi = 45,
                             Lokacia = "Gori",
                             Name = "Gori Fortress Hotel",
-                            gmail = "gori@gmail.com"
+                            Tviseba_Id = 8,
+                            gmail = "gori@gmail.com",
+                            image_name = "8.jpg"
                         },
                         new
                         {
@@ -374,7 +399,9 @@ namespace TravelTo.Migrations
                             Fasi = 55,
                             Lokacia = "Telavi",
                             Name = "Telavi Wine Hotel",
-                            gmail = "telavi@gmail.com"
+                            Tviseba_Id = 9,
+                            gmail = "telavi@gmail.com",
+                            image_name = "9.jpg"
                         },
                         new
                         {
@@ -383,7 +410,9 @@ namespace TravelTo.Migrations
                             Fasi = 65,
                             Lokacia = "Signagi",
                             Name = "Signagi Hilltop Hotel",
-                            gmail = "signagi@gmail.com"
+                            Tviseba_Id = 10,
+                            gmail = "signagi@gmail.com",
+                            image_name = "10.jpg"
                         });
                 });
 
@@ -502,9 +531,6 @@ namespace TravelTo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Tviseba_Id"));
 
-                    b.Property<int>("Sastumros_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Shinauri_cxovelebis_dashveba")
                         .HasColumnType("nvarchar(max)");
 
@@ -558,9 +584,219 @@ namespace TravelTo.Migrations
 
                     b.HasKey("Tviseba_Id");
 
-                    b.HasIndex("Sastumros_Id");
-
                     b.ToTable("TvisebebiDaSastumroebi");
+
+                    b.HasData(
+                        new
+                        {
+                            Tviseba_Id = 1,
+                            Shinauri_cxovelebis_dashveba = "YES",
+                            Ufaso_avtosadgomi = "NO",
+                            Wifi = "YES",
+                            bagi = "YES",
+                            bari = "YES",
+                            daxuruli_auzi = "NO",
+                            kino_darbasi = "NO",
+                            otaxi_aramweveltaTvis = "NO",
+                            resotrani = "NO",
+                            sabavsho_otaxi = "YES",
+                            sabiliardo = "NO",
+                            sakonferencio_darbazi = "NO",
+                            samrecxao = "YES",
+                            sauna = "YES",
+                            spa_centri = "NO",
+                            sportdarbazi = "YES",
+                            terasa = "NO"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 2,
+                            Shinauri_cxovelebis_dashveba = "NO",
+                            Ufaso_avtosadgomi = "YES",
+                            Wifi = "NO",
+                            bagi = "NO",
+                            bari = "NO",
+                            daxuruli_auzi = "YES",
+                            kino_darbasi = "YES",
+                            otaxi_aramweveltaTvis = "YES",
+                            resotrani = "YES",
+                            sabavsho_otaxi = "NO",
+                            sabiliardo = "YES",
+                            sakonferencio_darbazi = "YES",
+                            samrecxao = "NO",
+                            sauna = "NO",
+                            spa_centri = "YES",
+                            sportdarbazi = "NO",
+                            terasa = "YES"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 3,
+                            Shinauri_cxovelebis_dashveba = "YES",
+                            Ufaso_avtosadgomi = "NO",
+                            Wifi = "YES",
+                            bagi = "YES",
+                            bari = "YES",
+                            daxuruli_auzi = "NO",
+                            kino_darbasi = "YES",
+                            otaxi_aramweveltaTvis = "NO",
+                            resotrani = "NO",
+                            sabavsho_otaxi = "YES",
+                            sabiliardo = "NO",
+                            sakonferencio_darbazi = "NO",
+                            samrecxao = "YES",
+                            sauna = "YES",
+                            spa_centri = "NO",
+                            sportdarbazi = "YES",
+                            terasa = "NO"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 4,
+                            Shinauri_cxovelebis_dashveba = "NO",
+                            Ufaso_avtosadgomi = "YES",
+                            Wifi = "YES",
+                            bagi = "NO",
+                            bari = "NO",
+                            daxuruli_auzi = "NO",
+                            kino_darbasi = "NO",
+                            otaxi_aramweveltaTvis = "NO",
+                            resotrani = "YES",
+                            sabavsho_otaxi = "YES",
+                            sabiliardo = "YES",
+                            sakonferencio_darbazi = "YES",
+                            samrecxao = "YES",
+                            sauna = "YES",
+                            spa_centri = "YES",
+                            sportdarbazi = "NO",
+                            terasa = "YES"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 5,
+                            Shinauri_cxovelebis_dashveba = "YES",
+                            Ufaso_avtosadgomi = "NO",
+                            Wifi = "NO",
+                            bagi = "YES",
+                            bari = "YES",
+                            daxuruli_auzi = "YES",
+                            kino_darbasi = "YES",
+                            otaxi_aramweveltaTvis = "YES",
+                            resotrani = "NO",
+                            sabavsho_otaxi = "YES",
+                            sabiliardo = "YES",
+                            sakonferencio_darbazi = "NO",
+                            samrecxao = "NO",
+                            sauna = "NO",
+                            spa_centri = "NO",
+                            sportdarbazi = "YES",
+                            terasa = "YES"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 6,
+                            Shinauri_cxovelebis_dashveba = "YES",
+                            Ufaso_avtosadgomi = "YES",
+                            Wifi = "YES",
+                            bagi = "NO",
+                            bari = "YES",
+                            daxuruli_auzi = "NO",
+                            kino_darbasi = "YES",
+                            otaxi_aramweveltaTvis = "NO",
+                            resotrani = "YES",
+                            sabavsho_otaxi = "NO",
+                            sabiliardo = "NO",
+                            sakonferencio_darbazi = "NO",
+                            samrecxao = "YES",
+                            sauna = "YES",
+                            spa_centri = "NO",
+                            sportdarbazi = "YES",
+                            terasa = "NO"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 7,
+                            Shinauri_cxovelebis_dashveba = "NO",
+                            Ufaso_avtosadgomi = "NO",
+                            Wifi = "NO",
+                            bagi = "YES",
+                            bari = "NO",
+                            daxuruli_auzi = "NO",
+                            kino_darbasi = "NO",
+                            otaxi_aramweveltaTvis = "YES",
+                            resotrani = "YES",
+                            sabavsho_otaxi = "YES",
+                            sabiliardo = "YES",
+                            sakonferencio_darbazi = "YES",
+                            samrecxao = "YES",
+                            sauna = "NO",
+                            spa_centri = "YES",
+                            sportdarbazi = "NO",
+                            terasa = "YES"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 8,
+                            Shinauri_cxovelebis_dashveba = "NO",
+                            Ufaso_avtosadgomi = "YES",
+                            Wifi = "YES",
+                            bagi = "NO",
+                            bari = "YES",
+                            daxuruli_auzi = "NO",
+                            kino_darbasi = "YES",
+                            otaxi_aramweveltaTvis = "NO",
+                            resotrani = "NO",
+                            sabavsho_otaxi = "YES",
+                            sabiliardo = "YES",
+                            sakonferencio_darbazi = "NO",
+                            samrecxao = "YES",
+                            sauna = "YES",
+                            spa_centri = "YES",
+                            sportdarbazi = "NO",
+                            terasa = "NO"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 9,
+                            Shinauri_cxovelebis_dashveba = "YES",
+                            Ufaso_avtosadgomi = "NO",
+                            Wifi = "NO",
+                            bagi = "YES",
+                            bari = "NO",
+                            daxuruli_auzi = "YES",
+                            kino_darbasi = "YES",
+                            otaxi_aramweveltaTvis = "YES",
+                            resotrani = "YES",
+                            sabavsho_otaxi = "NO",
+                            sabiliardo = "NO",
+                            sakonferencio_darbazi = "YES",
+                            samrecxao = "YES",
+                            sauna = "NO",
+                            spa_centri = "NO",
+                            sportdarbazi = "YES",
+                            terasa = "YES"
+                        },
+                        new
+                        {
+                            Tviseba_Id = 10,
+                            Shinauri_cxovelebis_dashveba = "NO",
+                            Ufaso_avtosadgomi = "YES",
+                            Wifi = "YES",
+                            bagi = "NO",
+                            bari = "YES",
+                            daxuruli_auzi = "YES",
+                            kino_darbasi = "YES",
+                            otaxi_aramweveltaTvis = "NO",
+                            resotrani = "NO",
+                            sabavsho_otaxi = "YES",
+                            sabiliardo = "YES",
+                            sakonferencio_darbazi = "NO",
+                            samrecxao = "YES",
+                            sauna = "NO",
+                            spa_centri = "YES",
+                            sportdarbazi = "NO",
+                            terasa = "NO"
+                        });
                 });
 
             modelBuilder.Entity("TravelTo.Models.User", b =>
@@ -706,6 +942,17 @@ namespace TravelTo.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
+                {
+                    b.HasOne("TravelTo.Models.TvisebebiSastumroebis", "tvisebebiSastumroebis")
+                        .WithOne("Sastumro")
+                        .HasForeignKey("TravelTo.Models.Sastumroebi", "Tviseba_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tvisebebiSastumroebis");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.HasOne("TravelTo.Models.Company", "Company")
@@ -713,17 +960,6 @@ namespace TravelTo.Migrations
                         .HasForeignKey("Company_Id");
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("TravelTo.Models.TvisebebiSastumroebis", b =>
-                {
-                    b.HasOne("TravelTo.Models.Sastumroebi", "Sastumro")
-                        .WithMany("Tvisebebis_Sastumroebi")
-                        .HasForeignKey("Sastumros_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sastumro");
                 });
 
             modelBuilder.Entity("TravelTo.Models.UserAndTurebiMap", b =>
@@ -750,14 +986,15 @@ namespace TravelTo.Migrations
                     b.Navigation("Turebi");
                 });
 
-            modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
-                {
-                    b.Navigation("Tvisebebis_Sastumroebi");
-                });
-
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.Navigation("UserAndTurebiMapT");
+                });
+
+            modelBuilder.Entity("TravelTo.Models.TvisebebiSastumroebis", b =>
+                {
+                    b.Navigation("Sastumro")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TravelTo.Models.User", b =>
