@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class vnaxot : Migration
+    public partial class help : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -90,22 +90,32 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sastumroebis",
+                name: "TvisebebiDaSastumroebi",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Tviseba_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fasi = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    gmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Lokacia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Nomer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Wifi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ufaso_avtosadgomi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    otaxi_aramweveltaTvis = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    resotrani = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    daxuruli_auzi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    sauna = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    sportdarbazi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    sabiliardo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spa_centri = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    kino_darbasi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    sakonferencio_darbazi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    bari = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    sabavsho_otaxi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    terasa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    bagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    samrecxao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Shinauri_cxovelebis_dashveba = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sastumroebis", x => x.Id);
+                    table.PrimaryKey("PK_TvisebebiDaSastumroebi", x => x.Tviseba_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,38 +247,29 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TvisebebiDaSastumroebi",
+                name: "Sastumroebis",
                 columns: table => new
                 {
-                    Tviseba_Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Wifi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ufaso_avtosadgomi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    otaxi_aramweveltaTvis = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    resotrani = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    daxuruli_auzi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sauna = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sportdarbazi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sabiliardo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    spa_centri = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    kino_darbasi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sakonferencio_darbazi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    bari = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sabavsho_otaxi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    terasa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    bagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    samrecxao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Shinauri_cxovelebis_dashveba = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Sastumros_Id = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fasi = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    gmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Lokacia = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nomer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    image_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tviseba_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TvisebebiDaSastumroebi", x => x.Tviseba_Id);
+                    table.PrimaryKey("PK_Sastumroebis", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TvisebebiDaSastumroebi_Sastumroebis_Sastumros_Id",
-                        column: x => x.Sastumros_Id,
-                        principalTable: "Sastumroebis",
-                        principalColumn: "Id",
+                        name: "FK_Sastumroebis_TvisebebiDaSastumroebi_Tviseba_Id",
+                        column: x => x.Tviseba_Id,
+                        principalTable: "TvisebebiDaSastumroebi",
+                        principalColumn: "Tviseba_Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -308,20 +309,37 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Sastumroebis",
-                columns: new[] { "Id", "Description", "Fasi", "Lokacia", "Name", "Nomer", "Owner", "gmail" },
+                table: "TvisebebiDaSastumroebi",
+                columns: new[] { "Tviseba_Id", "Shinauri_cxovelebis_dashveba", "Ufaso_avtosadgomi", "Wifi", "bagi", "bari", "daxuruli_auzi", "kino_darbasi", "otaxi_aramweveltaTvis", "resotrani", "sabavsho_otaxi", "sabiliardo", "sakonferencio_darbazi", "samrecxao", "sauna", "spa_centri", "sportdarbazi", "terasa" },
                 values: new object[,]
                 {
-                    { 1, "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", 100, "Robotiqsi", "Robotiqsi Grand Hotel", null, null, "gmail@gmail.com" },
-                    { 2, "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", 50, "Antarqtida", "Antarqtida Luxury Suites", null, null, "antarqtida@gmail.com" },
-                    { 3, "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", 75, "Tbilisi", "Tbilisi City Hotel", null, null, "tbilisi@gmail.com" },
-                    { 4, "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", 60, "Kutaisi", "Kutaisi Boutique Hotel", null, null, "kutaisi@gmail.com" },
-                    { 5, "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.", 80, "Batumi", "Batumi Beach Resort", null, null, "batumi@gmail.com" },
-                    { 6, "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", 40, "Mtskheta", "Mtskheta Heritage Inn", null, null, "mtskheta@gmail.com" },
-                    { 7, "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", 30, "Zugdidi", "Zugdidi Park Hotel", null, null, "zugdidi@gmail.com" },
-                    { 8, "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", 45, "Gori", "Gori Fortress Hotel", null, null, "gori@gmail.com" },
-                    { 9, "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", 55, "Telavi", "Telavi Wine Hotel", null, null, "telavi@gmail.com" },
-                    { 10, "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", 65, "Signagi", "Signagi Hilltop Hotel", null, null, "signagi@gmail.com" }
+                    { 1, "YES", "NO", "YES", "YES", "YES", "NO", "NO", "NO", "NO", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "NO" },
+                    { 2, "NO", "YES", "NO", "NO", "NO", "YES", "YES", "YES", "YES", "NO", "YES", "YES", "NO", "NO", "YES", "NO", "YES" },
+                    { 3, "YES", "NO", "YES", "YES", "YES", "NO", "YES", "NO", "NO", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "NO" },
+                    { 4, "NO", "YES", "YES", "NO", "NO", "NO", "NO", "NO", "YES", "YES", "YES", "YES", "YES", "YES", "YES", "NO", "YES" },
+                    { 5, "YES", "NO", "NO", "YES", "YES", "YES", "YES", "YES", "NO", "YES", "YES", "NO", "NO", "NO", "NO", "YES", "YES" },
+                    { 6, "YES", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "YES", "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO" },
+                    { 7, "NO", "NO", "NO", "YES", "NO", "NO", "NO", "YES", "YES", "YES", "YES", "YES", "YES", "NO", "YES", "NO", "YES" },
+                    { 8, "NO", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "YES", "YES", "NO", "NO" },
+                    { 9, "YES", "NO", "NO", "YES", "NO", "YES", "YES", "YES", "YES", "NO", "NO", "YES", "YES", "NO", "NO", "YES", "YES" },
+                    { 10, "NO", "YES", "YES", "NO", "YES", "YES", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "NO" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sastumroebis",
+                columns: new[] { "Id", "Description", "Fasi", "Lokacia", "Name", "Nomer", "Owner", "Tviseba_Id", "gmail", "image_name" },
+                values: new object[,]
+                {
+                    { 1, "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", 100, "Robotiqsi", "Robotiqsi Grand Hotel", null, null, 1, "gmail@gmail.com", "1.jpeg" },
+                    { 2, "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", 50, "Antarqtida", "Antarqtida Luxury Suites", null, null, 2, "antarqtida@gmail.com", "2.jpg" },
+                    { 3, "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", 75, "Tbilisi", "Tbilisi City Hotel", null, null, 3, "tbilisi@gmail.com", "3.jpg" },
+                    { 4, "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", 60, "Kutaisi", "Kutaisi Boutique Hotel", null, null, 4, "kutaisi@gmail.com", "4.webp" },
+                    { 5, "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.", 80, "Batumi", "Batumi Beach Resort", null, null, 5, "batumi@gmail.com", "5.jpg" },
+                    { 6, "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", 40, "Mtskheta", "Mtskheta Heritage Inn", null, null, 6, "mtskheta@gmail.com", "6.jpg" },
+                    { 7, "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", 30, "Zugdidi", "Zugdidi Park Hotel", null, null, 7, "zugdidi@gmail.com", "7.jpg" },
+                    { 8, "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", 45, "Gori", "Gori Fortress Hotel", null, null, 8, "gori@gmail.com", "8.jpg" },
+                    { 9, "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", 55, "Telavi", "Telavi Wine Hotel", null, null, 9, "telavi@gmail.com", "9.jpg" },
+                    { 10, "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", 65, "Signagi", "Signagi Hilltop Hotel", null, null, 10, "signagi@gmail.com", "10.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -379,14 +397,15 @@ namespace TravelTo.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Sastumroebis_Tviseba_Id",
+                table: "Sastumroebis",
+                column: "Tviseba_Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Turebis_Company_Id",
                 table: "Turebis",
                 column: "Company_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TvisebebiDaSastumroebi_Sastumros_Id",
-                table: "TvisebebiDaSastumroebi",
-                column: "Sastumros_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAndTurebi_User_Id",
@@ -416,7 +435,7 @@ namespace TravelTo.Migrations
                 name: "ContactiUndat");
 
             migrationBuilder.DropTable(
-                name: "TvisebebiDaSastumroebi");
+                name: "Sastumroebis");
 
             migrationBuilder.DropTable(
                 name: "UserAndTurebi");
@@ -425,7 +444,7 @@ namespace TravelTo.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Sastumroebis");
+                name: "TvisebebiDaSastumroebi");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

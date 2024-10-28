@@ -23,6 +23,8 @@ namespace TravelTo.Models
         public string? Nomer {  get; set; }
         public string? Owner { get; set; }
         public string? image_name { get; set; }
-        public List<TvisebebiSastumroebis> Tvisebebis_Sastumroebi {  get; set; }
+        public int Tviseba_Id { get; set; }
+        [ForeignKey("Tviseba_Id")]
+        public TvisebebiSastumroebis tvisebebiSastumroebis{  get; set; }
     }
 }

@@ -25,9 +25,7 @@ namespace TravelTo.Models
         public string? samrecxao{  get; set; }
         public string? Shinauri_cxovelebis_dashveba{  get; set; }
 
-        public int Sastumros_Id{ get; set; }
-        [ForeignKey("Sastumros_Id")]
-        public Sastumroebi? Sastumro{ get; set; }
+        public Sastumroebi Sastumro{ get; set; }
     
     }
 }
