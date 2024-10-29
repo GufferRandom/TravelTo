@@ -469,7 +469,8 @@ namespace TravelTo.Controllers
 			}
             return View();
 		}
-		public IActionResult Sastumroebi(int page_id =1)
+		
+		public IActionResult Sastumroebi(List<string> archeuli,int page_id =1)
 		{
 			var sastumroebi = _context.Sastumroebis.ToList();
 			var type = typeof(TvisebebiSastumroebis);
@@ -477,7 +478,7 @@ namespace TravelTo.Controllers
 			var size = sastumroebi.Count();
          
             var skiP = _context.Sastumroebis.ToList();
-
+			
             var sastumroebis_tvisebebi =type.GetProperties().Select(p=>p.Name).ToList();
 			ViewBag.tvisebebi=sastumroebis_tvisebebi;
             var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
@@ -485,7 +486,22 @@ namespace TravelTo.Controllers
 			var current_page = page_id;
 			ViewBag.current_page = current_page;
 			var get_http_ses = HttpContext.Session.GetString("SortinCompania");
-			
+			foreach (var i in archeuli) {
+				Console.WriteLine(i);
+			}
+			var kekel = new TvisebebiSastumroebis();
+			var sastumroebi12 = kekel.GetType();
+			var kai_sas = sastumroebi12.GetProperties().Select(u=>u.Name).ToList();
+			var cr = new Hashtable();
+			var kai_sastumroebi = _context.Sastumroebis.Include(u=>u.tvisebebiSastumroebis).ToList();
+			List<Hashtable> list = new List<Hashtable>();
+			for(int i = 0; i < kai_sastumroebi.Count(); i++)
+			{
+			}
+			foreach(var i in archeuli)
+			{
+				Console.WriteLine(i);
+			}
 			switch (get_http_ses)
 			{
 				case "FasiZrdaCompania":
