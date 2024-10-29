@@ -3,8 +3,9 @@
 
     <div class="row">
         <div class="col-sm-3">
-            <form method="post">
+            <form method="post" asp-controller="Home" asp-action="Sastumroebi">
                 <h2>ფილტრი</h2>
+               
                 <div style="display: flex; margin-top: 70px;">
                     <input class="form-control" list="datalistOptions" id="exampleDataList"
                            type="search" name="names" placeholder="Type to search...">
@@ -46,7 +47,7 @@
                                 @for (int i = 0; i < ViewBag.tvisebebi.Count; i++)
                                 {
                                     <div class="form-check text-start">
-                                        <input class="form-check-input" type="checkbox" value="@ViewBag.tvisebebi[i]" id="checkbox-@ViewBag.tvisebebi[i]">
+                                        <input class="form-check-input" type="checkbox" value="@ViewBag.tvisebebi[i]" id="checkbox-@ViewBag.tvisebebi[i]" name="archeuli">
                                         <label class="form-check-label" for="checkbox-@ViewBag.tvisebebi[i]">
                                             @ViewBag.tvisebebi[i]
                                         </label>
