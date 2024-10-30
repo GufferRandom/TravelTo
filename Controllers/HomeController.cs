@@ -486,23 +486,12 @@ namespace TravelTo.Controllers
 			var current_page = page_id;
 			ViewBag.current_page = current_page;
 			var get_http_ses = HttpContext.Session.GetString("SortinCompania");
-			foreach (var i in archeuli) {
-				Console.WriteLine(i);
-			}
-			var kekel = new TvisebebiSastumroebis();
-			var sastumroebi12 = kekel.GetType();
-			var kai_sas = sastumroebi12.GetProperties().Select(u=>u.Name).ToList();
-			var cr = new Hashtable();
-			var kai_sastumroebi = _context.Sastumroebis.Include(u=>u.tvisebebiSastumroebis).ToList();
+
 			List<Hashtable> list = new List<Hashtable>();
-			for(int i = 0; i < kai_sastumroebi.Count(); i++)
-			{
-			}
-			foreach(var i in archeuli)
-			{
-				Console.WriteLine(i);
-			}
-			switch (get_http_ses)
+			var tvisebebi_row= new TvisebebiSastumroebis();
+			var tvisebebi_get_row = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
+			var tvisebebi_all_values = _context.TvisebebiDaSastumroebi.ToList();
+            switch (get_http_ses)
 			{
 				case "FasiZrdaCompania":
                     skiP=skiP.OrderBy(u => u.Fasi).ToList();
