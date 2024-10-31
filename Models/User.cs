@@ -12,7 +12,7 @@ namespace TravelTo.Models
         public string? Phone { get; set; }
         
         public ICollection<UserAndTurebiMap>? UserAndTurebiMapU { get; }
-
+        public ICollection<UserAndSastumroebi> user_sastumroebi { get; set; }
 
 
     }
