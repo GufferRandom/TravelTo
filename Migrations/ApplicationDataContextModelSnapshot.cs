@@ -873,6 +873,21 @@ namespace TravelTo.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("TravelTo.Models.UserAndSastumroebi", b =>
+                {
+                    b.Property<int?>("Sastumorebi_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("User_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Sastumorebi_Id", "User_Id");
+
+                    b.HasIndex("User_Id");
+
+                    b.ToTable("userAndSastumroebis");
+                });
+
             modelBuilder.Entity("TravelTo.Models.UserAndTurebiMap", b =>
                 {
                     b.Property<int?>("Turebi_Id")
@@ -959,6 +974,25 @@ namespace TravelTo.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.UserAndSastumroebi", b =>
+                {
+                    b.HasOne("TravelTo.Models.Sastumroebi", "sastumroebi")
+                        .WithMany("user_sastumroebi")
+                        .HasForeignKey("Sastumorebi_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelTo.Models.User", "users")
+                        .WithMany("user_sastumroebi")
+                        .HasForeignKey("User_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("sastumroebi");
+
+                    b.Navigation("users");
+                });
+
             modelBuilder.Entity("TravelTo.Models.UserAndTurebiMap", b =>
                 {
                     b.HasOne("TravelTo.Models.Turebi", "turebi")
@@ -983,6 +1017,11 @@ namespace TravelTo.Migrations
                     b.Navigation("Turebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
+                {
+                    b.Navigation("user_sastumroebi");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.Navigation("UserAndTurebiMapT");
@@ -997,6 +1036,8 @@ namespace TravelTo.Migrations
             modelBuilder.Entity("TravelTo.Models.User", b =>
                 {
                     b.Navigation("UserAndTurebiMapU");
+
+                    b.Navigation("user_sastumroebi");
                 });
 #pragma warning restore 612, 618
         }

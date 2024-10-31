@@ -26,5 +26,6 @@ namespace TravelTo.Models
         public int Tviseba_Id { get; set; }
         [ForeignKey("Tviseba_Id")]
         public TvisebebiSastumroebis tvisebebiSastumroebis{  get; set; }
+        public ICollection<UserAndSastumroebi> user_sastumroebi { get; set; }
     }
 }

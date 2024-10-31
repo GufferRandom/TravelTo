@@ -18,6 +18,7 @@ namespace TravelTo.Data
         public DbSet<ContactPerson> ContactiUndat { get; set; }
         public DbSet<Sastumroebi> Sastumroebis { get; set; }
         public DbSet<TvisebebiSastumroebis> TvisebebiDaSastumroebi { get; set; }
+        public DbSet<UserAndSastumroebi> userAndSastumroebis{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -266,8 +267,12 @@ namespace TravelTo.Data
             modelBuilder.Entity<Turebi>().HasOne(u => u.Company).WithMany(u => u.Turebi).HasForeignKey(u => u.Company_Id);
             modelBuilder.Entity<UserAndTurebiMap>().HasOne(u => u.turebi).WithMany(u => u.UserAndTurebiMapT).HasForeignKey(u => u.Turebi_Id);
             modelBuilder.Entity<UserAndTurebiMap>().HasOne(u => u.User).WithMany(u => u.UserAndTurebiMapU).HasForeignKey(u => u.User_Id);
-
             modelBuilder.Entity<Sastumroebi>().HasOne(u => u.tvisebebiSastumroebis).WithOne(u => u.Sastumro);
+            modelBuilder.Entity<UserAndSastumroebi>().HasKey(u => new { u.Sastumorebi_Id, u.User_Id });
+            modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.sastumroebi).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.Sastumorebi_Id);
+            modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.users).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.User_Id);
+
+
         }
         
 

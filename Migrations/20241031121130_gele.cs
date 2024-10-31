@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class help : Migration
+    public partial class gele : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -297,6 +297,30 @@ namespace TravelTo.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "userAndSastumroebis",
+                columns: table => new
+                {
+                    Sastumorebi_Id = table.Column<int>(type: "int", nullable: false),
+                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userAndSastumroebis", x => new { x.Sastumorebi_Id, x.User_Id });
+                    table.ForeignKey(
+                        name: "FK_userAndSastumroebis_AspNetUsers_User_Id",
+                        column: x => x.User_Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_userAndSastumroebis_Sastumroebis_Sastumorebi_Id",
+                        column: x => x.Sastumorebi_Id,
+                        principalTable: "Sastumroebis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Companies",
                 columns: new[] { "Company_Id", "Name", "description", "img_name", "owner" },
@@ -408,6 +432,11 @@ namespace TravelTo.Migrations
                 column: "Company_Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_userAndSastumroebis_User_Id",
+                table: "userAndSastumroebis",
+                column: "User_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAndTurebi_User_Id",
                 table: "UserAndTurebi",
                 column: "User_Id");
@@ -435,7 +464,7 @@ namespace TravelTo.Migrations
                 name: "ContactiUndat");
 
             migrationBuilder.DropTable(
-                name: "Sastumroebis");
+                name: "userAndSastumroebis");
 
             migrationBuilder.DropTable(
                 name: "UserAndTurebi");
@@ -444,13 +473,16 @@ namespace TravelTo.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "TvisebebiDaSastumroebi");
+                name: "Sastumroebis");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Turebis");
+
+            migrationBuilder.DropTable(
+                name: "TvisebebiDaSastumroebi");
 
             migrationBuilder.DropTable(
                 name: "Companies");
