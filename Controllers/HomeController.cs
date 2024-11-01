@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Components.RenderTree;
 using Mono.TextTemplating;
 using System.Runtime.InteropServices;
 using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Mvc.Formatters;
 namespace TravelTo.Controllers
 {
 	public class HomeController : Controller
@@ -539,6 +540,42 @@ namespace TravelTo.Controllers
 		{
 			HttpContext.Session.SetString("SortinCompania", "SaxeliKlebadobaKompania");
 			return RedirectToAction("Sastumroebi");
+		}
+		public IActionResult Fav_Sastumroebi(int id)
+		{
+            //var request_reader = Request.Headers["Referer"].ToString();
+            //Console.WriteLine(request_reader);
+
+            if (_signInManager.IsSignedIn(User)) {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				var get_sastumro=_context.Sastumroebis.FirstOrDefault(x => x.Id==id);
+				var get_new_user = new UserAndSastumroebi() { Sastumorebi_Id=id,User_Id= userid };
+				var get_if_exist = _context.userAndSastumroebis.Where(u => u.User_Id == userid && u.Sastumorebi_Id == id).FirstOrDefault();
+				if(get_if_exist != null)
+				{
+					TempData["Sastumroexists"] = "Sastumro exists simn";
+				}
+				else
+				{
+				_context.userAndSastumroebis.Add(get_new_user);
+				_context.SaveChanges();
+				TempData["SastumroSuc"] = "Sastumro warmatebit daemata kalatashi";
+				}
+            }
+            return RedirectToAction(Request.Headers["Referer"].ToString());
+		}
+		public IActionResult Kalatidan_wamogeba()
+		{
+            if (_signInManager.IsSignedIn(User))
+            {
+                var get_user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var get_user_sastumroebi= _context.userAndSastumroebis.Where(u => u.User_Id == get_user).Select(u=>u.sastumroebi);
+                ViewBag.sastumroebi = get_user_sastumroebi;
+                return View();
+                
+            }
+            return View();
 		}
 	}
 }
