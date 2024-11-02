@@ -1,6 +1,8 @@
 ﻿@model List<Sastumroebi>
 <div class="container text-center">
-
+    <span class="text-danger">@TempData["Sastumroexists"]</span>
+    <span class="text-success">@TempData["SastumroSuc"]</span>
+    <span class="text-danger">@TempData["NotRegirted"]</span>
     <div class="row">
         <div class="col-sm-3">
             <form method="post" asp-controller="Home" asp-action="Sastumroebi">

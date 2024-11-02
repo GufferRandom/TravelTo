@@ -362,7 +362,8 @@ namespace TravelTo.Controllers
 				var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
 									  .Select(u => u.turebi)
 									  .ToList();
-
+				var get_user_fav_sastumroebi=_context.userAndSastumroebis.Where(u=>u.User_Id == userid).Select(u=>u.sastumroebi).ToList();
+				ViewBag.sastumroebi = get_user_fav_sastumroebi;
 				return View(get_user_favs);
 			}
 			return View();
@@ -553,29 +554,43 @@ namespace TravelTo.Controllers
 				var get_if_exist = _context.userAndSastumroebis.Where(u => u.User_Id == userid && u.Sastumorebi_Id == id).FirstOrDefault();
 				if(get_if_exist != null)
 				{
-					TempData["Sastumroexists"] = "Sastumro exists simn";
+					TempData["Sastumroexists"] = "Sastumro kalatashia ukve batono simn";
 				}
 				else
 				{
 				_context.userAndSastumroebis.Add(get_new_user);
 				_context.SaveChanges();
 				TempData["SastumroSuc"] = "Sastumro warmatebit daemata kalatashi";
-				}
-            }
-            return RedirectToAction(Request.Headers["Referer"].ToString());
-		}
-		public IActionResult Kalatidan_wamogeba()
-		{
-            if (_signInManager.IsSignedIn(User))
-            {
-                var get_user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return Redirect(Request.Headers["Referer"].ToString());
 
-                var get_user_sastumroebi= _context.userAndSastumroebis.Where(u => u.User_Id == get_user).Select(u=>u.sastumroebi);
-                ViewBag.sastumroebi = get_user_sastumroebi;
-                return View();
-                
+                }
+                return Redirect(Request.Headers["Referer"].ToString());
+
             }
-            return View();
+            TempData["NotRegirted"] = "Damatebistvis sawiroa rom daregistridet";
+            return Redirect(Request.Headers["Referer"].ToString());
+		}
+	
+		public IActionResult Kalatidan_Washla(int id) {
+			var user_id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var get_sastumro = _context.userAndSastumroebis.Where(u => u.User_Id == user_id 
+													&& u.Sastumorebi_Id == id).
+													Select(u => u.sastumroebi).
+													FirstOrDefault();
+			if (get_sastumro != null)
+			{
+				_context.Sastumroebis.Remove(get_sastumro);
+				_context.SaveChanges();
+				TempData["SastumroWaishala"] = "სასტუმრო წარმატებით წაიშალა";
+				return Redirect(Request.Headers["Referer"].ToString());
+			}
+		
+				TempData["SastumroWashlaError"] = "რაღაც ერორია";
+
+				return Redirect(Request.Headers["Referer"].ToString());
+		
+
+
 		}
 	}
 }
