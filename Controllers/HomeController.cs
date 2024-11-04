@@ -489,9 +489,33 @@ namespace TravelTo.Controllers
 			ViewBag.current_page = current_page;
 			var get_http_ses = HttpContext.Session.GetString("SortinCompania");
 
-			List<Hashtable> list = new List<Hashtable>();
 			var tvisebebi_row= new TvisebebiSastumroebis();
 			var tvisebebi_get_row = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
+			List<Hashtable> list = new List<Hashtable>(tvisebebi_get_row.Count());
+			for(int i = 0; i < tvisebebi_get_row.Count(); i++)
+			{
+				Hashtable hashi = new Hashtable();
+				
+				hashi.Add(tvisebebi_get_row[i], "NO");
+				if (archeuli != null)
+				{
+					foreach (var susi in archeuli)
+					{
+						if (susi == tvisebebi_get_row[i])
+						{
+							hashi.Remove(tvisebebi_get_row[i]);
+							hashi.Add(tvisebebi_get_row[i], "YES");
+
+						}
+
+					}
+				}
+				list.Add(hashi);
+			}
+			foreach (var hashi in list)
+			{
+				Console.WriteLine($"{string.Join("",hashi.Keys.Cast<string>())} {string.Join("", hashi.Values.Cast<string>())}");
+			}
 			var tvisebebi_all_values = _context.TvisebebiDaSastumroebi.ToList();
             switch (get_http_ses)
 			{
@@ -520,7 +544,6 @@ namespace TravelTo.Controllers
 			
 			return View(sastumro);
 		}
-
 
 		public IActionResult FasiZrdaCompania()
 		{
@@ -573,13 +596,11 @@ namespace TravelTo.Controllers
 	
 		public IActionResult Kalatidan_Washla(int id) {
 			var user_id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var get_sastumro = _context.userAndSastumroebis.Where(u => u.User_Id == user_id 
-													&& u.Sastumorebi_Id == id).
-													Select(u => u.sastumroebi).
-													FirstOrDefault();
+			var get_sastumro = _context.userAndSastumroebis.Where(u => u.User_Id == user_id
+													&& u.Sastumorebi_Id == id).FirstOrDefault();
 			if (get_sastumro != null)
 			{
-				_context.Sastumroebis.Remove(get_sastumro);
+				_context.userAndSastumroebis.Remove(get_sastumro);
 				_context.SaveChanges();
 				TempData["SastumroWaishala"] = "სასტუმრო წარმატებით წაიშალა";
 				return Redirect(Request.Headers["Referer"].ToString());
