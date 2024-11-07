@@ -25,597 +25,615 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using NuGet.Protocol;
 namespace TravelTo.Controllers
 {
-	public class HomeController : Controller
-	{
-		private readonly ApplicationDataContext _context;
-		private readonly IWebHostEnvironment webHostEnvironment;
-		private readonly SignInManager<User> _signInManager;
+    public class HomeController : Controller
+    {
+        private readonly ApplicationDataContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly SignInManager<User> _signInManager;
 
-		public HomeController(ApplicationDataContext context, IWebHostEnvironment webHostEnvironment, SignInManager<User> signInManager)
-		{
-			_context = context;
-			this.webHostEnvironment = webHostEnvironment;
-			_signInManager = signInManager;
-		}
-		public IActionResult Index()
-		{
-			var turebi = _context.Turebis.ToList();
-			if (_signInManager.IsSignedIn(User))
-			{
-				var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
-									  .Select(u => u.turebi)
-									  .ToList().Count();
-				ViewBag.howmany = get_user_favs;
-			}
-			return View(turebi);
-		}
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-		public IActionResult Add()
-		{
-			var gettin_company = _context.Companies.ToList();
+        public HomeController(ApplicationDataContext context, IWebHostEnvironment webHostEnvironment, SignInManager<User> signInManager)
+        {
+            _context = context;
+            this.webHostEnvironment = webHostEnvironment;
+            _signInManager = signInManager;
+        }
+        public IActionResult Index()
+        {
+            var turebi = _context.Turebis.ToList();
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
+                                      .Select(u => u.turebi)
+                                      .ToList().Count();
+                ViewBag.howmany = get_user_favs;
+            }
+            return View(turebi);
+        }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Add()
+        {
+            var gettin_company = _context.Companies.ToList();
 
-			ViewBag.company = gettin_company;
-			return View();
-		}
+            ViewBag.company = gettin_company;
+            return View();
+        }
 
-		[HttpPost]
-		public IActionResult Add(TurebiDto turebi, string kompania)
-		{
-			if (turebi.image == null)
-			{
-				ModelState.AddModelError("image", "image is requered as hel");
-			}
+        [HttpPost]
+        public IActionResult Add(TurebiDto turebi, string kompania)
+        {
+            if (turebi.image == null)
+            {
+                ModelState.AddModelError("image", "image is requered as hel");
+            }
 
-			if (ModelState.IsValid)
-			{
-				string wwwrootpath = webHostEnvironment.WebRootPath;
-				string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
-				string productPath = Path.Combine(wwwrootpath, "turebi");
-				if (!Directory.Exists(productPath))
-				{
-					Directory.CreateDirectory(productPath);
-				}
-				using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
-				{
-					turebi.image.CopyTo(fileStream);
-				}
-				int company_id = _context.Companies.Where(u => u.Name == kompania).
-														Select(u => u.Company_Id).
-														FirstOrDefault();
-				var namdvili_turi = new Turebi()
-				{
-					Name = turebi.Name,
-					Description = turebi.Description,
-					Price = turebi.Price,
-					image_name = filename,
-					Company_Id = company_id,
-				};
-				_context.Add(namdvili_turi);
-				_context.SaveChanges();
-				return RedirectToAction("index");
-			}
-			return View();
-		}
-		public IActionResult GetTuri(int id)
-		{
-			var get_turi = _context.Turebis.Where(x => x.id == id).Include(x => x.Company).FirstOrDefault();
-			var yvela_tur = _context.Turebis.ToList();
-			yvela_tur.Remove(get_turi);
-			ViewBag.yvela_tur = yvela_tur;
-			return View(get_turi);
-		}
-		[HttpGet, DisplayName("Edit")]
-		public IActionResult Edit(int id)
-		{
-			var get_turi2 = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
-			ViewData["img_name"] = get_turi2.image_name;
-			var get_turi_dto = new TurebiDto() { Name = get_turi2.Name, Description = get_turi2.Description, Price = get_turi2.Price };
-			var companies = _context.Companies.Select(x => x.Name).ToList();
-			ViewBag.companies = companies;
-			return View(get_turi_dto);
-		}
-		[HttpPost]
-		public IActionResult Edit(int id, TurebiDto turebi, string kompania)
-		{
-			var get_turi = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
-			string wwwrootpath = webHostEnvironment.WebRootPath;
-			if (turebi.image != null)
-			{
-				string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
-				string productPath = Path.Combine(wwwrootpath, "turebi");
-				if (!Directory.Exists(productPath))
-				{
-					Directory.CreateDirectory(productPath);
-				}
-				using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
-				{
-					turebi.image.CopyTo(fileStream);
-				}
-				get_turi.image_name = filename;
-			};
-			get_turi.Name = turebi.Name;
-			get_turi.Price = turebi.Price;
-			get_turi.Description = turebi.Description;
-			var get_compani = _context.Companies.Where(x => x.Name == kompania).FirstOrDefault();
-			get_turi.Company = get_compani;
-			if (ModelState.IsValid)
-			{
-				_context.Update(get_turi);
-				_context.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			return View();
-		}
-		[HttpPost]
-		public IActionResult Delete(int id)
-		{
-			var tobedeletedTur = _context.Turebis.Include("Company").Where(u => u.id == id).FirstOrDefault();
-			var temp = tobedeletedTur;
-			string wwwpath = webHostEnvironment.WebRootPath;
-			string name = tobedeletedTur.image_name;
-			string Full_Image_Url = Path.Combine(wwwpath, "turebi", name);
-			System.IO.File.Delete(Full_Image_Url);
+            if (ModelState.IsValid)
+            {
+                string wwwrootpath = webHostEnvironment.WebRootPath;
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
+                string productPath = Path.Combine(wwwrootpath, "turebi");
+                if (!Directory.Exists(productPath))
+                {
+                    Directory.CreateDirectory(productPath);
+                }
+                using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                {
+                    turebi.image.CopyTo(fileStream);
+                }
+                int company_id = _context.Companies.Where(u => u.Name == kompania).
+                                                        Select(u => u.Company_Id).
+                                                        FirstOrDefault();
+                var namdvili_turi = new Turebi()
+                {
+                    Name = turebi.Name,
+                    Description = turebi.Description,
+                    Price = turebi.Price,
+                    image_name = filename,
+                    Company_Id = company_id,
+                };
+                _context.Add(namdvili_turi);
+                _context.SaveChanges();
+                return RedirectToAction("index");
+            }
+            return View();
+        }
+        public IActionResult GetTuri(int id)
+        {
+            var get_turi = _context.Turebis.Where(x => x.id == id).Include(x => x.Company).FirstOrDefault();
+            var yvela_tur = _context.Turebis.ToList();
+            yvela_tur.Remove(get_turi);
+            ViewBag.yvela_tur = yvela_tur;
+            return View(get_turi);
+        }
+        [HttpGet, DisplayName("Edit")]
+        public IActionResult Edit(int id)
+        {
+            var get_turi2 = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
+            ViewData["img_name"] = get_turi2.image_name;
+            var get_turi_dto = new TurebiDto() { Name = get_turi2.Name, Description = get_turi2.Description, Price = get_turi2.Price };
+            var companies = _context.Companies.Select(x => x.Name).ToList();
+            ViewBag.companies = companies;
+            return View(get_turi_dto);
+        }
+        [HttpPost]
+        public IActionResult Edit(int id, TurebiDto turebi, string kompania)
+        {
+            var get_turi = _context.Turebis.Where(x => x.id == id).FirstOrDefault();
+            string wwwrootpath = webHostEnvironment.WebRootPath;
+            if (turebi.image != null)
+            {
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(turebi.image.FileName);
+                string productPath = Path.Combine(wwwrootpath, "turebi");
+                if (!Directory.Exists(productPath))
+                {
+                    Directory.CreateDirectory(productPath);
+                }
+                using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                {
+                    turebi.image.CopyTo(fileStream);
+                }
+                get_turi.image_name = filename;
+            };
+            get_turi.Name = turebi.Name;
+            get_turi.Price = turebi.Price;
+            get_turi.Description = turebi.Description;
+            var get_compani = _context.Companies.Where(x => x.Name == kompania).FirstOrDefault();
+            get_turi.Company = get_compani;
+            if (ModelState.IsValid)
+            {
+                _context.Update(get_turi);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var tobedeletedTur = _context.Turebis.Include("Company").Where(u => u.id == id).FirstOrDefault();
+            var temp = tobedeletedTur;
+            string wwwpath = webHostEnvironment.WebRootPath;
+            string name = tobedeletedTur.image_name;
+            string Full_Image_Url = Path.Combine(wwwpath, "turebi", name);
+            System.IO.File.Delete(Full_Image_Url);
 
-			_context.Remove(tobedeletedTur);
-			_context.SaveChanges();
+            _context.Remove(tobedeletedTur);
+            _context.SaveChanges();
 
-			TempData["WarmatebitWaishala"] = $"ტური წარმატებით წაიშალა სახელად {temp.Name} მწარმოებელი კომპანია: {temp.Company.Name}";
+            TempData["WarmatebitWaishala"] = $"ტური წარმატებით წაიშალა სახელად {temp.Name} მწარმოებელი კომპანია: {temp.Company.Name}";
 
-			return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
-		}
-		public IActionResult Yvela(int page_id)
-		{
-			int length_of_turebi = _context.Turebis.Count();
-			int size = 5;
-			int ramdeni_gverdi = (int)Math.Ceiling(length_of_turebi / (double)size);
-			var getti_company = _context.Companies.ToList();
-			ViewBag.company = getti_company;
-			IQueryable<Turebi> query = _context.Turebis.Include("Company");
-			var sortin = HttpContext.Session.GetString("Sortin");
-			switch (sortin)
-			{
-				case "FasiZrda":
-					query = query.OrderBy(x => x.Price);
-					break;
-				case "FasiKlebadoba":
-					query = query.OrderByDescending(x => x.Price);
-					break;
-				case "Saxelizrda":
-					query = query.OrderBy(x => x.Name);
-					break;
-				case "SaxeliKlebadoba":
-					query = query.OrderByDescending(x => x.Name);
-					break;
-				default:
-					break;
-			}
-			ViewBag.current_page = page_id > 0 ? page_id : 1;
-			ViewBag.ramdeni_gverdi = ramdeni_gverdi;
-			if (page_id == 0)
-			{
-				var paged_tur = query.Take(size).ToList();
-				return View(paged_tur);
-			}
-			var pagedTurebis = query.Skip((page_id - 1) * size).Take(size).ToList();
+        }
+        public IActionResult Yvela(int page_id)
+        {
+            int length_of_turebi = _context.Turebis.Count();
+            int size = 5;
+            int ramdeni_gverdi = (int)Math.Ceiling(length_of_turebi / (double)size);
+            var getti_company = _context.Companies.ToList();
+            ViewBag.company = getti_company;
+            IQueryable<Turebi> query = _context.Turebis.Include("Company");
+            var sortin = HttpContext.Session.GetString("Sortin");
+            switch (sortin)
+            {
+                case "FasiZrda":
+                    query = query.OrderBy(x => x.Price);
+                    break;
+                case "FasiKlebadoba":
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case "Saxelizrda":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "SaxeliKlebadoba":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                default:
+                    break;
+            }
+            ViewBag.current_page = page_id > 0 ? page_id : 1;
+            ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+            if (page_id == 0)
+            {
+                var paged_tur = query.Take(size).ToList();
+                return View(paged_tur);
+            }
+            var pagedTurebis = query.Skip((page_id - 1) * size).Take(size).ToList();
 
-			return View(pagedTurebis);
-		}
+            return View(pagedTurebis);
+        }
 
-		public IActionResult Zebna(string names, string selected, string min, string max, string kompania)
-		{
-			double Max = Convert.ToDouble(max);
-			double Min = Convert.ToDouble(min);
-			if (names == null && selected != null && min != null && max != null && kompania != null)
-			{
-				var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected && u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+        public IActionResult Zebna(string names, string selected, string min, string max, string kompania)
+        {
+            double Max = Convert.ToDouble(max);
+            double Min = Convert.ToDouble(min);
+            if (names == null && selected != null && min != null && max != null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected && u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(getting_turs1);
-			}
+                return View(getting_turs1);
+            }
 
-			if (selected == null && names != null && min != null && max != null && kompania != null)
-			{
-				var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == names && u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+            if (selected == null && names != null && min != null && max != null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == names && u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(getting_turs1);
-			}
-			if (names == null && selected == null && min == null && max == null && kompania != null)
-			{
-				var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Company.Name == kompania).ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+                return View(getting_turs1);
+            }
+            if (names == null && selected == null && min == null && max == null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Company.Name == kompania).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(getting_turs1);
+                return View(getting_turs1);
 
-			}
-			if (names == null && selected == null && min != null && max != null && kompania != null)
-			{
-				var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
-				var get_tur = _context.Turebis.Include(u => u.Company).Where(u => u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
-				ViewBag.turebi = getting_turs1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+            }
+            if (names == null && selected == null && min != null && max != null && kompania != null)
+            {
+                var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
+                var get_tur = _context.Turebis.Include(u => u.Company).Where(u => u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
+                ViewBag.turebi = getting_turs1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(get_tur);
-			}
+                return View(get_tur);
+            }
 
-			if (names == null && selected != null && min != null && max != null && kompania == null)
-			{
-				var getting_turs1 = _context.Turebis.Where(u => u.Name == selected && u.Price > Min && u.Price < Max).ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+            if (names == null && selected != null && min != null && max != null && kompania == null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == selected && u.Price > Min && u.Price < Max).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(getting_turs1);
+                return View(getting_turs1);
 
-			}
-			if (selected == null && names != null && min != null && max != null && kompania == null)
-			{
-				var getting_turs1 = _context.Turebis.Where(u => u.Name == names && u.Price > Min && u.Price < Max).ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+            }
+            if (selected == null && names != null && min != null && max != null && kompania == null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == names && u.Price > Min && u.Price < Max).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(getting_turs1);
-			}
-			if (names == null && selected == null && min == null && max == null && kompania == null)
-			{
-				var getting_turs1 = _context.Turebis.ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+                return View(getting_turs1);
+            }
+            if (names == null && selected == null && min == null && max == null && kompania == null)
+            {
+                var getting_turs1 = _context.Turebis.ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return RedirectToAction("yvela");
-			}
-			if (names == null && selected == null && min != null && max != null && kompania == null)
-			{
-				var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
-				var get_tur = _context.Turebis.Where(u => u.Price > Min && u.Price < Max).ToList();
-				ViewBag.turebi = getting_turs1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+                return RedirectToAction("yvela");
+            }
+            if (names == null && selected == null && min != null && max != null && kompania == null)
+            {
+                var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
+                var get_tur = _context.Turebis.Where(u => u.Price > Min && u.Price < Max).ToList();
+                ViewBag.turebi = getting_turs1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(get_tur);
-			}
-			if (names == null && selected != null)
-			{
-				var getting_turs1 = _context.Turebis.Where(u => u.Name == selected).ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+                return View(get_tur);
+            }
+            if (names == null && selected != null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == selected).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(getting_turs1);
+                return View(getting_turs1);
 
-			}
-			if (selected == null && names != null)
-			{
-				var getting_turs1 = _context.Turebis.Where(u => u.Name == names).ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				ViewBag.company = get_company_name;
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
+            }
+            if (selected == null && names != null)
+            {
+                var getting_turs1 = _context.Turebis.Where(u => u.Name == names).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                ViewBag.company = get_company_name;
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
 
-				return View(getting_turs1);
-			}
-			if (names == null && selected == null)
-			{
-				var getting_turs1 = _context.Turebis.ToList();
-				var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.turebi = getting_full_vals1;
+                return View(getting_turs1);
+            }
+            if (names == null && selected == null)
+            {
+                var getting_turs1 = _context.Turebis.ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
 
-				var get_company_name = _context.Companies.Select(u => u.Name).ToList();
-				var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
-				ViewBag.get_country_name = get_country_name;
-				ViewBag.company = get_company_name;
-				return RedirectToAction("yvela");
-			}
-			var getting_turs = _context.Turebis.Where(u => u.Name == selected && u.Name == names).ToList();
-			var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
-			ViewBag.turebi = getting_full_vals;
-			var get_country_name1 = _context.Turebis.Select(u => u.Name).ToList();
-			ViewBag.get_country_name = get_country_name1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
+                ViewBag.company = get_company_name;
+                return RedirectToAction("yvela");
+            }
+            var getting_turs = _context.Turebis.Where(u => u.Name == selected && u.Name == names).ToList();
+            var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
+            ViewBag.turebi = getting_full_vals;
+            var get_country_name1 = _context.Turebis.Select(u => u.Name).ToList();
+            ViewBag.get_country_name = get_country_name1;
 
-			return View(getting_turs);
-		}
-		public IActionResult ShoppingCart()
-		{
-			if (_signInManager.IsSignedIn(User))
-			{
-				var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
-									  .Select(u => u.turebi)
-									  .ToList();
-				var get_user_fav_sastumroebi = _context.userAndSastumroebis.Where(u => u.User_Id == userid).Select(u => u.sastumroebi).ToList();
-				ViewBag.sastumroebi = get_user_fav_sastumroebi;
-				return View(get_user_favs);
-			}
-			return View();
-		}
-		[HttpPost]
-		public IActionResult ShoppingCart(int id)
-		{
-			var refererUrl = Request.Headers["Referer"].ToString();
-			if (_signInManager.IsSignedIn(User))
-			{
-				var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
-				var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				var new_enty = new UserAndTurebiMap { Turebi_Id = id, User_Id = userid };
-				if (_context.UserAndTurebi.Where(u => u.User_Id == userid)
-									  .Select(u => u.turebi)
-									   .Any(u => u.id == id))
-				{
-					TempData["Error"] = "ტური უკვე არი დამატებული კალათაში";
+            return View(getting_turs);
+        }
+        public IActionResult ShoppingCart()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
+                                      .Select(u => u.turebi)
+                                      .ToList();
+                var get_user_fav_sastumroebi = _context.userAndSastumroebis.Where(u => u.User_Id == userid).Select(u => u.sastumroebi).ToList();
+                ViewBag.sastumroebi = get_user_fav_sastumroebi;
+                return View(get_user_favs);
+            }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ShoppingCart(int id)
+        {
+            var refererUrl = Request.Headers["Referer"].ToString();
+            if (_signInManager.IsSignedIn(User))
+            {
+                var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var new_enty = new UserAndTurebiMap { Turebi_Id = id, User_Id = userid };
+                if (_context.UserAndTurebi.Where(u => u.User_Id == userid)
+                                      .Select(u => u.turebi)
+                                       .Any(u => u.id == id))
+                {
+                    TempData["Error"] = "ტური უკვე არი დამატებული კალათაში";
 
-				}
-				else
-				{
-					_context.UserAndTurebi.Add(new_enty);
-					_context.SaveChanges();
-					TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
+                }
+                else
+                {
+                    _context.UserAndTurebi.Add(new_enty);
+                    _context.SaveChanges();
+                    TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
 
-				}
+                }
 
-			}
-			else
-			{
-				TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
-				return Redirect(Request.Headers["Referer"].ToString());
-			}
-			return Redirect(Request.Headers["Referer"].ToString());
-		}
-		public IActionResult AmoshlaKalatidan(int id)
-		{
-			var get_tur = _context.Turebis.Where(u => u.id == id).Select(u => u.id).FirstOrDefault();
-			var user_Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var kide_get = _context.UserAndTurebi.Where(u => u.User_Id == user_Id && u.Turebi_Id == u.Turebi_Id).FirstOrDefault();
-			if (kide_get == null)
-			{
-				TempData["SomeKindOfError"] = "რაღაცა ერრორია";
-				return RedirectToAction("index");
+            }
+            else
+            {
+                TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+        public IActionResult AmoshlaKalatidan(int id)
+        {
+            var get_tur = _context.Turebis.Where(u => u.id == id).Select(u => u.id).FirstOrDefault();
+            var user_Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var kide_get = _context.UserAndTurebi.Where(u => u.User_Id == user_Id && u.Turebi_Id == u.Turebi_Id).FirstOrDefault();
+            if (kide_get == null)
+            {
+                TempData["SomeKindOfError"] = "რაღაცა ერრორია";
+                return RedirectToAction("index");
 
-			}
-			_context.UserAndTurebi.Remove(kide_get);
-			_context.SaveChanges();
-			TempData["sec"] = "turi warmatebit amoishala biwoo";
-			return Redirect(Request.Headers["Referer"].ToString());
+            }
+            _context.UserAndTurebi.Remove(kide_get);
+            _context.SaveChanges();
+            TempData["sec"] = "turi warmatebit amoishala biwoo";
+            return Redirect(Request.Headers["Referer"].ToString());
 
-		}
-		public IActionResult FasiZrda()
-		{
+        }
+        public IActionResult FasiZrda()
+        {
 
-			HttpContext.Session.SetString("Sortin", "FasiZrda");
-			return RedirectToAction("Yvela");
-		}
-		public IActionResult FasiKlebadoba()
-		{
-			HttpContext.Session.SetString("Sortin", "FasiKlebadoba");
-			return RedirectToAction("Yvela");
-		}
-		public IActionResult SaxeliZrda()
-		{
-			HttpContext.Session.SetString("Sortin", "SaxeliZrda");
+            HttpContext.Session.SetString("Sortin", "FasiZrda");
+            return RedirectToAction("Yvela");
+        }
+        public IActionResult FasiKlebadoba()
+        {
+            HttpContext.Session.SetString("Sortin", "FasiKlebadoba");
+            return RedirectToAction("Yvela");
+        }
+        public IActionResult SaxeliZrda()
+        {
+            HttpContext.Session.SetString("Sortin", "SaxeliZrda");
 
-			return RedirectToAction("Yvela");
-		}
-		public IActionResult SaxeliKlebadoba()
-		{
-			HttpContext.Session.SetString("Sortin", "SaxeliKlebadoba");
-			return RedirectToAction("Yvela");
-		}
-		public IActionResult Yvela_Kompania()
-		{
-			var comapniebi = _context.Companies.ToList();
-			return View(comapniebi);
-		}
-		public IActionResult Get_Kompania(int id)
-		{
+            return RedirectToAction("Yvela");
+        }
+        public IActionResult SaxeliKlebadoba()
+        {
+            HttpContext.Session.SetString("Sortin", "SaxeliKlebadoba");
+            return RedirectToAction("Yvela");
+        }
+        public IActionResult Yvela_Kompania()
+        {
+            var comapniebi = _context.Companies.ToList();
+            return View(comapniebi);
+        }
+        public IActionResult Get_Kompania(int id)
+        {
 
-			var get_company = _context.Companies.FirstOrDefault(u => u.Company_Id == id);
-			var turebi_kompaniebis = _context.Turebis.Where(u => u.Company_Id == id).ToList();
-			ViewBag.yvela_tur = turebi_kompaniebis;
-			return View(get_company);
-		}
-		public IActionResult Contact()
-		{
-			return View();
-		}
-		[HttpPost]
-		public IActionResult Contact(ContactPerson person)
-		{
-			if (_context.ContactiUndat.Any(x => x.First_Name == person.First_Name && x.Last_Name == person.Last_Name && x.Telephoni == person.Telephoni))
-			{
-				TempData["Warning"] = "ukve gagzavnili gaqvt tqveni sakontaqto infromacia";
-				return Redirect(Request.Headers["Referer"].ToString());
-			};
-			if (ModelState.IsValid)
-			{
-				_context.Add(person);
-				_context.SaveChanges();
-				TempData["Successfull"] = "warmatebit gaigzavna tqveni kontaqti";
-			}
-			return View();
-		}
+            var get_company = _context.Companies.FirstOrDefault(u => u.Company_Id == id);
+            var turebi_kompaniebis = _context.Turebis.Where(u => u.Company_Id == id).ToList();
+            ViewBag.yvela_tur = turebi_kompaniebis;
+            return View(get_company);
+        }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Contact(ContactPerson person)
+        {
+            if (_context.ContactiUndat.Any(x => x.First_Name == person.First_Name && x.Last_Name == person.Last_Name && x.Telephoni == person.Telephoni))
+            {
+                TempData["Warning"] = "ukve gagzavnili gaqvt tqveni sakontaqto infromacia";
+                return Redirect(Request.Headers["Referer"].ToString());
+            };
+            if (ModelState.IsValid)
+            {
+                _context.Add(person);
+                _context.SaveChanges();
+                TempData["Successfull"] = "warmatebit gaigzavna tqveni kontaqti";
+            }
+            return View();
+        }
 
-		public IActionResult Sastumroebi(List<string> archeuli, int page_id = 1)
-		{
-			var sastumroebi = _context.Sastumroebis.ToList();
-			var type = typeof(TvisebebiSastumroebis);
-			var tito_size = 5;
-			var size = sastumroebi.Count();
+        public IActionResult Sastumroebi(List<string> archeuli, int page_id = 1)
+        {
+            var sastumroebi = _context.Sastumroebis.ToList();
+            var type = typeof(TvisebebiSastumroebis);
+            var tito_size = 5;
+            var size = sastumroebi.Count();
 
-			var skiP = _context.Sastumroebis.ToList();
+            var skiP = _context.Sastumroebis.ToList();
 
-			var sastumroebis_tvisebebi = type.GetProperties().Select(p => p.Name).ToList();
-			ViewBag.tvisebebi = sastumroebis_tvisebebi;
-			var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
-			ViewBag.ramdeni_gverdi = ramdeni_gverdi;
-			var current_page = page_id;
-			ViewBag.current_page = current_page;
-			var get_http_ses = HttpContext.Session.GetString("SortinCompania");
+            var sastumroebis_tvisebebi = type.GetProperties().Select(p => p.Name).ToList();
+            ViewBag.tvisebebi = sastumroebis_tvisebebi;
+            var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
+            ViewBag.ramdeni_gverdi = ramdeni_gverdi;
+            var current_page = page_id;
+            ViewBag.current_page = current_page;
+            var get_http_ses = HttpContext.Session.GetString("SortinCompania");
 
-			var tvisebebi_row = new TvisebebiSastumroebis();
-			var tvisebebi_get_row = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
-			List<Hashtable> list = new List<Hashtable>(tvisebebi_get_row.Count());
-			for (int i = 1; i < tvisebebi_get_row.Count() - 1; i++)
-			{
-				Hashtable hashi = new Hashtable();
+            var tvisebebi_row = new TvisebebiSastumroebis();
+            var tvisebebi_get_row = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
+            List<Dictionary<string, string>> list = new List<Dictionary<string, string>>(tvisebebi_get_row.Count());
+            for (int i = 1; i < tvisebebi_get_row.Count() - 1; i++)
+            {
+                Dictionary<string, string> hashi = new Dictionary<string, string>();
 
-				hashi.Add(tvisebebi_get_row[i], "NO");
-				if (archeuli != null)
-				{
-					foreach (var susi in archeuli)
-					{
-						if (susi == tvisebebi_get_row[i])
-						{
-							hashi.Remove(tvisebebi_get_row[i]);
-							hashi.Add(tvisebebi_get_row[i], "YES");
+                hashi.Add(tvisebebi_get_row[i], "NO");
+                if (archeuli != null)
+                {
+                    foreach (var susi in archeuli)
+                    {
+                        if (hashi.ContainsKey(susi))
+                        {
+                            hashi.Remove(tvisebebi_get_row[i]);
+                            hashi.Add(tvisebebi_get_row[i], "YES");
 
-						}
+                        }
 
-					}
-				}
-				list.Add(hashi);
-			}
-			var tvisebebi_all_values = _context.TvisebebiDaSastumroebi.Include(u=>u.Sastumro).ToList();
-			var gsg = new TvisebebiSastumroebis();
-			var tipi = gsg.GetType().GetProperties().Select(u => u.Name).ToList();
-			
-			switch (get_http_ses)
-			{
-				case "FasiZrdaCompania":
-					skiP = skiP.OrderBy(u => u.Fasi).ToList();
-					break;
-				case "FasiKlebadobaCompania":
-					skiP = skiP.OrderByDescending(u => u.Fasi).ToList();
-					break;
-				case "SaxeliZrdaCompania":
-					skiP = skiP.OrderBy(u => u.Name).ToList();
-					break;
-				case "SaxeliKlebadobaKompania":
-					skiP = skiP.OrderByDescending(u => u.Name).ToList();
-					break;
-				default:
-					break;
-			}
-			skiP = skiP.Skip((page_id - 1) * tito_size).Take(tito_size).ToList();
-			return View(skiP);
-		}
-		public IActionResult GetSastumro(int id)
-		{
-			var sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
-			ViewBag.yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
+                    }
+                }
+                list.Add(hashi);
+            }
+            for (int j = 0; j < list.Count; j++)
+            {
+                foreach (var i in list[j])
+                {
+                    Console.WriteLine(i.Key + " " + i.Value);
+                }
+            }
+            var tvisebebi_all_values = _context.TvisebebiDaSastumroebi.Include(u => u.Sastumro).ToList();
+            var gsg = new TvisebebiSastumroebis();
+            var tipi = gsg.GetType().GetProperties().Select(u => u.Name).ToList();
+            List<Dictionary<string,string>> Get_Tviseba_ = new List<Dictionary<string,string>>();
+            foreach(var i in Get_Tviseba_) 
+            {
+                Dictionary<string, string> tvisebaRecord = new Dictionary<string, string>();
+                var prop = new TvisebebiSastumroebis().GetType().GetProperties();
+                var name_prop= new TvisebebiSastumroebis().GetType().GetProperties().Select(u=>u.Name);
+                foreach (var j in prop)
+                {
+                    Console.WriteLine(j.GetValue(i.Keys));
+                }
+            }
 
-			return View(sastumro);
-		}
+            switch (get_http_ses)
+            {
+                case "FasiZrdaCompania":
+                    skiP = skiP.OrderBy(u => u.Fasi).ToList();
+                    break;
+                case "FasiKlebadobaCompania":
+                    skiP = skiP.OrderByDescending(u => u.Fasi).ToList();
+                    break;
+                case "SaxeliZrdaCompania":
+                    skiP = skiP.OrderBy(u => u.Name).ToList();
+                    break;
+                case "SaxeliKlebadobaKompania":
+                    skiP = skiP.OrderByDescending(u => u.Name).ToList();
+                    break;
+                default:
+                    break;
+            }
+            skiP = skiP.Skip((page_id - 1) * tito_size).Take(tito_size).ToList();
+            return View(skiP);
+        }
+        public IActionResult GetSastumro(int id)
+        {
+            var sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
+            ViewBag.yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
 
-		public IActionResult FasiZrdaCompania()
-		{
-			HttpContext.Session.SetString("SortinCompania", "FasiZrdaCompania");
-			return RedirectToAction("Sastumroebi");
-		}
-		public IActionResult FasiKlebadobaCompania()
-		{
-			HttpContext.Session.SetString("SortinCompania", "FasiKlebadobaCompania");
-			return RedirectToAction("Sastumroebi");
-		}
-		public IActionResult SaxeliZrdaCompania()
-		{
-			HttpContext.Session.SetString("SortinCompania", "SaxeliZrdaCompania");
-			return RedirectToAction("Sastumroebi");
-		}
-		public IActionResult SaxeliKlebadobaKompania()
-		{
-			HttpContext.Session.SetString("SortinCompania", "SaxeliKlebadobaKompania");
-			return RedirectToAction("Sastumroebi");
-		}
-		public IActionResult Fav_Sastumroebi(int id)
-		{
-			//var request_reader = Request.Headers["Referer"].ToString();
-			//Console.WriteLine(request_reader);
+            return View(sastumro);
+        }
 
-			if (_signInManager.IsSignedIn(User))
-			{
-				var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				var get_sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
-				var get_new_user = new UserAndSastumroebi() { Sastumorebi_Id = id, User_Id = userid };
-				var get_if_exist = _context.userAndSastumroebis.Where(u => u.User_Id == userid && u.Sastumorebi_Id == id).FirstOrDefault();
-				if (get_if_exist != null)
-				{
-					TempData["Sastumroexists"] = "Sastumro kalatashia ukve batono simn";
-				}
-				else
-				{
-					_context.userAndSastumroebis.Add(get_new_user);
-					_context.SaveChanges();
-					TempData["SastumroSuc"] = "Sastumro warmatebit daemata kalatashi";
-					return Redirect(Request.Headers["Referer"].ToString());
+        public IActionResult FasiZrdaCompania()
+        {
+            HttpContext.Session.SetString("SortinCompania", "FasiZrdaCompania");
+            return RedirectToAction("Sastumroebi");
+        }
+        public IActionResult FasiKlebadobaCompania()
+        {
+            HttpContext.Session.SetString("SortinCompania", "FasiKlebadobaCompania");
+            return RedirectToAction("Sastumroebi");
+        }
+        public IActionResult SaxeliZrdaCompania()
+        {
+            HttpContext.Session.SetString("SortinCompania", "SaxeliZrdaCompania");
+            return RedirectToAction("Sastumroebi");
+        }
+        public IActionResult SaxeliKlebadobaKompania()
+        {
+            HttpContext.Session.SetString("SortinCompania", "SaxeliKlebadobaKompania");
+            return RedirectToAction("Sastumroebi");
+        }
+        public IActionResult Fav_Sastumroebi(int id)
+        {
+            //var request_reader = Request.Headers["Referer"].ToString();
+            //Console.WriteLine(request_reader);
 
-				}
-				return Redirect(Request.Headers["Referer"].ToString());
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var get_sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
+                var get_new_user = new UserAndSastumroebi() { Sastumorebi_Id = id, User_Id = userid };
+                var get_if_exist = _context.userAndSastumroebis.Where(u => u.User_Id == userid && u.Sastumorebi_Id == id).FirstOrDefault();
+                if (get_if_exist != null)
+                {
+                    TempData["Sastumroexists"] = "Sastumro kalatashia ukve batono simn";
+                }
+                else
+                {
+                    _context.userAndSastumroebis.Add(get_new_user);
+                    _context.SaveChanges();
+                    TempData["SastumroSuc"] = "Sastumro warmatebit daemata kalatashi";
+                    return Redirect(Request.Headers["Referer"].ToString());
 
-			}
-			TempData["NotRegirted"] = "Damatebistvis sawiroa rom daregistridet";
-			return Redirect(Request.Headers["Referer"].ToString());
-		}
+                }
+                return Redirect(Request.Headers["Referer"].ToString());
 
-		public IActionResult Kalatidan_Washla(int id)
-		{
-			var user_id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var get_sastumro = _context.userAndSastumroebis.Where(u => u.User_Id == user_id
-													&& u.Sastumorebi_Id == id).FirstOrDefault();
-			if (get_sastumro != null)
-			{
-				_context.userAndSastumroebis.Remove(get_sastumro);
-				_context.SaveChanges();
-				TempData["SastumroWaishala"] = "სასტუმრო წარმატებით წაიშალა";
-				return Redirect(Request.Headers["Referer"].ToString());
-			}
+            }
+            TempData["NotRegirted"] = "Damatebistvis sawiroa rom daregistridet";
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
 
-			TempData["SastumroWashlaError"] = "რაღაც ერორია";
+        public IActionResult Kalatidan_Washla(int id)
+        {
+            var user_id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var get_sastumro = _context.userAndSastumroebis.Where(u => u.User_Id == user_id
+                                                    && u.Sastumorebi_Id == id).FirstOrDefault();
+            if (get_sastumro != null)
+            {
+                _context.userAndSastumroebis.Remove(get_sastumro);
+                _context.SaveChanges();
+                TempData["SastumroWaishala"] = "სასტუმრო წარმატებით წაიშალა";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
 
-			return Redirect(Request.Headers["Referer"].ToString());
+            TempData["SastumroWashlaError"] = "რაღაც ერორია";
+
+            return Redirect(Request.Headers["Referer"].ToString());
 
 
 
-		}
-	}
+        }
+    }
 }
 
