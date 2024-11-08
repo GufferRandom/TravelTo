@@ -521,20 +521,6 @@ namespace TravelTo.Controllers
                     Console.WriteLine(i.Key + " " + i.Value);
                 }
             }
-            var tvisebebi_all_values = _context.TvisebebiDaSastumroebi.Include(u => u.Sastumro).ToList();
-            var gsg = new TvisebebiSastumroebis();
-            var tipi = gsg.GetType().GetProperties().Select(u => u.Name).ToList();
-            List<Dictionary<string,string>> Get_Tviseba_ = new List<Dictionary<string,string>>();
-            foreach(var i in Get_Tviseba_) 
-            {
-                Dictionary<string, string> tvisebaRecord = new Dictionary<string, string>();
-                var prop = new TvisebebiSastumroebis().GetType().GetProperties();
-                var name_prop= new TvisebebiSastumroebis().GetType().GetProperties().Select(u=>u.Name);
-                foreach (var j in prop)
-                {
-                    Console.WriteLine(j.GetValue(i.Keys));
-                }
-            }
 
             switch (get_http_ses)
             {
