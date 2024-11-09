@@ -549,7 +549,6 @@ namespace TravelTo.Controllers
 
             return View(sastumro);
         }
-
         public IActionResult FasiZrdaCompania()
         {
             HttpContext.Session.SetString("SortinCompania", "FasiZrdaCompania");
@@ -599,7 +598,6 @@ namespace TravelTo.Controllers
             TempData["NotRegirted"] = "Damatebistvis sawiroa rom daregistridet";
             return Redirect(Request.Headers["Referer"].ToString());
         }
-
         public IActionResult Kalatidan_Washla(int id)
         {
             var user_id = User.FindFirstValue(ClaimTypes.NameIdentifier);
