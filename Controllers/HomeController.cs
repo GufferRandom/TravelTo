@@ -480,9 +480,7 @@ namespace TravelTo.Controllers
             var type = typeof(TvisebebiSastumroebis);
             var tito_size = 5;
             var size = sastumroebi.Count();
-
             var skiP = _context.Sastumroebis.ToList();
-
             var sastumroebis_tvisebebi = type.GetProperties().Select(p => p.Name).ToList();
             ViewBag.tvisebebi = sastumroebis_tvisebebi;
             var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
@@ -490,7 +488,6 @@ namespace TravelTo.Controllers
             var current_page = page_id;
             ViewBag.current_page = current_page;
             var get_http_ses = HttpContext.Session.GetString("SortinCompania");
-
             var tvisebebi_row = new TvisebebiSastumroebis();
             var tvisebebi_get_row = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
             List<Dictionary<string, string>> list = new List<Dictionary<string, string>>(tvisebebi_get_row.Count());
@@ -521,7 +518,47 @@ namespace TravelTo.Controllers
                     Console.WriteLine(i.Key + " " + i.Value);
                 }
             }
+            var tvisebebi_row1 = new TvisebebiSastumroebis();
+            var tvisebebi_get_row1 = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
+            List<Dictionary<string,string>> pasuxe = new List<Dictionary<string,string>>();
+            var pasx = _context.TvisebebiDaSastumroebi.ToList();
+            foreach (var tvisebebi in pasx)
+            {
+                foreach (var property in tvisebebi.GetType().GetProperties())
+                {
+                    Dictionary<string, string> hashi = new Dictionary<string, string>();
 
+                    var value = property.GetValue(tvisebebi)?.ToString();
+                    if (value == "YES" || value == "NO")
+                    {
+                        hashi.Add(property.Name, value);
+                        pasuxe.Add(hashi);
+                    }
+                }
+
+
+            }
+            foreach (var i in list)
+            {
+                var filtered = pasuxe.FindAll(dict =>
+                {
+                    foreach (var kvp in i)
+                    {
+                        if (!dict.ContainsKey(kvp.Key) || dict[kvp.Key] != kvp.Value)
+                        {
+                            return false; 
+                        }
+                    }
+                    return true; 
+                });
+                foreach (var dict in filtered)
+                {
+                    foreach (var kvp in dict)
+                    {
+                        Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+                    }
+                }
+            }
             switch (get_http_ses)
             {
                 case "FasiZrdaCompania":
