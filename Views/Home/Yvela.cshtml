@@ -1,60 +1,60 @@
 ﻿@model List<Turebi>
 <div class="container text-center">
-    <span class="text-danger">@TempData["Failed"]</span>
-    <span class="text-success">@TempData["Success"]</span>
-    <span class="text-danger">@TempData["Error"]</span>
+			<span class="text-danger">@TempData["Failed"]</span>
+			<span class="text-success">@TempData["Success"]</span>
+			<span class="text-danger">@TempData["Error"]</span>
     <div class="row">
         <div class="col-sm-3">
-            <form method="post" asp-controller="Home" asp-action="Zebna">
+	<form method="post" asp-controller="Home" asp-action="Zebna">
                 <h2>ფილტრი</h2>
                 <div style="display: flex; justify-content: left; align-items: center; margin-top: 70px;">
                     <input class="form-control" list="datalistOptions" id="exampleDataList" type="search"
                            name="names" placeholder="Type to search..." style="flex: 1; margin-right: 10px;">
-                    <button type="submit" class="btn btn-outline-secondary">
-                        <i class="bi bi-search" style="font-size:20px"></i>
-                    </button>
-                </div>
+						<button type="submit" class="btn btn-outline-secondary">
+							<i class="bi bi-search" style="font-size:20px"></i>
+						</button>
+					</div>
 
 
-                <datalist id="datalistOptions">
-                    @foreach (var i in Model)
-                    {
-                        <option value="@i.Name">@i.Name</option>
-                    }
-                </datalist>
+					<datalist id="datalistOptions">
+						@foreach (var i in Model)
+						{
+							<option value="@i.Name">@i.Name</option>
+						}
+					</datalist>
                 <label for="selectedqveyana" style="display: block; text-align: left;">ლოკაციები</label>
                 <select id="selectedqveyana" class="form-select" aria-label="Small select example" name="selected" style="margin-top:10px; margin-bottom:10px">
-                    <option value="">აირჩიე ქვეყანა</option>
-                    @foreach (var i in Model)
-                    {
-                        <option value="@i.Name">@i.Name</option>
-                    }
-                </select>
+						<option value="">აირჩიე ქვეყანა</option>
+						@foreach (var i in Model)
+						{
+							<option value="@i.Name">@i.Name</option>
+						}
+					</select>
 
                 <label for="kompania" style="display: block; text-align: left;">კომპანია</label>
                 <select id="kompania" class="form-select" aria-label="Small select example" name="kompania" style="margin-top:10px; margin-bottom:10px">
-                    <option value="">აირჩიე კომპანია</option>
-                    @foreach (var i in ViewBag.company)
-                    {
-                        <option value="@i.Name">@i.Name</option>
-                    }
-                </select>
+						<option value="">აირჩიე კომპანია</option>
+						@foreach (var i in ViewBag.company)
+						{
+							<option value="@i.Name">@i.Name</option>
+						}
+					</select>
 
                 <span style="display: block; text-align: left;">Min</span>
-                <div class="input-group">
-                    <span class="input-group-text">$</span>
+					<div class="input-group">
+						<span class="input-group-text">$</span>
                     <input type="number" class="form-control" name="min" min="0">
-                </div>
+					</div>
 
                 <span style="display: block; text-align: left; margin-top: 10px;">Max</span>
-                <div class="input-group" style="margin-bottom:20px">
+					<div class="input-group" style="margin-bottom:20px">
                     <input type="number" class="form-control" name="max" min="0">
-                    <span class="input-group-text">$</span>
-                </div>
+						<span class="input-group-text">$</span>
+					</div>
 
                 <button type="submit" class="btn btn-success" style="margin-top: 10px; width: 100%;">Submit</button>
-            </form>
-        </div>
+				</form>
+			</div>
 
 
         <div class="col-sm-9">
@@ -71,52 +71,57 @@
                         <li><a class="dropdown-item" asp-controller="Home" asp-action="SaxeliKlebadoba">დალაგება სახელის კლებადობის მიხედვით</a></li>
                     </ul>
                 </div>
-            </div>
-            @foreach (var i in Model)
-            {
+		</div>
+	</form>
+	@foreach (var i in Model)
+	{
                 <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id" class="d-block">
-                                <img src="~/turebi/@i.image_name" class="img-fluid rounded-start" alt="..."
-                                     style="object-fit: cover; width: 100%; height: 200px;">
-                            </a>
-                        </div>
-                        <div class="col-md-8">
+			<div class="row g-0">
+
+				<div class="col-md-4">
+				   <a asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id" class="d-block">
+                <img src="~/turebi/@i.image_name" class="img-fluid rounded-start" alt="..."
+                     style="object-fit: cover; width: 100%; height: 200px;">
+            </a>
+				</div>
+
+				<div class="col-md-8">
                             <div class="card-body text-start">
                                 <span class="text-secondary text-start">
-                                    კომპანია:
+							კომპანია:
                                     <a asp-controller="Home" asp-action="Get_Kompania" asp-route-id="@i.Company.Company_Id" class="text-start">
-                                        @i.Company.Name
-                                    </a>
-                                </span>
+								@i.Company.Name
+
+							</a>
+						</span>
                                 <h5 class="card-title text-start">@i.Name</h5>
                                 <p class="card-text text-start">@i.Description</p>
                                 <p class="card-text text-start"><small class="text-body-secondary fw-bold">$@i.Price</small></p>
-                                <form method="post" asp-controller="Home" asp-action="ShoppingCart" asp-route-id="@i.id" name="form1">
-                                    <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
+						<form method="post" asp-controller="Home" asp-action="ShoppingCart" asp-route-id="@i.id" name="form1">
+							<button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
         </div>
     </div>
 </div>
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end">
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-end">
         <li class="page-item @(ViewBag.current_page == 1 ? "disabled" : "")">
             <a class="page-link" asp-controller="Home" asp-action="Yvela" asp-route-page_id="@(ViewBag.current_page - 1)">Previous</a>
-        </li>
-        @for (int i = 1; i <= ViewBag.ramdeni_gverdi; i++)
-        {
-            <li class="page-item @(i == ViewBag.current_page ? "active" : "")">
-                <a class="page-link" asp-controller="Home" asp-action="Yvela" asp-route-page_id="@i">@i</a>
-            </li>
-        }
+			</li>
+			@for (int i = 1; i <= ViewBag.ramdeni_gverdi; i++)
+			{
+				<li class="page-item @(i == ViewBag.current_page ? "active" : "")">
+					<a class="page-link" asp-controller="Home" asp-action="Yvela" asp-route-page_id="@i">@i</a>
+				</li>
+			}
         <li class="page-item @(ViewBag.current_page == ViewBag.ramdeni_gverdi ? "disabled" : "")">
             <a class="page-link" asp-controller="Home" asp-action="Yvela" asp-route-page_id="@(ViewBag.current_page + 1)">Next</a>
-        </li>
-    </ul>
-</nav>
+			</li>
+		</ul>
+	</nav>
+</div>
