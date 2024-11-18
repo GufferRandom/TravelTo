@@ -40,7 +40,7 @@ namespace TravelTo.Data
                 new Turebi { id = 7, Name = "Denmark", Description = "მაგარიი პონტიიი", Price = 19000, image_name = "Denmark.jfif", Company_Id = 4 },
                 new Turebi { id = 8, Name = "Spain", Description = "მაგარიი პონტიიი", Price = 23000, image_name = "Spain.jfif", Company_Id = 3 }
                 );
-			modelBuilder.Entity<Sastumroebi>().HasData(
+            modelBuilder.Entity<Sastumroebi>().HasData(
           new Sastumroebi {Id = 1, Lokacia = "Robotiqsi", Fasi = 100, Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", gmail = "gmail@gmail.com", Name = "Robotiqsi Grand Hotel", image_name = "1.jpeg" , Tviseba_Id = 1 },
           new Sastumroebi { Id = 2, Lokacia = "Antarqtida", Fasi = 50, Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", gmail = "antarqtida@gmail.com", Name = "Antarqtida Luxury Suites", image_name = "2.jpg" , Tviseba_Id = 2 },
           new Sastumroebi { Id = 3, Lokacia = "Tbilisi", Fasi = 75, Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", gmail = "tbilisi@gmail.com", Name = "Tbilisi City Hotel", image_name = "3.jpg" , Tviseba_Id = 3 },
@@ -51,7 +51,7 @@ namespace TravelTo.Data
           new Sastumroebi { Id = 8, Lokacia = "Gori", Fasi = 45, Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", gmail = "gori@gmail.com", Name = "Gori Fortress Hotel", image_name = "8.jpg" ,Tviseba_Id=8},
           new Sastumroebi { Id = 9, Lokacia = "Telavi", Fasi = 55, Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", gmail = "telavi@gmail.com", Name = "Telavi Wine Hotel", image_name = "9.jpg",Tviseba_Id=9 },
           new Sastumroebi { Id = 10, Lokacia = "Signagi", Fasi = 65, Description = "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", gmail = "signagi@gmail.com", Name = "Signagi Hilltop Hotel", image_name = "10.jpg" , Tviseba_Id = 10 }
-	  );
+      );
             modelBuilder.Entity<TvisebebiSastumroebis>().HasData(
                 new TvisebebiSastumroebis
                 {
@@ -263,7 +263,7 @@ namespace TravelTo.Data
                 spa_centri = "YES",
                 sportdarbazi = "NO"
             });
-			modelBuilder.Entity<UserAndTurebiMap>().HasKey(u => new { u.Turebi_Id, u.User_Id });
+            modelBuilder.Entity<UserAndTurebiMap>().HasKey(u => new { u.Turebi_Id, u.User_Id });
             modelBuilder.Entity<Turebi>().HasOne(u => u.Company).WithMany(u => u.Turebi).HasForeignKey(u => u.Company_Id);
             modelBuilder.Entity<UserAndTurebiMap>().HasOne(u => u.turebi).WithMany(u => u.UserAndTurebiMapT).HasForeignKey(u => u.Turebi_Id);
             modelBuilder.Entity<UserAndTurebiMap>().HasOne(u => u.User).WithMany(u => u.UserAndTurebiMapU).HasForeignKey(u => u.User_Id);
@@ -272,8 +272,7 @@ namespace TravelTo.Data
             modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.sastumroebi).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.Sastumorebi_Id);
             modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.users).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.User_Id);
 
-         
-            modelBuilder.Entity<Sastumroebi>().HasMany(u=>u.Tvisebebis_Sastumroebi).WithOne(u=>u.Sastumro).HasForeignKey(u=>u.Sastumros_Id);
+
         }
         
 

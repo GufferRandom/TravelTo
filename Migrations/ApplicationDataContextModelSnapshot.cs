@@ -528,9 +528,6 @@ namespace TravelTo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Tviseba_Id"));
 
-                    b.Property<int>("Sastumros_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Shinauri_cxovelebis_dashveba")
                         .HasColumnType("nvarchar(max)");
 

@@ -27,9 +27,6 @@ namespace TravelTo.Models
 
         public Sastumroebi Sastumro { get; set; }
 
-        public int Sastumros_Id{ get; set; }
-        [ForeignKey("Sastumros_Id")]
-        public Sastumroebi? Sastumro{ get; set; }
     
     }
 }
