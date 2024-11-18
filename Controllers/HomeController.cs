@@ -23,6 +23,7 @@ using System.Runtime.InteropServices;
 using Microsoft.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using NuGet.Protocol;
+using static Azure.Core.HttpHeader;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -57,11 +58,9 @@ namespace TravelTo.Controllers
         public IActionResult Add()
         {
             var gettin_company = _context.Companies.ToList();
-
             ViewBag.company = gettin_company;
             return View();
         }
-
         [HttpPost]
         public IActionResult Add(TurebiDto turebi, string kompania)
         {
@@ -69,7 +68,6 @@ namespace TravelTo.Controllers
             {
                 ModelState.AddModelError("image", "image is requered as hel");
             }
-
             if (ModelState.IsValid)
             {
                 string wwwrootpath = webHostEnvironment.WebRootPath;
@@ -103,9 +101,9 @@ namespace TravelTo.Controllers
         public IActionResult GetTuri(int id)
         {
             var get_turi = _context.Turebis.Where(x => x.id == id).Include(x => x.Company).FirstOrDefault();
-            var yvela_tur = _context.Turebis.ToList();
-            yvela_tur.Remove(get_turi);
-            ViewBag.yvela_tur = yvela_tur;
+            var Yvela_tur = _context.Turebis.ToList();
+            Yvela_tur.Remove(get_turi);
+            ViewBag.Yvela_tur = Yvela_tur;
             return View(get_turi);
         }
         [HttpGet, DisplayName("Edit")]
@@ -159,12 +157,9 @@ namespace TravelTo.Controllers
             string name = tobedeletedTur.image_name;
             string Full_Image_Url = Path.Combine(wwwpath, "turebi", name);
             System.IO.File.Delete(Full_Image_Url);
-
             _context.Remove(tobedeletedTur);
             _context.SaveChanges();
-
             TempData["WarmatebitWaishala"] = $"ტური წარმატებით წაიშალა სახელად {temp.Name} მწარმოებელი კომპანია: {temp.Company.Name}";
-
             return RedirectToAction("Index");
 
         }
@@ -296,7 +291,7 @@ namespace TravelTo.Controllers
                 var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.get_country_name = get_country_name;
 
-                return RedirectToAction("yvela");
+                return RedirectToAction("Yvela");
             }
             if (names == null && selected == null && min != null && max != null && kompania == null)
             {
@@ -345,7 +340,7 @@ namespace TravelTo.Controllers
                 var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.get_country_name = get_country_name;
                 ViewBag.company = get_company_name;
-                return RedirectToAction("yvela");
+                return RedirectToAction("Yvela");
             }
             var getting_turs = _context.Turebis.Where(u => u.Name == selected && u.Name == names).ToList();
             var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
@@ -450,7 +445,7 @@ namespace TravelTo.Controllers
 
             var get_company = _context.Companies.FirstOrDefault(u => u.Company_Id == id);
             var turebi_kompaniebis = _context.Turebis.Where(u => u.Company_Id == id).ToList();
-            ViewBag.yvela_tur = turebi_kompaniebis;
+            ViewBag.Yvela_tur = turebi_kompaniebis;
             return View(get_company);
         }
         public IActionResult Contact()
@@ -582,7 +577,7 @@ namespace TravelTo.Controllers
         public IActionResult GetSastumro(int id)
         {
             var sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
-            ViewBag.yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
+            ViewBag.Yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
 
             return View(sastumro);
         }
@@ -608,9 +603,6 @@ namespace TravelTo.Controllers
         }
         public IActionResult Fav_Sastumroebi(int id)
         {
-            //var request_reader = Request.Headers["Referer"].ToString();
-            //Console.WriteLine(request_reader);
-
             if (_signInManager.IsSignedIn(User))
             {
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -647,14 +639,10 @@ namespace TravelTo.Controllers
                 TempData["SastumroWaishala"] = "სასტუმრო წარმატებით წაიშალა";
                 return Redirect(Request.Headers["Referer"].ToString());
             }
-
             TempData["SastumroWashlaError"] = "რაღაც ერორია";
-
             return Redirect(Request.Headers["Referer"].ToString());
-
-
-
         }
     }
+    
 }
 
