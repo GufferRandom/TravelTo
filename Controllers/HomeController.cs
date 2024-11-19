@@ -205,6 +205,19 @@ namespace TravelTo.Controllers
         {
             double Max = Convert.ToDouble(max);
             double Min = Convert.ToDouble(min);
+            ViewBag.current_page = 1;
+            ViewBag.ramdeni_gverdi = 1;
+            if (names == null && selected == null && min != null && max == null && kompania == null)
+            {
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(x => (int)x.Price > int.Parse(min)).ToList();
+                var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.turebi = getting_full_vals1;
+                var get_company_name = _context.Companies.Select(u => u.Name).ToList();
+                var get_country_name = _context.Turebis.Select(u => u.Name).ToList();
+                ViewBag.get_country_name = get_country_name;
+                ViewBag.company = get_company_name;
+                return View(getting_turs1);
+            }
             if (names == null && selected != null && min != null && max != null && kompania != null)
             {
                 var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected && u.Price > Min && u.Price < Max && u.Company.Name == kompania).ToList();
@@ -258,7 +271,7 @@ namespace TravelTo.Controllers
 
             if (names == null && selected != null && min != null && max != null && kompania == null)
             {
-                var getting_turs1 = _context.Turebis.Where(u => u.Name == selected && u.Price > Min && u.Price < Max).ToList();
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected && u.Price > Min && u.Price < Max).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
                 var get_company_name = _context.Companies.Select(u => u.Name).ToList();
@@ -271,7 +284,7 @@ namespace TravelTo.Controllers
             }
             if (selected == null && names != null && min != null && max != null && kompania == null)
             {
-                var getting_turs1 = _context.Turebis.Where(u => u.Name == names && u.Price > Min && u.Price < Max).ToList();
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == names && u.Price > Min && u.Price < Max).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
                 var get_company_name = _context.Companies.Select(u => u.Name).ToList();
@@ -296,7 +309,7 @@ namespace TravelTo.Controllers
             if (names == null && selected == null && min != null && max != null && kompania == null)
             {
                 var getting_turs1 = _context.Turebis.Select(u => u.Name).ToList();
-                var get_tur = _context.Turebis.Where(u => u.Price > Min && u.Price < Max).ToList();
+                var get_tur = _context.Turebis.Include(u => u.Company).Where(u => u.Price > Min && u.Price < Max).ToList();
                 ViewBag.turebi = getting_turs1;
                 var get_company_name = _context.Companies.Select(u => u.Name).ToList();
                 ViewBag.company = get_company_name;
@@ -307,7 +320,7 @@ namespace TravelTo.Controllers
             }
             if (names == null && selected != null)
             {
-                var getting_turs1 = _context.Turebis.Where(u => u.Name == selected).ToList();
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
                 var get_company_name = _context.Companies.Select(u => u.Name).ToList();
@@ -320,7 +333,7 @@ namespace TravelTo.Controllers
             }
             if (selected == null && names != null)
             {
-                var getting_turs1 = _context.Turebis.Where(u => u.Name == names).ToList();
+                var getting_turs1 = _context.Turebis.Include(u => u.Company).Where(u => u.Name == names).ToList();
                 var getting_full_vals1 = _context.Turebis.Select(u => u.Name).ToList();
                 ViewBag.turebi = getting_full_vals1;
                 var get_company_name = _context.Companies.Select(u => u.Name).ToList();
@@ -342,7 +355,8 @@ namespace TravelTo.Controllers
                 ViewBag.company = get_company_name;
                 return RedirectToAction("Yvela");
             }
-            var getting_turs = _context.Turebis.Where(u => u.Name == selected && u.Name == names).ToList();
+           
+            var getting_turs = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected && u.Name == names).ToList();
             var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
             ViewBag.turebi = getting_full_vals;
             var get_country_name1 = _context.Turebis.Select(u => u.Name).ToList();
