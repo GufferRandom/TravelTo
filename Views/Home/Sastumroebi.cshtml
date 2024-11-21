@@ -5,7 +5,7 @@
     <span class="text-danger">@TempData["NotRegirted"]</span>
     <div class="row">
         <div class="col-sm-3">
-            <form method="post" asp-controller="Home" asp-action="Sastumroebi">
+            <form method="post" asp-controller="Home" asp-action="SastumroebiFilteri">
                 <h2>ფილტრი</h2>
                
                 <div style="display: flex; margin-top: 70px;">
@@ -21,16 +21,16 @@
                         <option value="@i.Name">@i.Name</option>
                     }
                 </datalist>
-                <select class="form-select" style="margin-top:10px" aria-label="Default select example">
-                    <option selected>ლოკაცია</option>
+                <select class="form-select" style="margin-top:10px" aria-label="Default select example" name="lokacia">
+                    <option value="">ლოკაცია</option>
                     @foreach (var location in Model.Select(m => m.Lokacia).Distinct())
                     {
                         <option value="@location">@location</option>
                     }
                 </select>
 
-                <select class="form-select" style="margin-top:10px;margin-bottom:10px" aria-label="Default select example">
-                    <option selected>სახელი</option>
+                <select class="form-select" name="sasumtrosaxeli" style="margin-top:10px;margin-bottom:10px" aria-label="Default select example">
+                    <option value="">სახელი</option>
                     @foreach (var name in Model.Select(m => m.Name).Distinct())
                     {
                         <option value="@name">@name</option>

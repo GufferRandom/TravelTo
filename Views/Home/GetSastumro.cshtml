@@ -1,4 +1,10 @@
 ﻿@model Sastumroebi
+<div class="container text-center m-4">
+
+<span class="text-danger">@TempData["Sastumroexists"]</span>
+<span class="text-success">@TempData["SastumroSuc"]</span>
+<span class="text-danger">@TempData["NotRegirted"]</span>
+</div>
 <section>        
 <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
@@ -12,7 +18,7 @@
                 </div>
                 <p class="lead">@Model.Description</p>
                 <div class="d-flex">
-                    <form method="post" asp-controller="Home" asp-action="ShoppingCart" asp-route-id="@Model.Id" name="form1">
+                <form method="post" asp-controller="Home" asp-action="Fav_Sastumroebi" asp-route-id="@Model.Id" name="form1">
                         <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
                     </form>
                 </div>
