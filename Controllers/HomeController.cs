@@ -24,6 +24,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using NuGet.Protocol;
 using static Azure.Core.HttpHeader;
+using System.Reflection;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -31,7 +32,6 @@ namespace TravelTo.Controllers
         private readonly ApplicationDataContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly SignInManager<User> _signInManager;
-
         public HomeController(ApplicationDataContext context, IWebHostEnvironment webHostEnvironment, SignInManager<User> signInManager)
         {
             _context = context;
@@ -355,7 +355,7 @@ namespace TravelTo.Controllers
                 ViewBag.company = get_company_name;
                 return RedirectToAction("Yvela");
             }
-           
+
             var getting_turs = _context.Turebis.Include(u => u.Company).Where(u => u.Name == selected && u.Name == names).ToList();
             var getting_full_vals = _context.Turebis.Select(u => u.Name).ToList();
             ViewBag.turebi = getting_full_vals;
@@ -399,9 +399,7 @@ namespace TravelTo.Controllers
                     _context.UserAndTurebi.Add(new_enty);
                     _context.SaveChanges();
                     TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
-
                 }
-
             }
             else
             {
@@ -498,76 +496,6 @@ namespace TravelTo.Controllers
             ViewBag.current_page = current_page;
             var get_http_ses = HttpContext.Session.GetString("SortinCompania");
             var tvisebebi_row = new TvisebebiSastumroebis();
-            //var tvisebebi_get_row = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
-            //List<Dictionary<string, string>> list = new List<Dictionary<string, string>>(tvisebebi_get_row.Count());
-            //for (int i = 1; i < tvisebebi_get_row.Count() - 1; i++)
-            //{
-            //    Dictionary<string, string> hashi = new Dictionary<string, string>();
-
-            //    hashi.Add(tvisebebi_get_row[i], "NO");
-            //    if (archeuli != null)
-            //    {
-            //        foreach (var susi in archeuli)
-            //        {
-            //            if (hashi.ContainsKey(susi))
-            //            {
-            //                hashi.Remove(tvisebebi_get_row[i]);
-            //                hashi.Add(tvisebebi_get_row[i], "YES");
-
-            //            }
-
-            //        }
-            //    }
-            //    list.Add(hashi);
-            //}
-            //for (int j = 0; j < list.Count; j++)
-            //{
-            //    foreach (var i in list[j])
-            //    {
-            //        Console.WriteLine(i.Key + " " + i.Value);
-            //    }
-            //}
-            //var tvisebebi_row1 = new TvisebebiSastumroebis();
-            //var tvisebebi_get_row1 = tvisebebi_row.GetType().GetProperties().Select(u => u.Name).ToList();
-            //List<Dictionary<string,string>> pasuxe = new List<Dictionary<string,string>>();
-            //var pasx = _context.TvisebebiDaSastumroebi.ToList();
-            //foreach (var tvisebebi in pasx)
-            //{
-            //    foreach (var property in tvisebebi.GetType().GetProperties())
-            //    {
-            //        Dictionary<string, string> hashi = new Dictionary<string, string>();
-
-            //        var value = property.GetValue(tvisebebi)?.ToString();
-            //        if (value == "YES" || value == "NO")
-            //        {
-            //            hashi.Add(property.Name, value);
-            //            pasuxe.Add(hashi);
-            //        }
-            //    }
-
-
-            //}
-            //foreach (var i in list)
-            //{
-            //    var filtered = pasuxe.FindAll(dict =>
-            //    {
-            //        foreach (var kvp in i)
-            //        {
-            //            if (!dict.ContainsKey(kvp.Key) || dict[kvp.Key] != kvp.Value)
-            //            {
-            //                return false; 
-            //            }
-            //        }
-            //        return true; 
-            //    });
-            //    foreach (var dict in filtered)
-            //    {
-            //        foreach (var kvp in dict)
-            //        {
-            //            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
-            //        }
-            //    }
-            //}
             switch (get_http_ses)
             {
                 case "FasiZrdaCompania":
@@ -656,7 +584,7 @@ namespace TravelTo.Controllers
             TempData["SastumroWashlaError"] = "რაღაც ერორია";
             return Redirect(Request.Headers["Referer"].ToString());
         }
-        public IActionResult SastumroebiFilteri(string lokacia,string sasumtrosaxeli, int page_id=1)
+        public IActionResult SastumroebiFilteri(string lokacia, string sasumtrosaxeli, List<string> archeuli, int page_id = 1)
         {
             var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);
@@ -670,30 +598,61 @@ namespace TravelTo.Controllers
             var current_page = page_id;
             ViewBag.current_page = current_page;
             var sastumroebi_lsit = _context.Sastumroebis.ToList();
-            Console.WriteLine(sasumtrosaxeli);
-            Console.WriteLine(lokacia);
+            //filtri tvisebebi unda gadmoces im saitidan da aq gaiflitros imedia aq rac xdeba ra damaviwydeba
+            var tvisebatype = new TvisebebiSastumroebis();
+            var tipi = tvisebatype.GetType().GetProperties().Select(p => p.Name).ToList();
+            Dictionary<string, string> tvisebebi = new Dictionary<string, string>();
+            foreach (var i in tipi)
+            {
+                tvisebebi.Add(i, "NO");
+            }
+            foreach (var j in archeuli)
+            {
+                if (tvisebebi.ContainsKey(j))
+                {
+                    tvisebebi[j] = "YES";
+                }
+            }
+            var saziebeli = _context.TvisebebiDaSastumroebi.ToList();
+            List<Dictionary<string, string>> pas = new List<Dictionary<string, string>>();
+            foreach (var i in saziebeli)
+            {
+                var hlep = new Dictionary<string, string>();
+
+                foreach (var propertyName in tipi)
+                {
+                    var propertyInfo = i.GetType().GetProperty(propertyName);
+                    if (propertyInfo != null)
+                    {
+                        var value = propertyInfo.GetValue(i)?.ToString() ?? string.Empty;
+                        hlep.Add(propertyName, value);
+                    }
+                }
+                pas.Add(hlep);
+            }
             if (lokacia != null && sasumtrosaxeli == null)
             {
                 var bohe = _context.Sastumroebis.Where(x => x.Lokacia == lokacia).ToList();
                 return View("Sastumroebi", bohe);
             }
-            else if(sasumtrosaxeli != null && lokacia == null)
+            else if (sasumtrosaxeli != null && lokacia == null)
             {
-
-                var bohe = _context.Sastumroebis.Where(x=>x.Name == sasumtrosaxeli).ToList();
+                var bohe = _context.Sastumroebis.Where(x => x.Name == sasumtrosaxeli).ToList();
                 return View("Sastumroebi", bohe);
             }
-            else if(sasumtrosaxeli != null && lokacia != null)
+            else if (sasumtrosaxeli != null && lokacia != null)
             {
                 var bohe = _context.Sastumroebis
                     .Where(x => x.Name == sasumtrosaxeli && x.Lokacia == lokacia)
                     .ToList();
                 return View("Sastumroebi", bohe);
-
             }
-            return View("Sastumroebi",sastumroebi_lsit);
+
+            return View("Sastumroebi", sastumroebi_lsit);
+
         }
+
+
     }
-    
 }
 
