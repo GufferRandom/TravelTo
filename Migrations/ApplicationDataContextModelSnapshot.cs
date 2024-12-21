@@ -961,10 +961,8 @@ namespace TravelTo.Migrations
                         .HasForeignKey("TravelTo.Models.Sastumroebi", "Tviseba_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
                     b.Navigation("tvisebebiSastumroebis");
                 });
-
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.HasOne("TravelTo.Models.Company", "Company")
@@ -973,7 +971,6 @@ namespace TravelTo.Migrations
 
                     b.Navigation("Company");
                 });
-
             modelBuilder.Entity("TravelTo.Models.UserAndSastumroebi", b =>
                 {
                     b.HasOne("TravelTo.Models.Sastumroebi", "sastumroebi")

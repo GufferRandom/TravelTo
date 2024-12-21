@@ -480,7 +480,6 @@ namespace TravelTo.Controllers
             }
             return View();
         }
-
         public IActionResult Sastumroebi(List<string> archeuli, int page_id = 1)
         {
             var sastumroebi = _context.Sastumroebis.ToList();
@@ -519,8 +518,12 @@ namespace TravelTo.Controllers
         public IActionResult GetSastumro(int id)
         {
             var sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
+            var tvisebebi = _context.TvisebebiDaSastumroebi.FirstOrDefault(x => x.Tviseba_Id ==sastumro.Tviseba_Id);
+            var tvisebebis_saxeli = new TvisebebiSastumroebis();
+            var tvisebasaxeli = tvisebebis_saxeli.GetType().GetProperties().Select(x => x.Name).ToList();
+            ViewBag.tvisebebi = tvisebebi;
+            ViewBag.tvisebasaxeli= tvisebasaxeli;
             ViewBag.Yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
-
             return View(sastumro);
         }
         public IActionResult FasiZrdaCompania()
@@ -599,27 +602,22 @@ namespace TravelTo.Controllers
             ViewBag.current_page = current_page;
             var sastumroebi_lsit = _context.Sastumroebis.ToList();
             //filtri tvisebebi unda gadmoces im saitidan da aq gaiflitros imedia aq rac xdeba ra damaviwydeba
-            var tvisebatype = new TvisebebiSastumroebis();
-            var tipi = tvisebatype.GetType().GetProperties().Select(p => p.Name).ToList();
-            Dictionary<string, string> tvisebebi = new Dictionary<string, string>();
-            foreach (var i in tipi)
+            var tipi = new TvisebebiSastumroebis();
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var tipebi = tipi.GetType().GetProperties().Select(x => x.Name).ToList();
+            //user picked so the user picks from site checks then go to server then hashing that thing to yes
+            Dictionary<string, string> userPick = new Dictionary<string, string>();
+            foreach(var i in archeuli)
             {
-                tvisebebi.Add(i, "NO");
-            }
-            foreach (var j in archeuli)
-            {
-                if (tvisebebi.ContainsKey(j))
-                {
-                    tvisebebi[j] = "YES";
-                }
-            }
+                userPick.Add(i, "YES");
+            } //aqamde
             var saziebeli = _context.TvisebebiDaSastumroebi.ToList();
             List<Dictionary<string, string>> pas = new List<Dictionary<string, string>>();
             foreach (var i in saziebeli)
             {
-                var hlep = new Dictionary<string, string>();
+            var hlep = new Dictionary<string, string>();
 
-                foreach (var propertyName in tipi)
+            foreach (var propertyName in tipebi)
                 {
                     var propertyInfo = i.GetType().GetProperty(propertyName);
                     if (propertyInfo != null)
@@ -630,29 +628,24 @@ namespace TravelTo.Controllers
                 }
                 pas.Add(hlep);
             }
-            if (lokacia != null && sasumtrosaxeli == null)
+            var filteredResults = pas.Where(dict =>
+            userPick.All(userEntry =>
+            dict.TryGetValue(userEntry.Key, out var value) && value == userEntry.Value)).ToList();
+            var pasuxisaboloo = new List<Sastumroebi>();
+            foreach(var i in filteredResults)
             {
-                var bohe = _context.Sastumroebis.Where(x => x.Lokacia == lokacia).ToList();
-                return View("Sastumroebi", bohe);
+                if (i.TryGetValue("Tviseba_Id", out var value))
+                {
+                    var matchingSastumroebi = sastumroebi_lsit.Where(x => x.Tviseba_Id.ToString() == value);
+                    pasuxisaboloo.AddRange(matchingSastumroebi);
+                }
             }
-            else if (sasumtrosaxeli != null && lokacia == null)
+            if (pasuxisaboloo.Count > 0)
             {
-                var bohe = _context.Sastumroebis.Where(x => x.Name == sasumtrosaxeli).ToList();
-                return View("Sastumroebi", bohe);
+                var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size).Take(tito_size).ToList();
+                return View("Sastumroebi", skap);
             }
-            else if (sasumtrosaxeli != null && lokacia != null)
-            {
-                var bohe = _context.Sastumroebis
-                    .Where(x => x.Name == sasumtrosaxeli && x.Lokacia == lokacia)
-                    .ToList();
-                return View("Sastumroebi", bohe);
-            }
-
             return View("Sastumroebi", sastumroebi_lsit);
-
         }
-
-
     }
 }
-

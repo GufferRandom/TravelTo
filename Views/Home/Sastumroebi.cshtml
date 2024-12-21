@@ -46,7 +46,7 @@
                         </h2>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
-                                @for (int i = 0; i < ViewBag.tvisebebi.Count; i++)
+                                @for (int i = 1; i < ViewBag.tvisebebi.Count-1; i++)
                                 {
                                     <div class="form-check text-start">
                                         <input class="form-check-input" type="checkbox" value="@ViewBag.tvisebebi[i]" id="checkbox-@ViewBag.tvisebebi[i]" name="archeuli">

@@ -9,10 +9,8 @@ namespace TravelTo.Data
     {
         public ApplicationDataContext(DbContextOptions<ApplicationDataContext> options) : base(options)
         {
-
         }
         public DbSet<Company> Companies { get; set; }
-
         public DbSet<Turebi> Turebis { get; set; }
         public DbSet<UserAndTurebiMap> UserAndTurebi{ get; set; }
         public DbSet<ContactPerson> ContactiUndat { get; set; }
@@ -272,9 +270,7 @@ namespace TravelTo.Data
             modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.sastumroebi).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.Sastumorebi_Id);
             modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.users).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.User_Id);
 
-
         }
         
-
     }
 }

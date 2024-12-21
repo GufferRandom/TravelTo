@@ -1,6 +1,5 @@
 ﻿@model Sastumroebi
 <div class="container text-center m-4">
-
 <span class="text-danger">@TempData["Sastumroexists"]</span>
 <span class="text-success">@TempData["SastumroSuc"]</span>
 <span class="text-danger">@TempData["NotRegirted"]</span>
@@ -24,9 +23,24 @@
                 </div>
             </div>
         </div>
-</section>
- <section class="py-5 bg-light">
+    <ol class="list-group " style="margin-top: 50px;">
+        @for (int index = 1; index < ViewBag.tvisebasaxeli.Count - 1; index++)
+        {
+            var j = ViewBag.tvisebebi.GetType().GetProperty(ViewBag.tvisebasaxeli[index])?.GetValue(ViewBag.tvisebebi, null);
+            var icon = j == "YES" ? "bi-check-circle text-success" : "bi-x-circle text-danger";
+            var text = j == "YES" ? "YES" : "NO";
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="fw-bold">@ViewBag.tvisebasaxeli[index]</span>
+                <span class="badge @icon" style="font-size: 1.5em;">
+                    @text
+                </span>
+            </li>
+        }
+    </ol>
 
+</section>
+
+ <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">
         <h2 class="fw-bolder mb-4">მსგავსი პროდუქტები</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
