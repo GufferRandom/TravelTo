@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using NuGet.Protocol;
 using static Azure.Core.HttpHeader;
 using System.Reflection;
+using Microsoft.IdentityModel.Tokens;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -493,6 +494,8 @@ namespace TravelTo.Controllers
             ViewBag.ramdeni_gverdi = ramdeni_gverdi;
             var current_page = page_id;
             ViewBag.current_page = current_page;
+            var lokaciebi = _context.Sastumroebis.Select(x => x.Lokacia).Distinct().ToList();
+            ViewBag.lokaciebi = lokaciebi;
             var get_http_ses = HttpContext.Session.GetString("SortinCompania");
             var tvisebebi_row = new TvisebebiSastumroebis();
             switch (get_http_ses)
@@ -587,17 +590,11 @@ namespace TravelTo.Controllers
             TempData["SastumroWashlaError"] = "რაღაც ერორია";
             return Redirect(Request.Headers["Referer"].ToString());
         }
-        public IActionResult SastumroebiFilteri(string lokacia, string sasumtrosaxeli, List<string> archeuli, int page_id = 1)
+        public IActionResult SastumroebiFilteri(string names,string lokacia, string sasumtrosaxeli, List<string> archeuli, int page_id = 1)
         {
-            var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);
-            var tito_size = 5;
-            var size = sastumroebi.Count();
-            var skiP = _context.Sastumroebis.ToList();
             var sastumroebis_tvisebebi = type.GetProperties().Select(p => p.Name).ToList();
             ViewBag.tvisebebi = sastumroebis_tvisebebi;
-            var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
-            ViewBag.ramdeni_gverdi = ramdeni_gverdi;
             var current_page = page_id;
             ViewBag.current_page = current_page;
             var sastumroebi_lsit = _context.Sastumroebis.ToList();
@@ -640,10 +637,35 @@ namespace TravelTo.Controllers
                     pasuxisaboloo.AddRange(matchingSastumroebi);
                 }
             }
-            if (pasuxisaboloo.Count > 0)
+            //if (names.IsNullOrEmpty())
+            //{
+            //    return View("Sastumroebi", new List<Sastumroebi>());
+
+            //}
+            var lokaciebi = _context.Sastumroebis.Select(x => x.Lokacia).Distinct().ToList();
+            ViewBag.lokaciebi = lokaciebi;
+
+            if (pasuxisaboloo.Count>0 && lokacia == null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
             {
-                var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size).Take(tito_size).ToList();
+                var tito_size_sab = 5;
+                var sizesab = pasuxisaboloo.Count();
+                var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                 return View("Sastumroebi", skap);
+            }
+            if (pasuxisaboloo.Count > 0 && lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty()) //lokacia da damatebiti servicebi arari null
+            {
+                var tito_size_sab = 5;
+                var sizesab = pasuxisaboloo.Count();
+                var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                var skap = pasuxisaboloo.Where(x=>x.Lokacia==lokacia).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                return View("Sastumroebi", skap);
+            }
+            if (archeuli.Count > 0)
+            {
+                return View("Sastumroebi", new List<Sastumroebi>());
             }
             return View("Sastumroebi", sastumroebi_lsit);
         }

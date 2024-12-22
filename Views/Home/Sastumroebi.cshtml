@@ -7,7 +7,6 @@
         <div class="col-sm-3">
             <form method="post" asp-controller="Home" asp-action="SastumroebiFilteri">
                 <h2>ფილტრი</h2>
-               
                 <div style="display: flex; margin-top: 70px;">
                     <input class="form-control" list="datalistOptions" id="exampleDataList"
                            type="search" name="names" placeholder="Type to search...">
@@ -23,12 +22,11 @@
                 </datalist>
                 <select class="form-select" style="margin-top:10px" aria-label="Default select example" name="lokacia">
                     <option value="">ლოკაცია</option>
-                    @foreach (var location in Model.Select(m => m.Lokacia).Distinct())
+                    @foreach (var location in ViewBag.lokaciebi)
                     {
                         <option value="@location">@location</option>
                     }
                 </select>
-
                 <select class="form-select" name="sasumtrosaxeli" style="margin-top:10px;margin-bottom:10px" aria-label="Default select example">
                     <option value="">სახელი</option>
                     @foreach (var name in Model.Select(m => m.Name).Distinct())
@@ -110,8 +108,12 @@
                     </div>
                 </div>
             }
+            @if(Model.Count <= 0)
+            {
+                <p class="text-justify fw-bold font-monospace text-danger" style="font-size:30px">
+                ასეთი სასტუმრო ჯერ ჯერობით არ მოიძებნება</p>
+            }
         </div>
-
     </div>
 </div>
 <nav aria-label="Page navigation example">
