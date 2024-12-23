@@ -656,7 +656,8 @@ namespace TravelTo.Controllers
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
-                    var skap = pasuxisaboloo.Where(x=>x.Name==names).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    var skap = pasuxisaboloo.Where(x=>x.Description.ToLower().Contains(names.ToLower()) || 
+                    x.Name.ToLower().Contains(names.ToLower())).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     return View("Sastumroebi", skap);
                 }
                 if (lokacia == null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty()
@@ -668,7 +669,15 @@ namespace TravelTo.Controllers
                 var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                 return View("Sastumroebi", skap);
             }
-            if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty())
+                if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
+                {
+                    var sizesab = pasuxisaboloo.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&(x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()) )).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
+                }
+                if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
@@ -676,15 +685,24 @@ namespace TravelTo.Controllers
                     var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     return View("Sastumroebi", skap);
                 }
-                 if(lokacia==null && !sasumtrosaxeli.IsNullOrEmpty())
+                if (lokacia == null && !sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
+                {
+                    var sizesab = pasuxisaboloo.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = pasuxisaboloo.Where(x => x.Name == sasumtrosaxeli && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()))).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
+                }
+                if (lokacia==null && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                  {
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = pasuxisaboloo.Where(x => x.Name== sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     return View("Sastumroebi", skap);
-                }
-                if (lokacia != null && !sasumtrosaxeli.IsNullOrEmpty())
+                } 
+               
+                if (lokacia != null && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
                 var sizesab = pasuxisaboloo.Count();
                 var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
@@ -693,6 +711,15 @@ namespace TravelTo.Controllers
                 x.Name==sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                 return View("Sastumroebi", skap);
                 }
+                if (lokacia != null && !sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
+                {
+                    var sizesab = pasuxisaboloo.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&
+                    x.Name == sasumtrosaxeli && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()))).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
+                }
                 else
                 {
                     return View("Sastumroebi", new List<Sastumroebi>());
@@ -700,7 +727,32 @@ namespace TravelTo.Controllers
             }
             else
             {
-                if(!sasumtrosaxeli.IsNullOrEmpty() && !lokacia.IsNullOrEmpty())
+                if (!names.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && lokacia.IsNullOrEmpty())
+                {
+                    var sizesab = sastumroebi_lsit.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = sastumroebi_lsit.Where(x => x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
+                }
+                if (lokacia.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
+                {
+                    var sizesab = sastumroebi_lsit.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = sastumroebi_lsit.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
+                }
+                if (!sasumtrosaxeli.IsNullOrEmpty() && !lokacia.IsNullOrEmpty() && !names.IsNullOrEmpty())
+                {
+                    var sizesab = sastumroebi_lsit.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = sastumroebi_lsit.Where(x => x.Name == sasumtrosaxeli && x.Lokacia == lokacia && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())))
+                        .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
+                }
+                if (!sasumtrosaxeli.IsNullOrEmpty() && !lokacia.IsNullOrEmpty() &&names.IsNullOrEmpty())
                 {
                     var sizesab = sastumroebi_lsit.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
@@ -709,8 +761,19 @@ namespace TravelTo.Controllers
                         .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     return View("Sastumroebi", skap);
                 }
-                if(!lokacia.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty())
+                if (!lokacia.IsNullOrEmpty() && 
+                    sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
+                    var sizesab = sastumroebi_lsit.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = sastumroebi_lsit
+                        .Where(x => x.Lokacia == lokacia && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())))
+                        .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
+                }
+                if (!lokacia.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
+            {
                     var sizesab = sastumroebi_lsit.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
@@ -718,8 +781,17 @@ namespace TravelTo.Controllers
                         .Where(x => x.Lokacia== lokacia)
                         .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     return View("Sastumroebi", skap);
+            }
+                if (lokacia.IsNullOrEmpty() && !sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
+                {
+                    var sizesab = sastumroebi_lsit.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = sastumroebi_lsit.Where(x => x.Name == sasumtrosaxeli && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())))
+                        .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    return View("Sastumroebi", skap);
                 }
-                if(lokacia.IsNullOrEmpty() && !sasumtrosaxeli.IsNullOrEmpty())
+                if (lokacia.IsNullOrEmpty() && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
                     var sizesab = sastumroebi_lsit.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
@@ -729,7 +801,11 @@ namespace TravelTo.Controllers
                     return View("Sastumroebi", skap);
                 }
             }
-            return View("Sastumroebi", sastumroebi_lsit);
+            var sizesaba = sastumroebi_lsit.Count();
+            var ramdeni_gverdi2 = Math.Ceiling(sizesaba / (double)tito_size_sab);
+            ViewBag.ramdeni_gverdi = ramdeni_gverdi2;
+            var skape = sastumroebi_lsit.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+            return View("Sastumroebi", skape);
         }
     }
 }
