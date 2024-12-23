@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TravelTo.Data;
 using TravelTo.Models;
-
 internal class Program
 {
     private static async Task Main(string[] args)
@@ -32,11 +31,7 @@ internal class Program
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             }
         });
-   
-        
-       
 		builder.Services.AddDistributedMemoryCache();
-
 		builder.Services.AddSession(options =>
 		{
 			options.IdleTimeout = TimeSpan.FromSeconds(10);
@@ -99,5 +94,4 @@ internal class Program
         }
         app.Run();
     }
-
 }
