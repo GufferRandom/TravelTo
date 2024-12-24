@@ -58,10 +58,7 @@
                     </div>
                 </div>
                 <button class="btn" style="display: block; text-align:left;font-size:20px">
-
                     <a asp-controller="Home" asp-action="Sastumroebi">
-
-
                         <i class="bi bi-arrow-clockwise"></i>
                     </a>
                 </button>
@@ -84,10 +81,10 @@
                     </ul>
                 </div>
             </div>
-
+                                
             @foreach (var i in Model)
             {
-                <div cl1ss="card mb-3 w-100">
+                <div class="card mb-3 w-100">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <a asp-controller="Home" asp-action="GetSastumro" asp-route-id="@i.Id" class="d-block">
@@ -113,8 +110,8 @@
                 <p class="text-justify fw-bold font-monospace text-danger" style="font-size:30px">
                 ასეთი სასტუმრო ჯერ ჯერობით არ მოიძებნება</p>
             }
-        </div>
     </div>
+        </div>
 </div>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
