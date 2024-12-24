@@ -481,7 +481,7 @@ namespace TravelTo.Controllers
             }
             return View();
         }
-        public IActionResult Sastumroebi(List<string> archeuli, int page_id = 1)
+        public IActionResult Sastumroebi(int page_id = 1)
         {
             var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);
