@@ -9,7 +9,7 @@
                 <h2>ფილტრი</h2>
                 <div style="display: flex; margin-top: 70px;">
                     <input class="form-control" list="datalistOptions" id="exampleDataList"
-                           type="search" name="names" placeholder="Type to search...">
+                           type="search" name="names" value="@((ViewBag.bolonames == null) ? "" : ViewBag.bolonames)" placeholder="@((ViewBag.bolonames == null) ? "type to search":ViewBag.bolonames)">
                     <button type="submit" class="btn btn-outline-secondary">
                         <i class="bi bi-search" style="font-size:20px"></i>
                     </button>
@@ -21,17 +21,30 @@
                     }
                 </datalist>
                 <select class="form-select" style="margin-top:10px" aria-label="Default select example" name="lokacia">
-                    <option value="">ლოკაცია</option>
+                    <option value="@((ViewBag.bolo_archeuli == null) ? "":ViewBag.bolo_archeuli)">
+                        @((ViewBag.bolo_archeuli == null) ? "ლოკაცია":ViewBag.bolo_archeuli)
+                     </option>
                     @foreach (var location in ViewBag.lokaciebi)
                     {
+                        if (location != ViewBag.bolo_archeuli)
+                        {
+                            
                         <option value="@location">@location</option>
+                        }
                     }
                 </select>
                 <select class="form-select" name="sasumtrosaxeli" style="margin-top:10px;margin-bottom:10px" aria-label="Default select example">
-                    <option value="">სახელი</option>
+                    <option value="@((ViewBag.boloarcheulisastumrosaxeli == null) ? "":ViewBag.boloarcheulisastumrosaxeli)">
+                        @((ViewBag.boloarcheulisastumrosaxeli == null) ? "სახელი" : ViewBag.boloarcheulisastumrosaxeli)
+                    </option>
+
                     @foreach (var name in ViewBag.saxelebi)
                     {
+                        if (name != ViewBag.boloarcheulisastumrosaxeli)
+                        {
+                            
                         <option value="@name">@name</option>
+                        }
                     }
                 </select>
 
@@ -47,21 +60,39 @@
                                 @for (int i = 1; i < ViewBag.tvisebebi.Count-1; i++)
                                 {
                                     <div class="form-check text-start">
-                                        <input class="form-check-input" type="checkbox" value="@ViewBag.tvisebebi[i]" id="checkbox-@ViewBag.tvisebebi[i]" name="archeuli">
+                                        <input class="form-check-input" type="checkbox" value="@ViewBag.tvisebebi[i]" 
+                                        id="checkbox-@ViewBag.tvisebebi[i]" name="archeuli">
+
+                                        @if (ViewBag.archeulilist is not null)
+                                        {
+                                            foreach (var j in ViewBag.archeulilist)
+                                            {
+                                                if (ViewBag.tvisebebi[i] == j)
+                                                {
+                                                    <input class="form-check-input" type="checkbox" value="@ViewBag.tvisebebi[i]" 
+                                                    id="checkbox-@ViewBag.tvisebebi[i]" name="archeuli" checked>
+
+                                                }
+                                            }
+                                        }
                                         <label class="form-check-label" for="checkbox-@ViewBag.tvisebebi[i]">
                                             @ViewBag.tvisebebi[i]
                                         </label>
                                     </div>
                                 }
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="btn" style="display: block; text-align:left;font-size:20px">
-                    <a asp-controller="Home" asp-action="Sastumroebi">
-                        <i class="bi bi-arrow-clockwise"></i>
+                <div style="margin: 0; padding: 0;margin-top:5px; text-align: left;">
+                    <a asp-controller="Home" asp-action="Sastumroebi"
+                       class="btn" style="font-size: 20px; padding: 5px; margin: 0; display: inline-block; color:blue">
+                        <i class="bi bi-arrow-clockwise "></i>
                     </a>
-                </button>
+                </div>
+
+
                 <button type="submit" class="btn btn-success" style="margin-top: 10px; width: 100%;">Submit</button>
 
             </form>
