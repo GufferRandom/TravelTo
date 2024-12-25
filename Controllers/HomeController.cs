@@ -488,6 +488,7 @@ namespace TravelTo.Controllers
             if(sax is not null)
             {
                 HttpContext.Session.Remove("lokaciebi");
+                HttpContext.Session.Remove("archeuli");
             }
             var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);

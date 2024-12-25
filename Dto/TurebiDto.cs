@@ -4,8 +4,6 @@ namespace TravelTo.Dto
 {
     public class TurebiDto
     {
-
-
         [Required, MaxLength(50)]
         public string Name { get; set; }
         [Required]
