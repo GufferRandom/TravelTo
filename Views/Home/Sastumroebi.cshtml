@@ -1,4 +1,6 @@
 ﻿@model List<Sastumroebi>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Newtonsoft.Json
 <div class="container text-center">
     <span class="text-danger">@TempData["Sastumroexists"]</span>
     <span class="text-success">@TempData["SastumroSuc"]</span>
@@ -59,13 +61,14 @@
                             <div class="accordion-body">
                                 @for (int i = 1; i < ViewBag.tvisebebi.Count-1; i++)
                                 {
+                                    var ragaca = HttpContextAccessor.HttpContext.Session.GetString("archeuli") == null? new List<string>(): 
+                                        JsonConvert.DeserializeObject<List<string>>(HttpContextAccessor.HttpContext.Session.GetString("archeuli"));
                                     <div class="form-check text-start">
                                         <input class="form-check-input" type="checkbox" value="@ViewBag.tvisebebi[i]" 
                                         id="checkbox-@ViewBag.tvisebebi[i]" name="archeuli">
-
-                                        @if (ViewBag.archeulilist is not null)
+                                        @if (ragaca.Count>0)
                                         {
-                                            foreach (var j in ViewBag.archeulilist)
+                                            foreach (var j in ragaca)
                                             {
                                                 if (ViewBag.tvisebebi[i] == j)
                                                 {
@@ -86,7 +89,7 @@
                     </div>
                 </div>
                 <div style="margin: 0; padding: 0;margin-top:5px; text-align: left;">
-                    <a asp-controller="Home" asp-action="Sastumroebi"
+                    <a asp-controller="Home" asp-action="Sastumroebi" asp-route-sax="racxa"
                        class="btn" style="font-size: 20px; padding: 5px; margin: 0; display: inline-block; color:blue">
                         <i class="bi bi-arrow-clockwise "></i>
                     </a>

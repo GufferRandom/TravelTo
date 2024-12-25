@@ -26,6 +26,8 @@ using NuGet.Protocol;
 using static Azure.Core.HttpHeader;
 using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Routing;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -481,17 +483,18 @@ namespace TravelTo.Controllers
             }
             return View();
         }
-        public IActionResult Sastumroebi(int page_id = 1)
+        public IActionResult Sastumroebi(string? sax,int page_id = 1)
         {
+            if(sax is not null)
+            {
+                HttpContext.Session.Remove("lokaciebi");
+            }
             var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);
             var tito_size = 5;
-            var size = sastumroebi.Count();
             var skiP = _context.Sastumroebis.ToList();
             var sastumroebis_tvisebebi = type.GetProperties().Select(p => p.Name).ToList();
             ViewBag.tvisebebi = sastumroebis_tvisebebi;
-            var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
-            ViewBag.ramdeni_gverdi = ramdeni_gverdi;
             var current_page = page_id;
             ViewBag.current_page = current_page;
             var lokaciebi = _context.Sastumroebis.Select(x => x.Lokacia).Distinct().ToList();
@@ -503,7 +506,14 @@ namespace TravelTo.Controllers
             switch (get_http_ses)
             {
                 case "FasiZrdaCompania":
+                    if(HttpContext.Session.GetString("lokaciebi") is not null)
+                    {
+                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("lokaciebi")).OrderBy(u=>u.Fasi).ToList();
+                    }
+                    else
+                    {
                     skiP = skiP.OrderBy(u => u.Fasi).ToList();
+                    }
                     break;
                 case "FasiKlebadobaCompania":
                     skiP = skiP.OrderByDescending(u => u.Fasi).ToList();
@@ -517,6 +527,9 @@ namespace TravelTo.Controllers
                 default:
                     break;
             }
+            var size = skiP.Count();
+            var ramdeni_gverdi = Math.Ceiling(size / (double)tito_size);
+            ViewBag.ramdeni_gverdi = ramdeni_gverdi;
             skiP = skiP.Skip((page_id - 1) * tito_size).Take(tito_size).ToList();
             return View(skiP);
         }
@@ -668,9 +681,16 @@ namespace TravelTo.Controllers
                 }
                 if (lokacia == null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty()
                 )
+
             {
-                   ViewBag.archeulilist = archeuli;
-                var sizesab = pasuxisaboloo.Count();
+                    HttpContext.Session.SetString("lokaciebi", JsonConvert.SerializeObject(pasuxisaboloo, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
+                    HttpContext.Session.SetString("archeuli",JsonConvert.SerializeObject(archeuli));
+                    ViewBag.archeulilist = archeuli;
+                 var sizesab = pasuxisaboloo.Count();
                 var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                 ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                 var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
@@ -765,6 +785,7 @@ namespace TravelTo.Controllers
                 }
                 if (lokacia.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
+                   
                     var sizesab = sastumroebi_lsit.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
@@ -852,5 +873,6 @@ namespace TravelTo.Controllers
             var skape = sastumroebi_lsit.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
             return View("Sastumroebi", skape);
         }
+       
     }
 }
