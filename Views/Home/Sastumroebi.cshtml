@@ -23,12 +23,12 @@
                     }
                 </datalist>
                 <select class="form-select" style="margin-top:10px" aria-label="Default select example" name="lokacia">
-                    <option value="@((ViewBag.bolo_archeuli == null) ? "":ViewBag.bolo_archeuli)">
-                        @((ViewBag.bolo_archeuli == null) ? "ლოკაცია":ViewBag.bolo_archeuli)
+                    <option value="@((HttpContextAccessor.HttpContext.Session.GetString("lokacia")  == null) ? "":HttpContextAccessor.HttpContext.Session.GetString("lokacia") )">
+                        @((HttpContextAccessor.HttpContext.Session.GetString("lokacia") == null) ? "ლოკაცია" : HttpContextAccessor.HttpContext.Session.GetString("lokacia"))
                      </option>
                     @foreach (var location in ViewBag.lokaciebi)
                     {
-                        if (location != ViewBag.bolo_archeuli)
+                        if (location != HttpContextAccessor.HttpContext.Session.GetString("lokacia"))
                         {
                             
                         <option value="@location">@location</option>

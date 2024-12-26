@@ -489,6 +489,7 @@ namespace TravelTo.Controllers
             {
                 HttpContext.Session.Remove("lokaciebi");
                 HttpContext.Session.Remove("archeuli");
+                HttpContext.Session.Remove("lokacia");
             }
             var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);
@@ -710,8 +711,15 @@ namespace TravelTo.Controllers
                 }
                 if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
+                    HttpContext.Session.SetString("lokaciebi", JsonConvert.SerializeObject(pasuxisaboloo, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
+
+                    HttpContext.Session.SetString("lokacia", lokacia); 
                     ViewBag.archeulilist = archeuli;
-                    ViewBag.bolo_archeuli = lokacia;
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
