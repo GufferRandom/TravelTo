@@ -11,7 +11,7 @@
                 <h2>ფილტრი</h2>
                 <div style="display: flex; margin-top: 70px;">
                     <input class="form-control" list="datalistOptions" id="exampleDataList"
-                           type="search" name="names" value="@((ViewBag.bolonames == null) ? "" : ViewBag.bolonames)" placeholder="@((ViewBag.bolonames == null) ? "type to search":ViewBag.bolonames)">
+                           type="search" name="names" value="@((HttpContextAccessor.HttpContext.Session.GetString("saxeli")== null) ? "" : HttpContextAccessor.HttpContext.Session.GetString("saxeli"))" placeholder="@((HttpContextAccessor.HttpContext.Session.GetString("saxeli")== null) ? "type to search":HttpContextAccessor.HttpContext.Session.GetString("saxeli"))">
                     <button type="submit" class="btn btn-outline-secondary">
                         <i class="bi bi-search" style="font-size:20px"></i>
                     </button>
@@ -36,13 +36,13 @@
                     }
                 </select>
                 <select class="form-select" name="sasumtrosaxeli" style="margin-top:10px;margin-bottom:10px" aria-label="Default select example">
-                    <option value="@((ViewBag.boloarcheulisastumrosaxeli == null) ? "":ViewBag.boloarcheulisastumrosaxeli)">
-                        @((ViewBag.boloarcheulisastumrosaxeli == null) ? "სახელი" : ViewBag.boloarcheulisastumrosaxeli)
+                    <option value="@((HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli") == null) ? " ":HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli"))">
+                        @((HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli") == null) ? "სახელი" : HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli"))
                     </option>
 
                     @foreach (var name in ViewBag.saxelebi)
                     {
-                        if (name != ViewBag.boloarcheulisastumrosaxeli)
+                        if (name != HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli"))
                         {
                             
                         <option value="@name">@name</option>

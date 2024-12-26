@@ -490,6 +490,9 @@ namespace TravelTo.Controllers
                 HttpContext.Session.Remove("lokaciebi");
                 HttpContext.Session.Remove("archeuli");
                 HttpContext.Session.Remove("lokacia");
+                HttpContext.Session.Remove("saxeli");
+                HttpContext.Session.Remove("sastumrosaxeli");
+                HttpContext.Session.Remove("pasuxebi");
             }
             var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);
@@ -508,9 +511,12 @@ namespace TravelTo.Controllers
             switch (get_http_ses)
             {
                 case "FasiZrdaCompania":
-                    if(HttpContext.Session.GetString("lokaciebi") is not null)
+                    if(HttpContext.Session.GetString("pasuxebi") is not null)
                     {
-                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("lokaciebi")).OrderBy(u=>u.Fasi).ToList();
+                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderBy(u=>u.Fasi).ToList();
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count/ 5.0);
+                        ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                        return View(skiP); 
                     }
                     else
                     {
@@ -518,13 +524,43 @@ namespace TravelTo.Controllers
                     }
                     break;
                 case "FasiKlebadobaCompania":
-                    skiP = skiP.OrderByDescending(u => u.Fasi).ToList();
+                    if (HttpContext.Session.GetString("pasuxebi") is not null)
+                    {
+                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderByDescending(u => u.Fasi).ToList();
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / 5.0);
+                        ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                        return View(skiP);
+                    }
+                    else
+                    {
+                        skiP = skiP.OrderByDescending(u => u.Fasi).ToList();
+                    }
                     break;
                 case "SaxeliZrdaCompania":
-                    skiP = skiP.OrderBy(u => u.Name).ToList();
+                    if (HttpContext.Session.GetString("pasuxebi") is not null)
+                    {
+                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderBy(u => u.Name).ToList();
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / 5.0);
+                        ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                        return View(skiP);
+                    }
+                    else
+                    {
+                        skiP = skiP.OrderBy(u => u.Name).ToList();
+                    }
                     break;
                 case "SaxeliKlebadobaKompania":
-                    skiP = skiP.OrderByDescending(u => u.Name).ToList();
+                    if (HttpContext.Session.GetString("pasuxebi") is not null)
+                    {
+                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderByDescending(u => u.Name).ToList();
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / 5.0);
+                        ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                        return View(skiP);
+                    }
+                    else
+                    {
+                        skiP = skiP.OrderByDescending(u => u.Name).ToList();
+                    }
                     break;
                 default:
                     break;
@@ -660,11 +696,6 @@ namespace TravelTo.Controllers
                     pasuxisaboloo.AddRange(matchingSastumroebi);
                 }
             }
-            //if (names.IsNullOrEmpty())
-            //{
-            //    return View("Sastumroebi", new List<Sastumroebi>());
-
-            //}
             var lokaciebi = _context.Sastumroebis.Select(x => x.Lokacia).Distinct().ToList();
             ViewBag.lokaciebi = lokaciebi;
             var tito_size_sab = 5;
@@ -673,33 +704,42 @@ namespace TravelTo.Controllers
                 if (lokacia == null && sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
                     ViewBag.archeulilist = archeuli;
+                    HttpContext.Session.SetString("saxeli", names);
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
                     ViewBag.bolonames = names;
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = pasuxisaboloo.Where(x=>x.Description.ToLower().Contains(names.ToLower()) || 
                     x.Name.ToLower().Contains(names.ToLower())).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
-                    return View("Sastumroebi", skap);
-                }
-                if (lokacia == null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty()
-                )
-
-            {
-                    HttpContext.Session.SetString("lokaciebi", JsonConvert.SerializeObject(pasuxisaboloo, new JsonSerializerSettings
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                         NullValueHandling = NullValueHandling.Ignore
                     }));
+                    return View("Sastumroebi", skap);
+                }
+                if (lokacia == null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty()
+                )
+            {
                     HttpContext.Session.SetString("archeuli",JsonConvert.SerializeObject(archeuli));
                     ViewBag.archeulilist = archeuli;
                  var sizesab = pasuxisaboloo.Count();
                 var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                 ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                 var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
-                return View("Sastumroebi", skap);
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
+                    return View("Sastumroebi", skap);
             }
                 if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
+                    HttpContext.Session.SetString("lokacia", lokacia);
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
+                    HttpContext.Session.SetString("saxeli", names);
                     ViewBag.archeulilist = archeuli;
                     ViewBag.bolonames = names;
                     ViewBag.bolo_archeuli = lokacia;
@@ -707,72 +747,92 @@ namespace TravelTo.Controllers
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&(x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()) )).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
-                    return View("Sastumroebi", skap);
-                }
-                if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
-                {
-                    HttpContext.Session.SetString("lokaciebi", JsonConvert.SerializeObject(pasuxisaboloo, new JsonSerializerSettings
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                         NullValueHandling = NullValueHandling.Ignore
                     }));
+                    return View("Sastumroebi", skap);
+                }
+                if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
+                {
                     HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
-
                     HttpContext.Session.SetString("lokacia", lokacia); 
-                    ViewBag.archeulilist = archeuli;
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (lokacia == null && !sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
-                    ViewBag.archeulilist = archeuli;
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
-                    ViewBag.bolonames = names;
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
+                    HttpContext.Session.SetString("saxeli", names);
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = pasuxisaboloo.Where(x => x.Name == sasumtrosaxeli && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()))).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (lokacia==null && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                  {
-                    ViewBag.archeulilist = archeuli;
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
-
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = pasuxisaboloo.Where(x => x.Name== sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 } 
-               
                 if (lokacia != null && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
-                    ViewBag.archeulilist = archeuli;
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
-                    ViewBag.bolo_archeuli = lokacia;
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
+                    HttpContext.Session.SetString("lokacia", lokacia);
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
                     var sizesab = pasuxisaboloo.Count();
                 var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                 ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                 var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&
                 x.Name==sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
-                return View("Sastumroebi", skap);
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
+                    return View("Sastumroebi", skap);
                 }
                 if (lokacia != null && !sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
-                    ViewBag.archeulilist = archeuli;
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
-                    ViewBag.bolonames = names;
-                    ViewBag.bolo_archeuli = lokacia;
-
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
+                    HttpContext.Session.SetString("lokacia", lokacia);
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
+                    HttpContext.Session.SetString("saxeli", names);
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&
                     x.Name == sasumtrosaxeli && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()))).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 else
@@ -784,65 +844,88 @@ namespace TravelTo.Controllers
             {
                 if (!names.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && lokacia.IsNullOrEmpty())
                 {
-                    ViewBag.bolonames = names;
+                    HttpContext.Session.SetString("saxeli", names);
                     var quer = sastumroebi_lsit.Where(x => x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()));
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (lokacia.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
-                   
                     var sizesab = sastumroebi_lsit.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = sastumroebi_lsit.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (!sasumtrosaxeli.IsNullOrEmpty() && !lokacia.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
-                    ViewBag.bolo_archeuli = lokacia;
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
-                    ViewBag.bolonames = names;
+                    HttpContext.Session.SetString("lokacia", lokacia);
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
+                    HttpContext.Session.SetString("saxeli", names);
                     var quer = sastumroebi_lsit.Where(x => x.Name == sasumtrosaxeli && x.Lokacia == lokacia && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())));
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (!sasumtrosaxeli.IsNullOrEmpty() && 
                     !lokacia.IsNullOrEmpty() &&names.IsNullOrEmpty())
                 {
-                    ViewBag.bolo_archeuli = lokacia;
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
+                    HttpContext.Session.SetString("lokacia", lokacia);
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
                     var quer = sastumroebi_lsit.Where(x => x.Name == sasumtrosaxeli && x.Lokacia == lokacia);
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer
                         .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (!lokacia.IsNullOrEmpty() && 
                     sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
-                    ViewBag.bolo_archeuli = lokacia;
-                    ViewBag.bolonames = names;
+                    HttpContext.Session.SetString("lokacia", lokacia);
+                    HttpContext.Session.SetString("saxeli", names);
                     var quer = sastumroebi_lsit
                         .Where(x => x.Lokacia == lokacia && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())));
-
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (!lokacia.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
             {
-                    ViewBag.bolo_archeuli = lokacia;
+                    HttpContext.Session.SetString("lokacia", lokacia);
                     var quer = sastumroebi_lsit
                         .Where(x => x.Lokacia == lokacia);
                     var sizesab =quer.Count();
@@ -850,29 +933,45 @@ namespace TravelTo.Controllers
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer
                         .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (lokacia.IsNullOrEmpty() && !sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
-                    ViewBag.bolonames = names;
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
+                    HttpContext.Session.SetString("saxeli", names);
+
                     var quer = sastumroebi_lsit.Where(x => x.Name == sasumtrosaxeli && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())));
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer
                         .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
                 if (lokacia.IsNullOrEmpty() && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
-                    ViewBag.boloarcheulisastumrosaxeli = sasumtrosaxeli;
+                    HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
                     var quer = sastumroebi_lsit.Where(x => x.Name == sasumtrosaxeli);
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer
                         .Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
                     return View("Sastumroebi", skap);
                 }
             }   
