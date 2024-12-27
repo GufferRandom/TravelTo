@@ -1,65 +1,79 @@
-﻿@model Sastumroebi
-<div class="container text-center m-4">
-<span class="text-danger">@TempData["Sastumroexists"]</span>
-<span class="text-success">@TempData["SastumroSuc"]</span>
-<span class="text-danger">@TempData["NotRegirted"]</span>
+﻿<div class="container text-center m-4">
+    <span class="text-danger fw-bold">@TempData["Sastumroexists"]</span>
+    <span class="text-success fw-bold">@TempData["SastumroSuc"]</span>
+    <span class="text-danger fw-bold">@TempData["NotRegirted"]</span>
 </div>
-<section>        
-<div class="row gx-4 gx-lg-5 align-items-center">
+<section class="py-5">
+    <div class="container">
+        <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
-                <img class="card-img-top mb-5 mb-md-0" src="~/Sastumroebi/@Model.image_name" alt="@Model.Name - Image" />
+                <img class="card-img-top rounded shadow-lg mb-4" src="~/Sastumroebi/@Model.image_name" alt="@Model.Name - Image" />
             </div>
-
             <div class="col-md-6">
-                <h1 class="display-5 fw-bolder">@Model.Name</h1>
-                <div class="fs-5 mb-5">
-                    <span>$@Model.Fasi</span>
+                <h1 class="display-5 fw-bolder text-primary">@Model.Name</h1>
+                <div class="fs-4 text-muted mb-4">
+                    <span class="text-success">$@Model.Fasi</span>
                 </div>
-                <p class="lead">@Model.Description</p>
-                <div class="d-flex">
-                <form method="post" asp-controller="Home" asp-action="Fav_Sastumroebi" asp-route-id="@Model.Id" name="form1">
-                        <button type="submit" class="btn btn-outline-primary">კალათაში დამატება</button>
+                <p class="lead text-dark">@Model.Description</p>
+                <div class="d-flex align-items-center mb-3">
+                    <form method="post" asp-controller="Home" asp-action="Fav_Sastumroebi" asp-route-id="@Model.Id" name="form1">
+                        <button type="submit" class="btn btn-outline-primary shadow-sm me-3">კალათაში დამატება</button>
                     </form>
+                    <button type="button" class="btn btn-outline-success shadow-sm">დაჯავშნა</button>
                 </div>
+                <div class="d-flex align-items-center mt-3">
+                    <i class="bi bi-geo-alt text-success fs-5"></i>
+                    <label class="fw-bold text-success ms-2">@Model.Lokacia</label>
+                </div>
+                @if (Model.Nomer is not null)
+                {
+                    <div class="d-flex align-items-center mt-2">
+                        <i class="bi bi-telephone text-secondary fs-5"></i>
+                        <label class="text-secondary fw-bold ms-2">@Model.Nomer</label>
+                    </div>
+                }
             </div>
         </div>
-    <ol class="list-group " style="margin-top: 50px;">
-        @for (int index = 1; index < ViewBag.tvisebasaxeli.Count - 1; index++)
-        {
-            var j = ViewBag.tvisebebi.GetType().GetProperty(ViewBag.tvisebasaxeli[index])?.GetValue(ViewBag.tvisebebi, null);
-            var icon = j == "YES" ? "bi-check-circle text-success" : "bi-x-circle text-danger";
-            var text = j == "YES" ? "YES" : "NO";
-            <li class="list-group-item d-flex justify-content-between">
-                <span class="fw-bold">@ViewBag.tvisebasaxeli[index]</span>
-                <span class="badge @icon" style="font-size: 1.5em;">
-                    @text
-                </span>
-            </li>
-        }
-    </ol>
-
+    </div>
 </section>
-
- <section class="py-5 bg-light">
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bolder mb-4">სერვისები</h2>
+        <ol class="list-group" style="margin-top: 20px;">
+            @for (int index = 1; index < ViewBag.tvisebasaxeli.Count - 1; index++)
+            {
+                var j = ViewBag.tvisebebi.GetType().GetProperty(ViewBag.tvisebasaxeli[index])?.GetValue(ViewBag.tvisebebi, null);
+                var icon = j == "YES" ? "bi-check-circle text-success" : "bi-x-circle text-danger";
+                var text = j == "YES" ? "YES" : "NO";
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="fw-bold">@ViewBag.tvisebasaxeli[index]</span>
+                    <span class="badge @icon" style="font-size: 1.5em;">
+                        @text
+                    </span>
+                </li>
+            }
+        </ol>
+    </div>
+</section>
+<section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">
         <h2 class="fw-bolder mb-4">მსგავსი პროდუქტები</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var i in ViewBag.yvelasastumro as List<Sastumroebi>)
             {
                 <div class="col mb-5">
-                    <div class="card h-100">
-                        <img class="card-img-top" style="height:150px" src="~/Sastumroebi/@i.image_name" alt="..." />
+                    <div class="card h-100 shadow-sm">
+                        <img class="card-img-top rounded" style="height:150px; object-fit: cover;" src="~/Sastumroebi/@i.image_name" alt="@i.Name" />
                         <div class="card-body p-4">
-
                             <div class="text-center">
                                 <h5 class="fw-bolder">@i.Name</h5>
-                                $@i.Fasi
+                                <p class="text-muted">$@i.Fasi</p>
                             </div>
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
                                 <a class="btn btn-outline-dark mt-auto" asp-controller="Home" asp-action="GetSastumro" asp-route-id="@i.Id">
-                                        დეტალურად
+                                    დეტალურად
                                 </a>
                             </div>
                         </div>
