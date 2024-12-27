@@ -269,7 +269,9 @@ namespace TravelTo.Data
             modelBuilder.Entity<UserAndSastumroebi>().HasKey(u => new { u.Sastumorebi_Id, u.User_Id });
             modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.sastumroebi).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.Sastumorebi_Id);
             modelBuilder.Entity<UserAndSastumroebi>().HasOne(u => u.users).WithMany(u => u.user_sastumroebi).HasForeignKey(u => u.User_Id);
-
+            modelBuilder.Entity<SastumroebiDaTurebi>().HasKey(u => new {u.Sastumro_Id,u.Turebi_Id});
+            modelBuilder.Entity<SastumroebiDaTurebi>().HasOne(u => u.Turebi).WithMany(u => u.Sastumroebi).HasForeignKey(u => u.Turebi_Id);
+            modelBuilder.Entity<SastumroebiDaTurebi>().HasOne(u => u.Sastumroebi).WithMany(u => u.turebi).HasForeignKey(u => u.Sastumro_Id);
         }
         
     }
