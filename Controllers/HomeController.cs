@@ -28,6 +28,7 @@ using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System.Net.Http.Headers;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -981,6 +982,11 @@ namespace TravelTo.Controllers
             var skape = sastumroebi_lsit.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
             return View("Sastumroebi", skape);
         }
-       
+        [HttpPost]
+        public IActionResult Dajavshna(SastumroDajavshna piri)
+        {
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
     }
 }

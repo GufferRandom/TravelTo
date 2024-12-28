@@ -1,4 +1,5 @@
-﻿<div class="container text-center m-4">
+﻿@model Sastumroebi
+<div class="container text-center m-4">
     <span class="text-danger fw-bold">@TempData["Sastumroexists"]</span>
     <span class="text-success fw-bold">@TempData["SastumroSuc"]</span>
     <span class="text-danger fw-bold">@TempData["NotRegirted"]</span>
@@ -19,7 +20,54 @@
                     <form method="post" asp-controller="Home" asp-action="Fav_Sastumroebi" asp-route-id="@Model.Id" name="form1">
                         <button type="submit" class="btn btn-outline-primary shadow-sm me-3">კალათაში დამატება</button>
                     </form>
-                    <button type="button" class="btn btn-outline-success shadow-sm">დაჯავშნა</button>
+                    <button type="button" class="btn btn-outline-success shadow-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        დაჯავშნა
+                    </button>
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bolder " id="exampleModalLabel">დაჯავშნა</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="post" asp-controller="Home" asp-action="Dajavshna">
+
+                                <div class="modal-body">
+                                    
+                                    <div class="form-floating mb-3">
+                                        @{
+                                            SastumroDajavshna persona = new SastumroDajavshna();
+                                        }
+                                        <input type="text" class="form-control" id="SAXELI" placeholder="სახელი">
+                                        <label for="SAXELI">სახელი</label>
+                                        <span asp-validation-for="@persona.First_Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="GVARI" placeholder="გვარი">
+                                        <label for="GVARI">გვარი</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="tel" class="form-control" id="TELNOMER" placeholder="ტელეფონის ნომერი">
+                                        <label for="TELNOMER">ტელეფონის ნომერი</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="GMAIL" placeholder="გმაილი">
+                                        <label for="GMAIL">გმაილი</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="დატოვე შეტყობინება" id="floatingShetyobineba" style="height: 100px;resize:none"></textarea>
+                                        <label for="floatingShetyobineba">შეტყობინება</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">დახურვა</button>
+                                    <button type="submit" class="btn btn-outline-success">დაჯავშნა</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="d-flex align-items-center mt-3">
                     <i class="bi bi-geo-alt text-success fs-5"></i>
