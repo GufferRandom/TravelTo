@@ -1,4 +1,4 @@
-﻿@model Sastumroebi
+﻿@model SastumtroAndDajavshna
 <div class="container text-center m-4">
     <span class="text-danger fw-bold">@TempData["Sastumroexists"]</span>
     <span class="text-success fw-bold">@TempData["SastumroSuc"]</span>
@@ -8,16 +8,16 @@
     <div class="container">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
-                <img class="card-img-top rounded shadow-lg mb-4" src="~/Sastumroebi/@Model.image_name" alt="@Model.Name - Image" />
+                <img class="card-img-top rounded shadow-lg mb-4" src="~/Sastumroebi/@Model.Sastumroebi.image_name" alt="@Model.Sastumroebi.Name - Image" />
             </div>
             <div class="col-md-6">
-                <h1 class="display-5 fw-bolder text-primary">@Model.Name</h1>
+                <h1 class="display-5 fw-bolder text-primary">@Model.Sastumroebi.Name</h1>
                 <div class="fs-4 text-muted mb-4">
-                    <span class="text-success">$@Model.Fasi</span>
+                    <span class="text-success">$@Model.Sastumroebi.Fasi</span>
                 </div>
-                <p class="lead text-dark">@Model.Description</p>
+                <p class="lead text-dark">@Model.Sastumroebi.Description</p>
                 <div class="d-flex align-items-center mb-3">
-                    <form method="post" asp-controller="Home" asp-action="Fav_Sastumroebi" asp-route-id="@Model.Id" name="form1">
+                    <form method="post" asp-controller="Home" asp-action="Fav_Sastumroebi" asp-route-id="@Model.Sastumroebi.Id" name="form1">
                         <button type="submit" class="btn btn-outline-primary shadow-sm me-3">კალათაში დამატება</button>
                     </form>
                     <button type="button" class="btn btn-outline-success shadow-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -30,33 +30,39 @@
                                     <h5 class="modal-title fw-bolder " id="exampleModalLabel">დაჯავშნა</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
+                               
                                 <form method="post" asp-controller="Home" asp-action="Dajavshna">
+                                   
+                                    <div class="modal-body">
+                                     <input type="text" class="form-control" asp-for="@Model.sastumroDajavshna.Id" hidden />
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="SAXELI" placeholder="სახელი" asp-for="@Model.sastumroDajavshna.First_Name" required>
+                                        <label for="SAXELI" asp-for="@Model.sastumroDajavshna.First_Name">სახელი</label>
+                                        <span asp-validation-for="@Model.sastumroDajavshna.First_Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="GVARI" placeholder="გვარი " asp-for="@Model.sastumroDajavshna.Last_Name" required>
+                                            <label for="GVARI" asp-for="@Model.sastumroDajavshna.Last_Name"> გვარი</label>
+                                        <span asp-validation-for="@Model.sastumroDajavshna.Last_Name" class="text-danger"></span>
 
-                                <div class="modal-body">
-                                    
-                                    <div class="form-floating mb-3">
-                                        @{
-                                            SastumroDajavshna persona = new SastumroDajavshna();
-                                        }
-                                        <input type="text" class="form-control" id="SAXELI" placeholder="სახელი">
-                                        <label for="SAXELI">სახელი</label>
-                                        <span asp-validation-for="@persona.First_Name" class="text-danger"></span>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="GVARI" placeholder="გვარი">
-                                        <label for="GVARI">გვარი</label>
+                                            <input type="tel" class="form-control" id="TELNOMER" placeholder="ტელეფონის ნომერი" asp-for="@Model.sastumroDajavshna.Phone_Number" required>
+                                            <label for="TELNOMER" asp-for="@Model.sastumroDajavshna.Phone_Number">ტელეფონის ნომერი</label>
+                                        <span asp-validation-for="@Model.sastumroDajavshna.Phone_Number" class="text-danger"></span>
+
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="tel" class="form-control" id="TELNOMER" placeholder="ტელეფონის ნომერი">
-                                        <label for="TELNOMER">ტელეფონის ნომერი</label>
+                                            <input type="email" class="form-control" id="GMAIL" placeholder="გმაილი" asp-for="@Model.sastumroDajavshna.gmail" required>
+                                            <label for="GMAIL" asp-for="@Model.sastumroDajavshna.gmail">გმაილი</label>
+                                        <span asp-validation-for="@Model.sastumroDajavshna.gmail" class="text-danger"></span>
+
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="GMAIL" placeholder="გმაილი">
-                                        <label for="GMAIL">გმაილი</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="დატოვე შეტყობინება" id="floatingShetyobineba" style="height: 100px;resize:none"></textarea>
-                                        <label for="floatingShetyobineba">შეტყობინება</label>
+                                            <textarea class="form-control" placeholder="დატოვე შეტყობინება" id="floatingShetyobineba" asp-for="@Model.sastumroDajavshna.text"
+                                                      style="height: 100px;resize:none"></textarea>
+                                            <label for="floatingShetyobineba" asp-for="@Model.sastumroDajavshna.text">შეტყობინება</label>
+                                            <span asp-validation-for="@Model.sastumroDajavshna.text" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -71,13 +77,13 @@
                 </div>
                 <div class="d-flex align-items-center mt-3">
                     <i class="bi bi-geo-alt text-success fs-5"></i>
-                    <label class="fw-bold text-success ms-2">@Model.Lokacia</label>
+                    <label class="fw-bold text-success ms-2">@Model.Sastumroebi.Lokacia</label>
                 </div>
-                @if (Model.Nomer is not null)
+                @if (Model.Sastumroebi.Nomer is not null)
                 {
                     <div class="d-flex align-items-center mt-2">
                         <i class="bi bi-telephone text-secondary fs-5"></i>
-                        <label class="text-secondary fw-bold ms-2">@Model.Nomer</label>
+                        <label class="text-secondary fw-bold ms-2">@Model.Sastumroebi.Nomer</label>
                     </div>
                 }
             </div>

@@ -4,6 +4,8 @@ namespace TravelTo.Models
 {
     public class SastumroDajavshna
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         [MinLength(3,ErrorMessage ="Too small for first_name")]
         [MaxLength(10,ErrorMessage ="Too large for first_name")]

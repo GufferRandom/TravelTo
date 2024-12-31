@@ -17,6 +17,7 @@ namespace TravelTo.Data
         public DbSet<Sastumroebi> Sastumroebis { get; set; }
         public DbSet<TvisebebiSastumroebis> TvisebebiDaSastumroebi { get; set; }
         public DbSet<UserAndSastumroebi> userAndSastumroebis{ get; set; }
+        public DbSet<SastumroDajavshna> sastumroDajavshna { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

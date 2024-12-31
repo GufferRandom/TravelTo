@@ -581,7 +581,9 @@ namespace TravelTo.Controllers
             ViewBag.tvisebebi = tvisebebi;
             ViewBag.tvisebasaxeli= tvisebasaxeli;
             ViewBag.Yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
-            return View(sastumro);
+            SastumtroAndDajavshna sastumtroo = new SastumtroAndDajavshna();
+            sastumtroo.Sastumroebi = sastumro;
+            return View(sastumtroo);
         }
         public IActionResult FasiZrdaCompania()
         {
@@ -911,8 +913,7 @@ namespace TravelTo.Controllers
                 {
                     HttpContext.Session.SetString("lokacia", lokacia);
                     HttpContext.Session.SetString("saxeli", names);
-                    var quer = sastumroebi_lsit
-                        .Where(x => x.Lokacia == lokacia && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())));
+                    var quer = sastumroebi_lsit.Where(x => x.Lokacia == lokacia && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())));
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
@@ -945,7 +946,6 @@ namespace TravelTo.Controllers
                 {
                     HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
                     HttpContext.Session.SetString("saxeli", names);
-
                     var quer = sastumroebi_lsit.Where(x => x.Name == sasumtrosaxeli && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower())));
                     var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
@@ -983,10 +983,11 @@ namespace TravelTo.Controllers
             return View("Sastumroebi", skape);
         }
         [HttpPost]
-        public IActionResult Dajavshna(SastumroDajavshna piri)
+        public IActionResult Dajavshna(SastumtroAndDajavshna piri)
         {
+            _context.Add(piri.sastumroDajavshna);
+            _context.SaveChanges();
             return Redirect(Request.Headers["Referer"].ToString());
         }
-
     }
 }
