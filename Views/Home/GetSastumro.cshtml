@@ -111,7 +111,35 @@
 </section>
 <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">მსგავსი პროდუქტები</h2>
+        <h2 class="fw-bolder mb-4">დაკავშირებული ტურები</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var i in ViewBag.loadturebi as List<Turebi>)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100 shadow-sm">
+                        <img class="card-img-top rounded" style="height:150px; object-fit: cover;" src="~/turebi/@i.image_name" alt="@i.Name" />
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h5 class="fw-bolder">@i.Name</h5>
+                                <p class="text-muted">$@i.Price</p>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" asp-controller="Home" asp-action="GetTuri" asp-route-id="@i.id">
+                                    დეტალურად
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">მსგავსი სასტუმროები</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var i in ViewBag.yvelasastumro as List<Sastumroebi>)
             {

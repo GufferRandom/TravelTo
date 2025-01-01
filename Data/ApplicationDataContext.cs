@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TravelTo.Models;
@@ -18,6 +19,7 @@ namespace TravelTo.Data
         public DbSet<TvisebebiSastumroebis> TvisebebiDaSastumroebi { get; set; }
         public DbSet<UserAndSastumroebi> userAndSastumroebis{ get; set; }
         public DbSet<SastumroDajavshna> sastumroDajavshna { get; set; }
+        public DbSet<SastumroebiDaTurebi> Sastumrodaturebi { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -32,25 +34,35 @@ namespace TravelTo.Data
             modelBuilder.Entity<Turebi>().HasData(
                 new Turebi { id = 1, Name = "Antarqtida", Description = "aq iyo batoni wyali romelmac wyali dalia", Price = 5.99, image_name = "antarqtida.jpg", Company_Id = 1 },
                 new Turebi { id = 2, Name = "Tbilisi", Description = "tbilo tibifli", Price = 15.99, image_name = "Tbilisi.jpg", Company_Id = 3 },
-                new Turebi { id = 3, Name = "Parizi", Description = "parizelta dedaqali", Price = 6.99, image_name = "Parizi.jfif", Company_Id = 2 },
-                new Turebi { id = 4, Name = "Los-Angeles, CA", Description = "მაგარიი პონტიიი", Price = 15555, image_name = "Los-AngelesCa.jfif", Company_Id = 4 },
-                new Turebi { id = 5, Name = "Italy", Description = "მაგარიი პონტიიი", Price = 12341, image_name = "Italy.png", Company_Id = 1 },
-                new Turebi { id = 6, Name = "Brazil", Description = "მაგარიი პონტიიი", Price = 15111, image_name = "Brazil.jfif", Company_Id = 2 },
-                new Turebi { id = 7, Name = "Denmark", Description = "მაგარიი პონტიიი", Price = 19000, image_name = "Denmark.jfif", Company_Id = 4 },
-                new Turebi { id = 8, Name = "Spain", Description = "მაგარიი პონტიიი", Price = 23000, image_name = "Spain.jfif", Company_Id = 3 }
+                new Turebi { id = 3, Name = "Kutasi", Description = "parizelta dedaqali", Price = 6.99, image_name = "Parizi.jfif", Company_Id = 2 },
+                new Turebi { id = 4, Name = "Signagi, CA", Description = "მაგარიი პონტიიი", Price = 15555, image_name = "Los-AngelesCa.jfif", Company_Id = 4 },
+                new Turebi { id = 5, Name = "Batumi", Description = "მაგარიი პონტიიი", Price = 12341, image_name = "Italy.png", Company_Id = 1 },
+                new Turebi { id = 6, Name = "Gori", Description = "მაგარიი პონტიიი", Price = 15111, image_name = "Brazil.jfif", Company_Id = 2 },
+                new Turebi { id = 7, Name = "Telavi", Description = "მაგარიი პონტიიი", Price = 19000, image_name = "Denmark.jfif", Company_Id = 4 },
+                new Turebi { id = 8, Name = "Roboto", Description = "მაგარიი პონტიიი", Price = 23000, image_name = "Spain.jfif", Company_Id = 3 }
                 );
             modelBuilder.Entity<Sastumroebi>().HasData(
-          new Sastumroebi {Id = 1, Lokacia = "Robotiqsi", Fasi = 100, Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", gmail = "gmail@gmail.com", Name = "Robotiqsi Grand Hotel", image_name = "1.jpeg" , Tviseba_Id = 1 },
-          new Sastumroebi { Id = 2, Lokacia = "Antarqtida", Fasi = 50, Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", gmail = "antarqtida@gmail.com", Name = "Antarqtida Luxury Suites", image_name = "2.jpg" , Tviseba_Id = 2 },
-          new Sastumroebi { Id = 3, Lokacia = "Tbilisi", Fasi = 75, Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", gmail = "tbilisi@gmail.com", Name = "Tbilisi City Hotel", image_name = "3.jpg" , Tviseba_Id = 3 },
-          new Sastumroebi { Id = 4, Lokacia = "Kutaisi", Fasi = 60, Description = "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", gmail = "kutaisi@gmail.com", Name = "Kutaisi Boutique Hotel", image_name = "4.webp",Tviseba_Id=4 },
-          new Sastumroebi { Id = 5, Lokacia = "Batumi", Fasi = 80, Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.", gmail = "batumi@gmail.com", Name = "Batumi Beach Resort", image_name = "5.jpg" , Tviseba_Id = 5 },
-          new Sastumroebi { Id = 6, Lokacia = "Mtskheta", Fasi = 40, Description = "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", gmail = "mtskheta@gmail.com", Name = "Mtskheta Heritage Inn", image_name = "6.jpg" ,    Tviseba_Id = 6 },
-          new Sastumroebi { Id = 7, Lokacia = "Zugdidi", Fasi = 30, Description = "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", gmail = "zugdidi@gmail.com", Name = "Zugdidi Park Hotel", image_name = "7.jpg" , Tviseba_Id = 7 },
-          new Sastumroebi { Id = 8, Lokacia = "Gori", Fasi = 45, Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", gmail = "gori@gmail.com", Name = "Gori Fortress Hotel", image_name = "8.jpg" ,Tviseba_Id=8},
-          new Sastumroebi { Id = 9, Lokacia = "Telavi", Fasi = 55, Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", gmail = "telavi@gmail.com", Name = "Telavi Wine Hotel", image_name = "9.jpg",Tviseba_Id=9 },
-          new Sastumroebi { Id = 10, Lokacia = "Signagi", Fasi = 65, Description = "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", gmail = "signagi@gmail.com", Name = "Signagi Hilltop Hotel", image_name = "10.jpg" , Tviseba_Id = 10 }
+          new Sastumroebi {Id = 1, Lokacia = "RobotiqsiHotel", Fasi = 100, Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", gmail = "gmail@gmail.com", Name = "Robotiqsi Grand Hotel", image_name = "1.jpeg" , Tviseba_Id = 1 },
+          new Sastumroebi { Id = 2, Lokacia = "AntarqtidaHotel", Fasi = 50, Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", gmail = "antarqtida@gmail.com", Name = "Antarqtida Luxury Suites", image_name = "2.jpg" , Tviseba_Id = 2 },
+          new Sastumroebi { Id = 3, Lokacia = "TbilisiHotel", Fasi = 75, Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", gmail = "tbilisi@gmail.com", Name = "Tbilisi City Hotel", image_name = "3.jpg" , Tviseba_Id = 3 },
+          new Sastumroebi { Id = 4, Lokacia = "KutaisiHotel", Fasi = 60, Description = "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", gmail = "kutaisi@gmail.com", Name = "Kutaisi Boutique Hotel", image_name = "4.webp",Tviseba_Id=4 },
+          new Sastumroebi { Id = 5, Lokacia = "BatumiHotel", Fasi = 80, Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.", gmail = "batumi@gmail.com", Name = "Batumi Beach Resort", image_name = "5.jpg" , Tviseba_Id = 5 },
+          new Sastumroebi { Id = 6, Lokacia = "MtskhetaHotel", Fasi = 40, Description = "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", gmail = "mtskheta@gmail.com", Name = "Mtskheta Heritage Inn", image_name = "6.jpg" ,    Tviseba_Id = 6 },
+          new Sastumroebi { Id = 7, Lokacia = "ZugdidiHotel", Fasi = 30, Description = "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", gmail = "zugdidi@gmail.com", Name = "Zugdidi Park Hotel", image_name = "7.jpg" , Tviseba_Id = 7 },
+          new Sastumroebi { Id = 8, Lokacia = "GoriHotel", Fasi = 45, Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", gmail = "gori@gmail.com", Name = "Gori Fortress Hotel", image_name = "8.jpg" ,Tviseba_Id=8},
+          new Sastumroebi { Id = 9, Lokacia = "TelaviHotel", Fasi = 55, Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", gmail = "telavi@gmail.com", Name = "Telavi Wine Hotel", image_name = "9.jpg",Tviseba_Id=9 },
+          new Sastumroebi { Id = 10, Lokacia = "SignagiHotel", Fasi = 65, Description = "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", gmail = "signagi@gmail.com", Name = "Signagi Hilltop Hotel", image_name = "10.jpg" , Tviseba_Id = 10 }
       );
+            modelBuilder.Entity<SastumroebiDaTurebi>().HasData(
+                   new SastumroebiDaTurebi { Sastumro_Id = 2, Turebi_Id = 1 },
+                   new SastumroebiDaTurebi { Sastumro_Id = 3, Turebi_Id = 2 },
+                   new SastumroebiDaTurebi { Sastumro_Id = 4, Turebi_Id = 3 },
+                   new SastumroebiDaTurebi { Sastumro_Id = 1, Turebi_Id = 8 },
+                   new SastumroebiDaTurebi { Sastumro_Id = 10, Turebi_Id = 4 },
+                   new SastumroebiDaTurebi { Sastumro_Id = 9, Turebi_Id = 7 },
+                   new SastumroebiDaTurebi { Sastumro_Id = 8, Turebi_Id = 6 },
+                   new SastumroebiDaTurebi { Sastumro_Id = 5, Turebi_Id = 5 }
+                );
             modelBuilder.Entity<TvisebebiSastumroebis>().HasData(
                 new TvisebebiSastumroebis
                 {

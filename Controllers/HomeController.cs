@@ -575,7 +575,11 @@ namespace TravelTo.Controllers
         public IActionResult GetSastumro(int id)
         {
             var sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
-            var tvisebebi = _context.TvisebebiDaSastumroebi.FirstOrDefault(x => x.Tviseba_Id ==sastumro.Tviseba_Id);
+            var get_turebi = _context.Sastumrodaturebi.Where(x => x.Sastumro_Id == id).Select(x=>x.Turebi_Id).ToList();
+            var load_turebi = _context.Turebis.Where(x => get_turebi.Contains(x.id)).ToList();
+            ViewBag.loadturebi = load_turebi;
+          var tvisebebi = _context.TvisebebiDaSastumroebi.FirstOrDefault(x => x.Tviseba_Id ==sastumro.Tviseba_Id);
+
             var tvisebebis_saxeli = new TvisebebiSastumroebis();
             var tvisebasaxeli = tvisebebis_saxeli.GetType().GetProperties().Select(x => x.Name).ToList();
             ViewBag.tvisebebi = tvisebebi;
