@@ -1,6 +1,7 @@
 ﻿@model SastumtroAndDajavshna
 <div class="container text-center m-4">
     <span class="text-danger fw-bold">@TempData["Sastumroexists"]</span>
+    <span class="text-success fw-bold">@TempData["Success"] </span>
     <span class="text-success fw-bold">@TempData["SastumroSuc"]</span>
     <span class="text-danger fw-bold">@TempData["NotRegirted"]</span>
 </div>
@@ -35,6 +36,7 @@
                                    
                                     <div class="modal-body">
                                      <input type="text" class="form-control" asp-for="@Model.sastumroDajavshna.Id" hidden />
+                                     <input type="text" class="form-control" asp-for="@Model.Sastumro_Id" value="@Model.Sastumroebi.Id" hidden/>
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control" id="SAXELI" placeholder="სახელი" asp-for="@Model.sastumroDajavshna.First_Name" required>
                                         <label for="SAXELI" asp-for="@Model.sastumroDajavshna.First_Name">სახელი</label>

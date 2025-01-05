@@ -505,6 +505,21 @@ namespace TravelTo.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumtroAndDajavshna", b =>
+                {
+                    b.Property<int>("Sastumro_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SastumroDajavshna_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Sastumro_Id", "SastumroDajavshna_Id");
+
+                    b.HasIndex("SastumroDajavshna_Id");
+
+                    b.ToTable("SastumtroAndDajavshna");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.Property<int>("id")
@@ -1076,6 +1091,25 @@ namespace TravelTo.Migrations
                     b.Navigation("Turebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumtroAndDajavshna", b =>
+                {
+                    b.HasOne("TravelTo.Models.SastumroDajavshna", "sastumroDajavshna")
+                        .WithMany("SastumroAndDajavshna")
+                        .HasForeignKey("SastumroDajavshna_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelTo.Models.Sastumroebi", "Sastumroebi")
+                        .WithMany("SastumroAndDajavshna")
+                        .HasForeignKey("Sastumro_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sastumroebi");
+
+                    b.Navigation("sastumroDajavshna");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.HasOne("TravelTo.Models.Company", "Company")
@@ -1128,8 +1162,15 @@ namespace TravelTo.Migrations
                     b.Navigation("Turebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumroDajavshna", b =>
+                {
+                    b.Navigation("SastumroAndDajavshna");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
                 {
+                    b.Navigation("SastumroAndDajavshna");
+
                     b.Navigation("turebi");
 
                     b.Navigation("user_sastumroebi");

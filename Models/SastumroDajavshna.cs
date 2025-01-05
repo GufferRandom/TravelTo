@@ -22,5 +22,7 @@ namespace TravelTo.Models
         public string gmail { get; set; }
         [MaxLength(1500,ErrorMessage ="Too Large ")]
         public string? text { get; set; }
+        public ICollection<SastumtroAndDajavshna>? SastumroAndDajavshna { get; set; }
+
     }
 }

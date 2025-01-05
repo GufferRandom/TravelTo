@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class gele : Migration
+    public partial class waha : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -87,6 +87,23 @@ namespace TravelTo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ContactiUndat", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "sastumroDajavshna",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    First_Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Last_Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Phone_Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    gmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    text = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_sastumroDajavshna", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -298,6 +315,54 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sastumrodaturebi",
+                columns: table => new
+                {
+                    Sastumro_Id = table.Column<int>(type: "int", nullable: false),
+                    Turebi_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sastumrodaturebi", x => new { x.Sastumro_Id, x.Turebi_Id });
+                    table.ForeignKey(
+                        name: "FK_Sastumrodaturebi_Sastumroebis_Sastumro_Id",
+                        column: x => x.Sastumro_Id,
+                        principalTable: "Sastumroebis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Sastumrodaturebi_Turebis_Turebi_Id",
+                        column: x => x.Turebi_Id,
+                        principalTable: "Turebis",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SastumtroAndDajavshna",
+                columns: table => new
+                {
+                    Sastumro_Id = table.Column<int>(type: "int", nullable: false),
+                    SastumroDajavshna_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SastumtroAndDajavshna", x => new { x.Sastumro_Id, x.SastumroDajavshna_Id });
+                    table.ForeignKey(
+                        name: "FK_SastumtroAndDajavshna_Sastumroebis_Sastumro_Id",
+                        column: x => x.Sastumro_Id,
+                        principalTable: "Sastumroebis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SastumtroAndDajavshna_sastumroDajavshna_SastumroDajavshna_Id",
+                        column: x => x.SastumroDajavshna_Id,
+                        principalTable: "sastumroDajavshna",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "userAndSastumroebis",
                 columns: table => new
                 {
@@ -354,16 +419,16 @@ namespace TravelTo.Migrations
                 columns: new[] { "Id", "Description", "Fasi", "Lokacia", "Name", "Nomer", "Owner", "Tviseba_Id", "gmail", "image_name" },
                 values: new object[,]
                 {
-                    { 1, "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", 100, "Robotiqsi", "Robotiqsi Grand Hotel", null, null, 1, "gmail@gmail.com", "1.jpeg" },
-                    { 2, "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", 50, "Antarqtida", "Antarqtida Luxury Suites", null, null, 2, "antarqtida@gmail.com", "2.jpg" },
-                    { 3, "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", 75, "Tbilisi", "Tbilisi City Hotel", null, null, 3, "tbilisi@gmail.com", "3.jpg" },
-                    { 4, "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", 60, "Kutaisi", "Kutaisi Boutique Hotel", null, null, 4, "kutaisi@gmail.com", "4.webp" },
-                    { 5, "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.", 80, "Batumi", "Batumi Beach Resort", null, null, 5, "batumi@gmail.com", "5.jpg" },
-                    { 6, "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", 40, "Mtskheta", "Mtskheta Heritage Inn", null, null, 6, "mtskheta@gmail.com", "6.jpg" },
-                    { 7, "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", 30, "Zugdidi", "Zugdidi Park Hotel", null, null, 7, "zugdidi@gmail.com", "7.jpg" },
-                    { 8, "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", 45, "Gori", "Gori Fortress Hotel", null, null, 8, "gori@gmail.com", "8.jpg" },
-                    { 9, "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", 55, "Telavi", "Telavi Wine Hotel", null, null, 9, "telavi@gmail.com", "9.jpg" },
-                    { 10, "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", 65, "Signagi", "Signagi Hilltop Hotel", null, null, 10, "signagi@gmail.com", "10.jpg" }
+                    { 1, "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", 100, "RobotiqsiHotel", "Robotiqsi Grand Hotel", null, null, 1, "gmail@gmail.com", "1.jpeg" },
+                    { 2, "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", 50, "AntarqtidaHotel", "Antarqtida Luxury Suites", null, null, 2, "antarqtida@gmail.com", "2.jpg" },
+                    { 3, "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", 75, "TbilisiHotel", "Tbilisi City Hotel", null, null, 3, "tbilisi@gmail.com", "3.jpg" },
+                    { 4, "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", 60, "KutaisiHotel", "Kutaisi Boutique Hotel", null, null, 4, "kutaisi@gmail.com", "4.webp" },
+                    { 5, "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.", 80, "BatumiHotel", "Batumi Beach Resort", null, null, 5, "batumi@gmail.com", "5.jpg" },
+                    { 6, "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", 40, "MtskhetaHotel", "Mtskheta Heritage Inn", null, null, 6, "mtskheta@gmail.com", "6.jpg" },
+                    { 7, "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", 30, "ZugdidiHotel", "Zugdidi Park Hotel", null, null, 7, "zugdidi@gmail.com", "7.jpg" },
+                    { 8, "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", 45, "GoriHotel", "Gori Fortress Hotel", null, null, 8, "gori@gmail.com", "8.jpg" },
+                    { 9, "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", 55, "TelaviHotel", "Telavi Wine Hotel", null, null, 9, "telavi@gmail.com", "9.jpg" },
+                    { 10, "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", 65, "SignagiHotel", "Signagi Hilltop Hotel", null, null, 10, "signagi@gmail.com", "10.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -373,12 +438,27 @@ namespace TravelTo.Migrations
                 {
                     { 1, 1, "aq iyo batoni wyali romelmac wyali dalia", "Antarqtida", 5.9900000000000002, "antarqtida.jpg" },
                     { 2, 3, "tbilo tibifli", "Tbilisi", 15.99, "Tbilisi.jpg" },
-                    { 3, 2, "parizelta dedaqali", "Parizi", 6.9900000000000002, "Parizi.jfif" },
-                    { 4, 4, "მაგარიი პონტიიი", "Los-Angeles, CA", 15555.0, "Los-AngelesCa.jfif" },
-                    { 5, 1, "მაგარიი პონტიიი", "Italy", 12341.0, "Italy.png" },
-                    { 6, 2, "მაგარიი პონტიიი", "Brazil", 15111.0, "Brazil.jfif" },
-                    { 7, 4, "მაგარიი პონტიიი", "Denmark", 19000.0, "Denmark.jfif" },
-                    { 8, 3, "მაგარიი პონტიიი", "Spain", 23000.0, "Spain.jfif" }
+                    { 3, 2, "parizelta dedaqali", "Kutasi", 6.9900000000000002, "Parizi.jfif" },
+                    { 4, 4, "მაგარიი პონტიიი", "Signagi, CA", 15555.0, "Los-AngelesCa.jfif" },
+                    { 5, 1, "მაგარიი პონტიიი", "Batumi", 12341.0, "Italy.png" },
+                    { 6, 2, "მაგარიი პონტიიი", "Gori", 15111.0, "Brazil.jfif" },
+                    { 7, 4, "მაგარიი პონტიიი", "Telavi", 19000.0, "Denmark.jfif" },
+                    { 8, 3, "მაგარიი პონტიიი", "Roboto", 23000.0, "Spain.jfif" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sastumrodaturebi",
+                columns: new[] { "Sastumro_Id", "Turebi_Id" },
+                values: new object[,]
+                {
+                    { 1, 8 },
+                    { 2, 1 },
+                    { 3, 2 },
+                    { 4, 3 },
+                    { 5, 5 },
+                    { 8, 6 },
+                    { 9, 7 },
+                    { 10, 4 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -421,10 +501,20 @@ namespace TravelTo.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Sastumrodaturebi_Turebi_Id",
+                table: "Sastumrodaturebi",
+                column: "Turebi_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sastumroebis_Tviseba_Id",
                 table: "Sastumroebis",
                 column: "Tviseba_Id",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SastumtroAndDajavshna_SastumroDajavshna_Id",
+                table: "SastumtroAndDajavshna",
+                column: "SastumroDajavshna_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Turebis_Company_Id",
@@ -464,6 +554,12 @@ namespace TravelTo.Migrations
                 name: "ContactiUndat");
 
             migrationBuilder.DropTable(
+                name: "Sastumrodaturebi");
+
+            migrationBuilder.DropTable(
+                name: "SastumtroAndDajavshna");
+
+            migrationBuilder.DropTable(
                 name: "userAndSastumroebis");
 
             migrationBuilder.DropTable(
@@ -471,6 +567,9 @@ namespace TravelTo.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "sastumroDajavshna");
 
             migrationBuilder.DropTable(
                 name: "Sastumroebis");

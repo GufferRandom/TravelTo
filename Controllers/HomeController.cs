@@ -990,7 +990,14 @@ namespace TravelTo.Controllers
         public IActionResult Dajavshna(SastumtroAndDajavshna piri)
         {
             _context.Add(piri.sastumroDajavshna);
+            var sastumro_dajavshna_id = piri.sastumroDajavshna.Id;
+            var sastumro_id = piri.Sastumro_Id;
+            SastumtroAndDajavshna sas = new SastumtroAndDajavshna() { Sastumro_Id = sastumro_id, SastumroDajavshna_Id = sastumro_dajavshna_id };
+            sas.Sastumroebi = _context.Sastumroebis.FirstOrDefault(x => x.Id == sastumro_id);
+            sas.sastumroDajavshna = piri.sastumroDajavshna;
+            _context.Add(sas);
             _context.SaveChanges();
+            TempData["Success"] = "წარმატებით დაიჯავშნა სასტუმრო .მოგვიანებით დაგიკავშირდებით";
             return Redirect(Request.Headers["Referer"].ToString());
         }
     }

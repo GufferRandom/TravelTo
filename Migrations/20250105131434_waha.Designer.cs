@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20241227122237_axali")]
-    partial class axali
+    [Migration("20250105131434_waha")]
+    partial class waha
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -257,6 +257,41 @@ namespace TravelTo.Migrations
                     b.ToTable("ContactiUndat");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumroDajavshna", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("First_Name")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Last_Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Phone_Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("gmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("text")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("sastumroDajavshna");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
                 {
                     b.Property<int>("Id")
@@ -309,7 +344,7 @@ namespace TravelTo.Migrations
                             Id = 1,
                             Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini",
                             Fasi = 100,
-                            Lokacia = "Robotiqsi",
+                            Lokacia = "RobotiqsiHotel",
                             Name = "Robotiqsi Grand Hotel",
                             Tviseba_Id = 1,
                             gmail = "gmail@gmail.com",
@@ -320,7 +355,7 @@ namespace TravelTo.Migrations
                             Id = 2,
                             Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa",
                             Fasi = 50,
-                            Lokacia = "Antarqtida",
+                            Lokacia = "AntarqtidaHotel",
                             Name = "Antarqtida Luxury Suites",
                             Tviseba_Id = 2,
                             gmail = "antarqtida@gmail.com",
@@ -331,7 +366,7 @@ namespace TravelTo.Migrations
                             Id = 3,
                             Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.",
                             Fasi = 75,
-                            Lokacia = "Tbilisi",
+                            Lokacia = "TbilisiHotel",
                             Name = "Tbilisi City Hotel",
                             Tviseba_Id = 3,
                             gmail = "tbilisi@gmail.com",
@@ -342,7 +377,7 @@ namespace TravelTo.Migrations
                             Id = 4,
                             Description = "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.",
                             Fasi = 60,
-                            Lokacia = "Kutaisi",
+                            Lokacia = "KutaisiHotel",
                             Name = "Kutaisi Boutique Hotel",
                             Tviseba_Id = 4,
                             gmail = "kutaisi@gmail.com",
@@ -353,7 +388,7 @@ namespace TravelTo.Migrations
                             Id = 5,
                             Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.",
                             Fasi = 80,
-                            Lokacia = "Batumi",
+                            Lokacia = "BatumiHotel",
                             Name = "Batumi Beach Resort",
                             Tviseba_Id = 5,
                             gmail = "batumi@gmail.com",
@@ -364,7 +399,7 @@ namespace TravelTo.Migrations
                             Id = 6,
                             Description = "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.",
                             Fasi = 40,
-                            Lokacia = "Mtskheta",
+                            Lokacia = "MtskhetaHotel",
                             Name = "Mtskheta Heritage Inn",
                             Tviseba_Id = 6,
                             gmail = "mtskheta@gmail.com",
@@ -375,7 +410,7 @@ namespace TravelTo.Migrations
                             Id = 7,
                             Description = "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja",
                             Fasi = 30,
-                            Lokacia = "Zugdidi",
+                            Lokacia = "ZugdidiHotel",
                             Name = "Zugdidi Park Hotel",
                             Tviseba_Id = 7,
                             gmail = "zugdidi@gmail.com",
@@ -386,7 +421,7 @@ namespace TravelTo.Migrations
                             Id = 8,
                             Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.",
                             Fasi = 45,
-                            Lokacia = "Gori",
+                            Lokacia = "GoriHotel",
                             Name = "Gori Fortress Hotel",
                             Tviseba_Id = 8,
                             gmail = "gori@gmail.com",
@@ -397,7 +432,7 @@ namespace TravelTo.Migrations
                             Id = 9,
                             Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.",
                             Fasi = 55,
-                            Lokacia = "Telavi",
+                            Lokacia = "TelaviHotel",
                             Name = "Telavi Wine Hotel",
                             Tviseba_Id = 9,
                             gmail = "telavi@gmail.com",
@@ -408,7 +443,7 @@ namespace TravelTo.Migrations
                             Id = 10,
                             Description = "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.",
                             Fasi = 65,
-                            Lokacia = "Signagi",
+                            Lokacia = "SignagiHotel",
                             Name = "Signagi Hilltop Hotel",
                             Tviseba_Id = 10,
                             gmail = "signagi@gmail.com",
@@ -428,7 +463,64 @@ namespace TravelTo.Migrations
 
                     b.HasIndex("Turebi_Id");
 
-                    b.ToTable("SastumroebiDaTurebi");
+                    b.ToTable("Sastumrodaturebi");
+
+                    b.HasData(
+                        new
+                        {
+                            Sastumro_Id = 2,
+                            Turebi_Id = 1
+                        },
+                        new
+                        {
+                            Sastumro_Id = 3,
+                            Turebi_Id = 2
+                        },
+                        new
+                        {
+                            Sastumro_Id = 4,
+                            Turebi_Id = 3
+                        },
+                        new
+                        {
+                            Sastumro_Id = 1,
+                            Turebi_Id = 8
+                        },
+                        new
+                        {
+                            Sastumro_Id = 10,
+                            Turebi_Id = 4
+                        },
+                        new
+                        {
+                            Sastumro_Id = 9,
+                            Turebi_Id = 7
+                        },
+                        new
+                        {
+                            Sastumro_Id = 8,
+                            Turebi_Id = 6
+                        },
+                        new
+                        {
+                            Sastumro_Id = 5,
+                            Turebi_Id = 5
+                        });
+                });
+
+            modelBuilder.Entity("TravelTo.Models.SastumtroAndDajavshna", b =>
+                {
+                    b.Property<int>("Sastumro_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SastumroDajavshna_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Sastumro_Id", "SastumroDajavshna_Id");
+
+                    b.HasIndex("SastumroDajavshna_Id");
+
+                    b.ToTable("SastumtroAndDajavshna");
                 });
 
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
@@ -487,7 +579,7 @@ namespace TravelTo.Migrations
                             id = 3,
                             Company_Id = 2,
                             Description = "parizelta dedaqali",
-                            Name = "Parizi",
+                            Name = "Kutasi",
                             Price = 6.9900000000000002,
                             image_name = "Parizi.jfif"
                         },
@@ -496,7 +588,7 @@ namespace TravelTo.Migrations
                             id = 4,
                             Company_Id = 4,
                             Description = "მაგარიი პონტიიი",
-                            Name = "Los-Angeles, CA",
+                            Name = "Signagi, CA",
                             Price = 15555.0,
                             image_name = "Los-AngelesCa.jfif"
                         },
@@ -505,7 +597,7 @@ namespace TravelTo.Migrations
                             id = 5,
                             Company_Id = 1,
                             Description = "მაგარიი პონტიიი",
-                            Name = "Italy",
+                            Name = "Batumi",
                             Price = 12341.0,
                             image_name = "Italy.png"
                         },
@@ -514,7 +606,7 @@ namespace TravelTo.Migrations
                             id = 6,
                             Company_Id = 2,
                             Description = "მაგარიი პონტიიი",
-                            Name = "Brazil",
+                            Name = "Gori",
                             Price = 15111.0,
                             image_name = "Brazil.jfif"
                         },
@@ -523,7 +615,7 @@ namespace TravelTo.Migrations
                             id = 7,
                             Company_Id = 4,
                             Description = "მაგარიი პონტიიი",
-                            Name = "Denmark",
+                            Name = "Telavi",
                             Price = 19000.0,
                             image_name = "Denmark.jfif"
                         },
@@ -532,7 +624,7 @@ namespace TravelTo.Migrations
                             id = 8,
                             Company_Id = 3,
                             Description = "მაგარიი პონტიიი",
-                            Name = "Spain",
+                            Name = "Roboto",
                             Price = 23000.0,
                             image_name = "Spain.jfif"
                         });
@@ -1002,6 +1094,25 @@ namespace TravelTo.Migrations
                     b.Navigation("Turebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumtroAndDajavshna", b =>
+                {
+                    b.HasOne("TravelTo.Models.SastumroDajavshna", "sastumroDajavshna")
+                        .WithMany("SastumroAndDajavshna")
+                        .HasForeignKey("SastumroDajavshna_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelTo.Models.Sastumroebi", "Sastumroebi")
+                        .WithMany("SastumroAndDajavshna")
+                        .HasForeignKey("Sastumro_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sastumroebi");
+
+                    b.Navigation("sastumroDajavshna");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Turebi", b =>
                 {
                     b.HasOne("TravelTo.Models.Company", "Company")
@@ -1054,8 +1165,15 @@ namespace TravelTo.Migrations
                     b.Navigation("Turebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumroDajavshna", b =>
+                {
+                    b.Navigation("SastumroAndDajavshna");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
                 {
+                    b.Navigation("SastumroAndDajavshna");
+
                     b.Navigation("turebi");
 
                     b.Navigation("user_sastumroebi");
