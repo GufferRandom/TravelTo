@@ -254,6 +254,26 @@ namespace TravelTo.Migrations
                     b.ToTable("ContactiUndat");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumroCapitacity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Sastumro_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Sastumro_Id")
+                        .IsUnique()
+                        .HasFilter("[Sastumro_Id] IS NOT NULL");
+
+                    b.ToTable("SastumroCapitacity");
+                });
+
             modelBuilder.Entity("TravelTo.Models.SastumroDajavshna", b =>
                 {
                     b.Property<int>("Id")
@@ -1061,6 +1081,15 @@ namespace TravelTo.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TravelTo.Models.SastumroCapitacity", b =>
+                {
+                    b.HasOne("TravelTo.Models.Sastumroebi", "Sastumroebi")
+                        .WithOne("sastumroCapitacity")
+                        .HasForeignKey("TravelTo.Models.SastumroCapitacity", "Sastumro_Id");
+
+                    b.Navigation("Sastumroebi");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
                 {
                     b.HasOne("TravelTo.Models.TvisebebiSastumroebis", "tvisebebiSastumroebis")
@@ -1170,6 +1199,8 @@ namespace TravelTo.Migrations
             modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
                 {
                     b.Navigation("SastumroAndDajavshna");
+
+                    b.Navigation("sastumroCapitacity");
 
                     b.Navigation("turebi");
 

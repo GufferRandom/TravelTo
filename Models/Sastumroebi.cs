@@ -27,5 +27,6 @@ namespace TravelTo.Models
         public ICollection<UserAndSastumroebi> user_sastumroebi { get; set; }
         public ICollection<SastumroebiDaTurebi>? turebi { get; set; }
         public ICollection<SastumtroAndDajavshna>? SastumroAndDajavshna { get; set; }
+        public SastumroCapitacity? sastumroCapitacity { get; set; }
     }
 }

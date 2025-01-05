@@ -21,6 +21,7 @@ namespace TravelTo.Data
         public DbSet<SastumroDajavshna> sastumroDajavshna { get; set; }
         public DbSet<SastumroebiDaTurebi> Sastumrodaturebi { get; set; }
         public DbSet<SastumtroAndDajavshna> SastumtroAndDajavshna { get; set; }
+        public DbSet<SastumroCapitacity> SastumroCapitacity { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -289,6 +290,7 @@ namespace TravelTo.Data
             modelBuilder.Entity<SastumtroAndDajavshna>().HasKey(u => new { u.Sastumro_Id, u.SastumroDajavshna_Id });
             modelBuilder.Entity<SastumtroAndDajavshna>().HasOne(u => u.Sastumroebi).WithMany(u => u.SastumroAndDajavshna).HasForeignKey(u => u.Sastumro_Id);
             modelBuilder.Entity<SastumtroAndDajavshna>().HasOne(u => u.sastumroDajavshna).WithMany(u => u.SastumroAndDajavshna).HasForeignKey(u => u.SastumroDajavshna_Id);
+            modelBuilder.Entity<SastumroCapitacity>().HasOne(u=>u.Sastumroebi).WithOne(u=>u.sastumroCapitacity).HasForeignKey<SastumroCapitacity>(u=>u.Sastumro_Id);
         }
         
     }

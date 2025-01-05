@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class waha : Migration
+    public partial class van : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -315,6 +315,24 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SastumroCapitacity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Sastumro_Id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SastumroCapitacity", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SastumroCapitacity_Sastumroebis_Sastumro_Id",
+                        column: x => x.Sastumro_Id,
+                        principalTable: "Sastumroebis",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sastumrodaturebi",
                 columns: table => new
                 {
@@ -501,6 +519,13 @@ namespace TravelTo.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SastumroCapitacity_Sastumro_Id",
+                table: "SastumroCapitacity",
+                column: "Sastumro_Id",
+                unique: true,
+                filter: "[Sastumro_Id] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sastumrodaturebi_Turebi_Id",
                 table: "Sastumrodaturebi",
                 column: "Turebi_Id");
@@ -552,6 +577,9 @@ namespace TravelTo.Migrations
 
             migrationBuilder.DropTable(
                 name: "ContactiUndat");
+
+            migrationBuilder.DropTable(
+                name: "SastumroCapitacity");
 
             migrationBuilder.DropTable(
                 name: "Sastumrodaturebi");
