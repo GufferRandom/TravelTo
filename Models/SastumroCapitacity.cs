@@ -8,6 +8,8 @@ namespace TravelTo.Models
         [Key]
         public int Id { get; set; }
         public int? Sastumro_Id { get; set; }
+        public int? MaxCapitacity { get; set; } 
+        public int? CurrentCapacity { get; set; }
         public Sastumroebi? Sastumroebi { get; set; }
     }
 }

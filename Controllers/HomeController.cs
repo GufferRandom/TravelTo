@@ -587,6 +587,9 @@ namespace TravelTo.Controllers
             ViewBag.Yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
             SastumtroAndDajavshna sastumtroo = new SastumtroAndDajavshna();
             sastumtroo.Sastumroebi = sastumro;
+            var capitacity = _context.SastumroCapitacity.FirstOrDefault(x => x.Sastumro_Id == id);
+            ViewBag.CurrCapitacity=capitacity.CurrentCapacity;
+            ViewBag.MaxCapitacity=capitacity.MaxCapitacity;
             return View(sastumtroo);
         }
         public IActionResult FasiZrdaCompania()
@@ -996,6 +999,9 @@ namespace TravelTo.Controllers
             sas.Sastumroebi = _context.Sastumroebis.FirstOrDefault(x => x.Id == sastumro_id);
             sas.sastumroDajavshna = piri.sastumroDajavshna;
             _context.Add(sas);
+            var capitacity = _context.SastumroCapitacity.FirstOrDefault(x=>x.Sastumro_Id == sastumro_id);
+            capitacity.CurrentCapacity++;
+            _context.Update(capitacity);
             _context.SaveChanges();
             TempData["Success"] = "წარმატებით დაიჯავშნა სასტუმრო .მოგვიანებით დაგიკავშირდებით";
             return Redirect(Request.Headers["Referer"].ToString());

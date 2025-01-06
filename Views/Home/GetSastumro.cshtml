@@ -17,6 +17,23 @@
                     <span class="text-success">$@Model.Sastumroebi.Fasi</span>
                 </div>
                 <p class="lead text-dark">@Model.Sastumroebi.Description</p>
+                <div class="container text-center mt-4" style="margin-bottom: 20px">
+                    <h2 class="mb-4 text-success">სტატუსი</h2>
+                    <p class="mb-3 text-muted">
+                        დაჯავშნილია: <strong class="text-success">@ViewBag.CurrCapitacity</strong> /
+                        ადგილი: <strong class="text-primary">@ViewBag.MaxCapitacity</strong>
+                    </p>
+                    <div class="progress" style="height: 30px; border-radius: 15px;">
+                        <div class="progress-bar   bg-success"
+                             role="progressbar"
+                             style="width: @(ViewBag.CurrCapitacity * 100 / ViewBag.MaxCapitacity)%;"
+                             aria-valuenow="@ViewBag.CurrCapitacity"
+                             aria-valuemin="0"
+                             aria-valuemax="@ViewBag.MaxCapitacity">
+                            @ViewBag.CurrCapitacity
+                        </div>
+                    </div>
+                </div>
                 <div class="d-flex align-items-center mb-3">
                     <form method="post" asp-controller="Home" asp-action="Fav_Sastumroebi" asp-route-id="@Model.Sastumroebi.Id" name="form1">
                         <button type="submit" class="btn btn-outline-primary shadow-sm me-3">კალათაში დამატება</button>
@@ -100,7 +117,7 @@
             {
                 var j = ViewBag.tvisebebi.GetType().GetProperty(ViewBag.tvisebasaxeli[index])?.GetValue(ViewBag.tvisebebi, null);
                 var icon = j == "YES" ? "bi-check-circle text-success" : "bi-x-circle text-danger";
-                var text = j == "YES" ? "YES" : "NO";
+                var text = j == "YES" ? "კი" : "არა";
                 <li class="list-group-item d-flex justify-content-between">
                     <span class="fw-bold">@ViewBag.tvisebasaxeli[index]</span>
                     <span class="badge @icon" style="font-size: 1.5em;">
