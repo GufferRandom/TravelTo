@@ -63,7 +63,7 @@ namespace TravelTo.Data
                 new Turebi
                 {
                     id = 3, Name = "Kutasi", Description = "parizelta dedaqali", Price = 6.99,
-                    image_name = "Parizi.jfif", Company_Id = 2
+                    image_name = "7012519385_f7e92b8d8e_z.jpg", Company_Id = 2
                 },
                 new Turebi
                 {
@@ -72,7 +72,7 @@ namespace TravelTo.Data
                 },
                 new Turebi
                 {
-                    id = 5, Name = "Batumi", Description = "მაგარიი პონტიიი", Price = 12341, image_name = "Italy.png",
+                    id = 5, Name = "Batumi", Description = "მაგარიი პონტიიი", Price = 12341, image_name = "Batumi.jpg",
                     Company_Id = 1
                 },
                 new Turebi
