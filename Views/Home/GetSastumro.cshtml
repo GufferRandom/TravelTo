@@ -18,11 +18,26 @@
                 </div>
                 <p class="lead text-dark">@Model.Sastumroebi.Description</p>
                 <div class="container text-center mt-4" style="margin-bottom: 20px">
-                    <h2 class="mb-4 text-success">სტატუსი</h2>
                     <p class="mb-3 text-muted">
-                        დაჯავშნილია: <strong class="text-success">@ViewBag.CurrCapitacity</strong> /
-                        ადგილი: <strong class="text-primary">@ViewBag.MaxCapitacity</strong>
+                        დაჯავშნილია:
+                        <strong class="text-success">@ViewBag.CurrCapitacity</strong> /
+                        ადგილი:
+                        <strong class="text-primary">@ViewBag.MaxCapitacity</strong>
+                        @if (ViewBag.MaxCapitacity == ViewBag.CurrCapitacity)
+                        {
+                            <span class="text-danger d-block mt-2">
+                                <strong>სამწუხაროდ</strong> ადგილები აღარ არის დარჩენილი  
+                            </span>    
+                        }
+                        else if (ViewBag.MaxCapitacity - 10 <= ViewBag.CurrCapitacity)
+                        {
+                            <span class="text-danger d-block mt-2">
+                                <strong>იჩქარეთ!</strong> დარჩენილია მხოლოდ 
+                                <strong>@((ViewBag.MaxCapitacity - ViewBag.CurrCapitacity>0) ?ViewBag.MaxCapitacity - ViewBag.CurrCapitacity:0)</strong> ადგილი.
+        </span>
+                        }
                     </p>
+                    <h2 class="mb-4 text-success">სტატუსი</h2>
                     <div class="progress" style="height: 30px; border-radius: 15px;">
                         <div class="progress-bar   bg-success"
                              role="progressbar"
@@ -44,51 +59,59 @@
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                             <div class="modal-content">
+                           @if (ViewBag.MaxCapitacity <= ViewBag.CurrCapitacity)
+                           {
+                               <h2 class="text-danger">ადგილები აღარ არის სამწუხაროდ. მოგვიანებით ცადეთ</h2>
+                               <div class="modal-footer">
+                                   <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">დახურვა</button>
+                               </div>
+                           }
+                           else
+                           {
                                 <div class="modal-header">
                                     <h5 class="modal-title fw-bolder " id="exampleModalLabel">დაჯავშნა</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                               
                                 <form method="post" asp-controller="Home" asp-action="Dajavshna">
-                                   
                                     <div class="modal-body">
-                                     <input type="text" class="form-control" asp-for="@Model.sastumroDajavshna.Id" hidden />
-                                     <input type="text" class="form-control" asp-for="@Model.Sastumro_Id" value="@Model.Sastumroebi.Id" hidden/>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="SAXELI" placeholder="სახელი" asp-for="@Model.sastumroDajavshna.First_Name" required>
-                                        <label for="SAXELI" asp-for="@Model.sastumroDajavshna.First_Name">სახელი</label>
-                                        <span asp-validation-for="@Model.sastumroDajavshna.First_Name" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" asp-for="@Model.sastumroDajavshna.Id" hidden/>
+                                        <input type="text" class="form-control" asp-for="@Model.Sastumro_Id" value="@Model.Sastumroebi.Id" hidden/>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="SAXELI" placeholder="სახელი" asp-for="@Model.sastumroDajavshna.First_Name" required>
+                                            <label for="SAXELI" asp-for="@Model.sastumroDajavshna.First_Name">სახელი</label>
+                                            <span asp-validation-for="@Model.sastumroDajavshna.First_Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-floating mb-3">
                                             <input type="text" class="form-control" id="GVARI" placeholder="გვარი " asp-for="@Model.sastumroDajavshna.Last_Name" required>
                                             <label for="GVARI" asp-for="@Model.sastumroDajavshna.Last_Name"> გვარი</label>
-                                        <span asp-validation-for="@Model.sastumroDajavshna.Last_Name" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.sastumroDajavshna.Last_Name" class="text-danger"></span>
 
-                                    </div>
-                                    <div class="form-floating mb-3">
+                                        </div>
+                                        <div class="form-floating mb-3">
                                             <input type="tel" class="form-control" id="TELNOMER" placeholder="ტელეფონის ნომერი" asp-for="@Model.sastumroDajavshna.Phone_Number" required>
                                             <label for="TELNOMER" asp-for="@Model.sastumroDajavshna.Phone_Number">ტელეფონის ნომერი</label>
-                                        <span asp-validation-for="@Model.sastumroDajavshna.Phone_Number" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.sastumroDajavshna.Phone_Number" class="text-danger"></span>
 
-                                    </div>
-                                    <div class="form-floating mb-3">
+                                        </div>
+                                        <div class="form-floating mb-3">
                                             <input type="email" class="form-control" id="GMAIL" placeholder="გმაილი" asp-for="@Model.sastumroDajavshna.gmail" required>
                                             <label for="GMAIL" asp-for="@Model.sastumroDajavshna.gmail">გმაილი</label>
-                                        <span asp-validation-for="@Model.sastumroDajavshna.gmail" class="text-danger"></span>
+                                            <span asp-validation-for="@Model.sastumroDajavshna.gmail" class="text-danger"></span>
 
-                                    </div>
-                                    <div class="form-floating mb-3">
+                                        </div>
+                                        <div class="form-floating mb-3">
                                             <textarea class="form-control" placeholder="დატოვე შეტყობინება" id="floatingShetyobineba" asp-for="@Model.sastumroDajavshna.text"
                                                       style="height: 100px;resize:none"></textarea>
                                             <label for="floatingShetyobineba" asp-for="@Model.sastumroDajavshna.text">შეტყობინება</label>
                                             <span asp-validation-for="@Model.sastumroDajavshna.text" class="text-danger"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">დახურვა</button>
-                                    <button type="submit" class="btn btn-outline-success">დაჯავშნა</button>
-                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">დახურვა</button>
+                                        <button type="submit" class="btn btn-outline-success">დაჯავშნა</button>
+                                    </div>
                                 </form>
+                                }
                             </div>
                         </div>
                     </div>
@@ -118,7 +141,7 @@
                 var j = ViewBag.tvisebebi.GetType().GetProperty(ViewBag.tvisebasaxeli[index])?.GetValue(ViewBag.tvisebebi, null);
                 var icon = j == "YES" ? "bi-check-circle text-success" : "bi-x-circle text-danger";
                 var text = j == "YES" ? "კი" : "არა";
-                <li class="list-group-item d-flex justify-content-between">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">@ViewBag.tvisebasaxeli[index]</span>
                     <span class="badge @icon" style="font-size: 1.5em;">
                         @text
@@ -127,11 +150,10 @@
             }
         </ol>
     </div>
-</section>
-<section class="py-5 bg-light">
+</section><section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <h2 class="fw-bolder mb-4">დაკავშირებული ტურები</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var i in ViewBag.loadturebi as List<Turebi>)
             {
                 <div class="col mb-5">
@@ -156,10 +178,11 @@
         </div>
     </div>
 </section>
-<section class="py-5 bg-light">
+
+<section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <h2 class="fw-bolder mb-4">მსგავსი სასტუმროები</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var i in ViewBag.yvelasastumro as List<Sastumroebi>)
             {
                 <div class="col mb-5">

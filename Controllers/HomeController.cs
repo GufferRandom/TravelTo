@@ -484,10 +484,17 @@ namespace TravelTo.Controllers
             }
             return View();
         }
+
+        public IActionResult SettingChveneba(string chveneba = "5")
+        {
+            HttpContext.Session.SetString("Chveneba", chveneba);
+            return RedirectToAction("Sastumroebi");
+        }
         public IActionResult Sastumroebi(string? sax,int page_id = 1)
         {
             if(sax is not null)
             {
+                HttpContext.Session.Remove("Chveneba");
                 HttpContext.Session.Remove("lokaciebi");
                 HttpContext.Session.Remove("archeuli");
                 HttpContext.Session.Remove("lokacia");
@@ -497,7 +504,9 @@ namespace TravelTo.Controllers
             }
             var sastumroebi = _context.Sastumroebis.ToList();
             var type = typeof(TvisebebiSastumroebis);
-            var tito_size = 5;
+            var tito_size = (HttpContext.Session.GetString("Chveneba").IsNullOrEmpty()
+                ? 5
+                : int.Parse(HttpContext.Session.GetString("Chveneba")));
             var skiP = _context.Sastumroebis.ToList();
             var sastumroebis_tvisebebi = type.GetProperties().Select(p => p.Name).ToList();
             ViewBag.tvisebebi = sastumroebis_tvisebebi;
@@ -515,7 +524,7 @@ namespace TravelTo.Controllers
                     if(HttpContext.Session.GetString("pasuxebi") is not null)
                     {
                         skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderBy(u=>u.Fasi).ToList();
-                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count/ 5.0);
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count/ (double)tito_size);
                         ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                         return View(skiP); 
                     }
@@ -528,7 +537,7 @@ namespace TravelTo.Controllers
                     if (HttpContext.Session.GetString("pasuxebi") is not null)
                     {
                         skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderByDescending(u => u.Fasi).ToList();
-                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / 5.0);
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / (double)tito_size);
                         ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                         return View(skiP);
                     }
@@ -541,7 +550,7 @@ namespace TravelTo.Controllers
                     if (HttpContext.Session.GetString("pasuxebi") is not null)
                     {
                         skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderBy(u => u.Name).ToList();
-                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / 5.0);
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / (double)tito_size);
                         ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                         return View(skiP);
                     }
@@ -554,7 +563,7 @@ namespace TravelTo.Controllers
                     if (HttpContext.Session.GetString("pasuxebi") is not null)
                     {
                         skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderByDescending(u => u.Name).ToList();
-                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / 5.0);
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / (double)tito_size);
                         ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                         return View(skiP);
                     }
@@ -579,7 +588,6 @@ namespace TravelTo.Controllers
             var load_turebi = _context.Turebis.Where(x => get_turebi.Contains(x.id)).ToList();
             ViewBag.loadturebi = load_turebi;
           var tvisebebi = _context.TvisebebiDaSastumroebi.FirstOrDefault(x => x.Tviseba_Id ==sastumro.Tviseba_Id);
-
             var tvisebebis_saxeli = new TvisebebiSastumroebis();
             var tvisebasaxeli = tvisebebis_saxeli.GetType().GetProperties().Select(x => x.Name).ToList();
             ViewBag.tvisebebi = tvisebebi;

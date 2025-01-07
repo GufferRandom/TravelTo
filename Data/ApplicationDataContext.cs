@@ -434,7 +434,7 @@ namespace TravelTo.Data
                 {
                     Id = 10,
                     Sastumro_Id = 10,
-                    MaxCapitacity = 200,
+                    MaxCapitacity = 2,
                     CurrentCapacity = 0,
                 }
             );

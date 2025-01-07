@@ -39,7 +39,6 @@
                     <option value="@((HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli") == null) ? " ":HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli"))">
                         @((HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli") == null) ? "სახელი" : HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli"))
                     </option>
-
                     @foreach (var name in ViewBag.saxelebi)
                     {
                         if (name != HttpContextAccessor.HttpContext.Session.GetString("sastumrosaxeli"))
@@ -94,28 +93,38 @@
                         <i class="bi bi-arrow-clockwise "></i>
                     </a>
                 </div>
-
-
                 <button type="submit" class="btn btn-success" style="margin-top: 10px; width: 100%;">Submit</button>
-
             </form>
         </div>
         <div class="col-sm-9">
             <h3 class="text-success fw-bold">სასტუმროები</h3>
-            <div class="d-flex justify-content-end mb-3">
+            <div class="d-flex justify-content-end mb-3 gap-3">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        დალაგება
+                    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-eye"></i> ჩვენება
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" asp-controller="Home" asp-action="FasiZrdaCompania">დალაგება ფასის ზრდადობის მიხედვით</a></li>
-                        <li><a class="dropdown-item" asp-controller="Home" asp-action="FasiKlebadobaCompania">დალაგება ფასის კლებადობის მიხედვით</a></li>
-                        <li><a class="dropdown-item" asp-controller="Home" asp-action="SaxeliZrdaCompania">დალაგება სახელის ზრდადობის მიხედვით</a></li>
-                        <li><a class="dropdown-item" asp-controller="Home" asp-action="SaxeliKlebadobaKompania">დალაგება სახელის კლებადობის მიხედვით</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="SettingChveneba" asp-route-chveneba="5">5</a></li>
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="SettingChveneba" asp-route-chveneba="10">10</a></li>
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="SettingChveneba" asp-route-chveneba="20">20</a></li>
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="SettingChveneba" asp-route-chveneba="50">50</a></li>
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="SettingChveneba" asp-route-chveneba="100">100</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-sort-alpha-down"></i> დალაგება
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="FasiZrdaCompania">დალაგება ფასის ზრდადობის მიხედვით</a></li>
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="FasiKlebadobaCompania">დალაგება ფასის კლებადობის მიხედვით</a></li>
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="SaxeliZrdaCompania">დალაგება სახელის ზრდადობის მიხედვით</a></li>
+                        <li><a class="dropdown-item text-success" asp-controller="Home" asp-action="SaxeliKlebadobaKompania">დალაგება სახელის კლებადობის მიხედვით</a></li>
                     </ul>
                 </div>
             </div>
-                                
+
+
             @foreach (var i in Model)
             {
                 <div class="card mb-3 w-100">
