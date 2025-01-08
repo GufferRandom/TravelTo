@@ -5,3 +5,48 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<link href="~/css/some.css" rel="stylesheet" />
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="3000">
+            <a href="/Home/Yvela">
+            <img src="~/turebi/9fef3ddc-1917-4145-a854-60ca0767376a.webp" class="d-block w-100" alt="Travel Destination">
+            <div class="carousel-caption ">
+                <h3 class="fw-bolder">იმოგზაურე</h3>
+                <p class="fw-bold">შემოურეთ მსოფლიოს ჩვენი ტურებით </p>
+            </div>
+            </a>
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+            <a href="/Home/Sastumroebi">
+            <img src="~/Sastumroebi/2.jpg" class="d-block w-100" alt="Booking Travel">
+            <div class="carousel-caption ">
+                <h3 class="fw-bolder">დაჯავშნე</h3>
+                <p class="fw-bold">მხოლოდ 100 ლარიდან დღეში</p>
+            </div>
+            </a>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000">
+            <a href="/Home/Sastumroebi">
+            <img src="~/turebi/antarqtida.jpg" class="d-block w-100" alt="Affordable Prices">
+            <div class="carousel-caption">
+                <h3 class="fw-bolder  ">ყველაზე იაფად</h3>
+                <p class="fw-bold">უმაღლესი ხარისხით და ფულის დაბრუნების გარანტიით</p>
+            </div>
+            </a>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
