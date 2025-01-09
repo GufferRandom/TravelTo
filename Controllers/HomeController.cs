@@ -45,6 +45,10 @@ namespace TravelTo.Controllers
         public IActionResult Index()
         {
             var turebi = _context.Turebis.ToList();
+            var sastumroebi = _context.Sastumroebis.ToList();
+            var sastumroandturebi = new SastumroebiAndTurebi();
+            sastumroandturebi.sasturmroebi = sastumroebi;
+            sastumroandturebi.turebi = turebi;
             if (_signInManager.IsSignedIn(User))
             {
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -53,7 +57,7 @@ namespace TravelTo.Controllers
                                       .ToList().Count();
                 ViewBag.howmany = get_user_favs;
             }
-            return View(turebi);
+            return View(sastumroandturebi);
         }
         public IActionResult Privacy()
         {
