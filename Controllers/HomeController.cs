@@ -423,13 +423,13 @@ namespace TravelTo.Controllers
             var kide_get = _context.UserAndTurebi.Where(u => u.User_Id == user_Id && u.Turebi_Id == u.Turebi_Id).FirstOrDefault();
             if (kide_get == null)
             {
-                TempData["SomeKindOfError"] = "რაღაცა ერრორია";
+                TempData["SomeKindOfError"] = "სამწუხაროდ,რაღაც ერრორია მალე გამოსწორდება";
                 return RedirectToAction("index");
 
             }
             _context.UserAndTurebi.Remove(kide_get);
             _context.SaveChanges();
-            TempData["sec"] = "turi warmatebit amoishala biwoo";
+            TempData["sec"] = "ტური წარმატებით ამოიშალა";
             return Redirect(Request.Headers["Referer"].ToString());
 
         }
@@ -477,14 +477,14 @@ namespace TravelTo.Controllers
         {
             if (_context.ContactiUndat.Any(x => x.First_Name == person.First_Name && x.Last_Name == person.Last_Name && x.Telephoni == person.Telephoni))
             {
-                TempData["Warning"] = "ukve gagzavnili gaqvt tqveni sakontaqto infromacia";
+                TempData["Warning"] = "უკვე გაგზავნილი გაქვთ თქვენი საკონტაქტო ინფორმაცია";
                 return Redirect(Request.Headers["Referer"].ToString());
             };
             if (ModelState.IsValid)
             {
                 _context.Add(person);
                 _context.SaveChanges();
-                TempData["Successfull"] = "warmatebit gaigzavna tqveni kontaqti";
+                TempData["Successfull"] = "თქვენი კონტაქტი წარმატებით გაიგზავნა";
             }
             return View();
         }
@@ -634,20 +634,20 @@ namespace TravelTo.Controllers
                 var get_if_exist = _context.userAndSastumroebis.Where(u => u.User_Id == userid && u.Sastumorebi_Id == id).FirstOrDefault();
                 if (get_if_exist != null)
                 {
-                    TempData["Sastumroexists"] = "Sastumro kalatashia ukve batono simn";
+                    TempData["Sastumroexists"] = "სასტუმრო უკვე კალათაშია";
                 }
                 else
                 {
                     _context.userAndSastumroebis.Add(get_new_user);
                     _context.SaveChanges();
-                    TempData["SastumroSuc"] = "Sastumro warmatebit daemata kalatashi";
+                    TempData["SastumroSuc"] = "სასტუმრო წარმატებით დაემატა კალათაში";
                     return Redirect(Request.Headers["Referer"].ToString());
 
                 }
                 return Redirect(Request.Headers["Referer"].ToString());
 
             }
-            TempData["NotRegirted"] = "Damatebistvis sawiroa rom daregistridet";
+            TempData["NotRegirted"] = "დამატებისთვის საწიროა რომ დარეგისტრილდეთ";
             return Redirect(Request.Headers["Referer"].ToString());
         }
         public IActionResult Kalatidan_Washla(int id)
