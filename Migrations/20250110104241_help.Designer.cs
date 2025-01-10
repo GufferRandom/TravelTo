@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelTo.Data;
 
@@ -11,9 +12,11 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250110104241_help")]
+    partial class help
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -685,7 +688,7 @@ namespace TravelTo.Migrations
                             Description = "პარიზი საფრანგეთის დედაქალაქია, ცნობილია აიფელის კოშკით და ლუვრის მუზეუმით.",
                             Name = "პარიზი",
                             Price = 1999.99,
-                            image_name = "Spain.jfif"
+                            image_name = "Paris.jpg"
                         },
                         new
                         {
@@ -703,7 +706,7 @@ namespace TravelTo.Migrations
                             Description = "მაიამი, აშშ-ის ფლორიდაში მდებარე ქალაქია, ცნობილი თავისი ფინანსური, კულტურული და სავაჭრო ცენტრის როლით.",
                             Name = "მაიამი",
                             Price = 1999.99,
-                            image_name = "Brazil.jfif"
+                            image_name = "Miami.jpg"
                         },
                         new
                         {
@@ -712,7 +715,7 @@ namespace TravelTo.Migrations
                             Description = "გორი ქალაქია საქართველოში, ცნობილია თავისი ისტორიული მნიშვნელობით და გორის ციხით.",
                             Name = "გორი",
                             Price = 500.99000000000001,
-                            image_name = "Denmark.jfif"
+                            image_name = "Gori.jpg"
                         },
                         new
                         {
@@ -721,7 +724,7 @@ namespace TravelTo.Migrations
                             Description = "თელავი ქალაქია კახეთში, ცნობილი თავისი ღვინის კულტურით და ისტორიული ძეგლებით.",
                             Name = "თელავი",
                             Price = 999.99000000000001,
-                            image_name = "Los-AngelesCa.jfif"
+                            image_name = "Telavi.jpg"
                         });
                 });
 

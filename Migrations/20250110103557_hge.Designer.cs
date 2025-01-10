@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelTo.Data;
 
@@ -11,9 +12,11 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250110103557_hge")]
+    partial class hge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -440,7 +443,7 @@ namespace TravelTo.Migrations
                             Description = "ეს სასტუმრო წარმოადგენს სამგზის ლუქსს და თანამედროვე მომსახურებას.",
                             Fasi = 100,
                             Lokacia = "თბილისი",
-                            Name = "თბილისის ცენტრალური სასტუმრო",
+                            Name = "თბილისი გრანდ ჰოტელი",
                             Tviseba_Id = 1,
                             gmail = "tbilisi@gmail.com",
                             image_name = "1.jpeg"
@@ -451,7 +454,7 @@ namespace TravelTo.Migrations
                             Description = "ამ სასტუმროში სტუმრები სარგებლობენ საოცარი სანაპიროს ხედებით.",
                             Fasi = 50,
                             Lokacia = "ბათუმი",
-                            Name = "ბათუმი რეზორტი",
+                            Name = "ბათუმი ბიჩ რეზორტი",
                             Tviseba_Id = 2,
                             gmail = "batumi@gmail.com",
                             image_name = "2.jpg"
@@ -462,7 +465,7 @@ namespace TravelTo.Migrations
                             Description = "სასტუმრო გთავაზობთ კომფორტულ პირობებს და შესანიშნავ სამზარეულოს.",
                             Fasi = 75,
                             Lokacia = "ქუთაისი",
-                            Name = "ქუთაისი  სასტუმრო",
+                            Name = "ქუთაისი ბუტიკ ჰოტელი",
                             Tviseba_Id = 3,
                             gmail = "kutaisi@gmail.com",
                             image_name = "3.jpg"
@@ -473,7 +476,7 @@ namespace TravelTo.Migrations
                             Description = "სასტუმრო წარმოადგენს ისტორიულ და კულტურულ გარემოს.",
                             Fasi = 60,
                             Lokacia = "მცხეთა",
-                            Name = "მცხეთა ჰერიტიჯ სასტუმრო",
+                            Name = "მცხეთა ჰერიტიჯ ინი",
                             Tviseba_Id = 4,
                             gmail = "mtskheta@gmail.com",
                             image_name = "4.webp"
@@ -484,7 +487,7 @@ namespace TravelTo.Migrations
                             Description = "ცენტრალური ადგილმდებარეობა, ახლოს სამრეწველო და კულტურული ატრაქციონებთან.",
                             Fasi = 80,
                             Lokacia = "ზუგდიდი",
-                            Name = "ზუგდიდი პარკ სასტუმრო",
+                            Name = "ზუგდიდი პარკ ჰოტელი",
                             Tviseba_Id = 5,
                             gmail = "zugdidi@gmail.com",
                             image_name = "5.jpg"
@@ -495,7 +498,7 @@ namespace TravelTo.Migrations
                             Description = "მომსახურება მაღალი ხარისხის, მყუდრო ატმოსფერო და თანამედროვე ოთახები.",
                             Fasi = 40,
                             Lokacia = "გორი",
-                            Name = "გორი ფორტეს სასტუმრო",
+                            Name = "გორი ფორტეს ჰოტელი",
                             Tviseba_Id = 6,
                             gmail = "gori@gmail.com",
                             image_name = "6.jpg"
@@ -517,7 +520,7 @@ namespace TravelTo.Migrations
                             Description = "სასტუმრო მაღალი ხარისხის მომსახურებითა და ლამაზი ხედებით.",
                             Fasi = 45,
                             Lokacia = "სიღნაღი",
-                            Name = "სიღნაღი ჰილტოპ სასტუმრო",
+                            Name = "სიღნაღი ჰილტოპ ჰოტელი",
                             Tviseba_Id = 8,
                             gmail = "signagi@gmail.com",
                             image_name = "8.jpg"
@@ -685,7 +688,7 @@ namespace TravelTo.Migrations
                             Description = "პარიზი საფრანგეთის დედაქალაქია, ცნობილია აიფელის კოშკით და ლუვრის მუზეუმით.",
                             Name = "პარიზი",
                             Price = 1999.99,
-                            image_name = "Spain.jfif"
+                            image_name = "Paris.jpg"
                         },
                         new
                         {
@@ -703,7 +706,7 @@ namespace TravelTo.Migrations
                             Description = "მაიამი, აშშ-ის ფლორიდაში მდებარე ქალაქია, ცნობილი თავისი ფინანსური, კულტურული და სავაჭრო ცენტრის როლით.",
                             Name = "მაიამი",
                             Price = 1999.99,
-                            image_name = "Brazil.jfif"
+                            image_name = "Miami.jpg"
                         },
                         new
                         {
@@ -712,7 +715,7 @@ namespace TravelTo.Migrations
                             Description = "გორი ქალაქია საქართველოში, ცნობილია თავისი ისტორიული მნიშვნელობით და გორის ციხით.",
                             Name = "გორი",
                             Price = 500.99000000000001,
-                            image_name = "Denmark.jfif"
+                            image_name = "Gori.jpg"
                         },
                         new
                         {
@@ -721,7 +724,7 @@ namespace TravelTo.Migrations
                             Description = "თელავი ქალაქია კახეთში, ცნობილი თავისი ღვინის კულტურით და ისტორიული ძეგლებით.",
                             Name = "თელავი",
                             Price = 999.99000000000001,
-                            image_name = "Los-AngelesCa.jfif"
+                            image_name = "Telavi.jpg"
                         });
                 });
 
