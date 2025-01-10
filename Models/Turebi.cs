@@ -15,7 +15,7 @@ namespace TravelTo.Models
         public string Name { get; set; }
 
         public double Price { get; set; }
-        [MaxLength(200)]
+        [MaxLength(1000)]
         public string? Description { get; set; }
         public string? image_name { get; set; }
         public int? Company_Id { get; set; }
