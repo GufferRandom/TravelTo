@@ -27,7 +27,6 @@ namespace TravelTo.Data
         {
             base.OnModelCreating(modelBuilder);
 
-
             modelBuilder.Entity<Company>().HasData(
                 new Company
                 {
