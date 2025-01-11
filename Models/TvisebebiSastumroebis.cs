@@ -8,22 +8,23 @@ namespace TravelTo.Models
         [Key]
         public int Tviseba_Id { get; set; }
         public string? Wifi { get; set; }
-        public string? Ufaso_avtosadgomi { get; set; }
-        public string? otaxi_aramweveltaTvis { get; set; }
-        public string? resotrani { get; set; }
-        public string? daxuruli_auzi { get; set; }
-        public string? sauna { get; set; }
-        public string? sportdarbazi { get; set; }
-        public string? sabiliardo { get; set; }
-        public string? spa_centri { get; set; }
-        public string? kino_darbasi { get; set; }
-        public string? sakonferencio_darbazi { get; set; }
-        public string? bari { get; set; }
-        public string? sabavsho_otaxi { get; set; }
-        public string? terasa { get; set; }
-        public string? bagi { get; set; }
-        public string? samrecxao { get; set; }
-        public string? Shinauri_cxovelebis_dashveba { get; set; }
+        public string? უფასო_ავტოსადგომი { get; set; }
+        public string? ოთახი_არამწეველებისთვის { get; set; }
+        public string? რესტორანი { get; set; }
+        public string? უფასო_წყალი { get; set; }
+        public string? საუნა { get; set; }
+        public string? სპორტული_დარბაზი { get; set; }
+        public string? ბილიარდი { get; set; }
+        public string? სპა_ცენტრი { get; set; }
+        public string? კინოდარბაზი { get; set; }
+        public string? საკონფერენციო_დარბაზი { get; set; }
+        public string? ბარი { get; set; }
+        public string? საბავშო_ოთახი { get; set; }
+        public string? ტერასა { get; set; }
+        public string? ბაღი { get; set; }
+        public string? სამრეცხაო { get; set; }
+        public string? შინაური_ცხოვრების_დაშვება { get; set; }
+
 
         public Sastumroebi Sastumro { get; set; }
 

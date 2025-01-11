@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20250110091450_change")]
-    partial class change
+    [Migration("20250111082957_kidekaco")]
+    partial class kidekaco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -440,111 +440,111 @@ namespace TravelTo.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini",
+                            Description = "ეს სასტუმრო წარმოადგენს სამგზის ლუქსს და თანამედროვე მომსახურებას.",
                             Fasi = 100,
-                            Lokacia = "RobotiqsiHotel",
-                            Name = "Robotiqsi Grand Hotel",
+                            Lokacia = "თბილისი",
+                            Name = "თბილისის ცენტრალური სასტუმრო",
                             Tviseba_Id = 1,
-                            gmail = "gmail@gmail.com",
+                            gmail = "tbilisi@gmail.com",
                             image_name = "1.jpeg"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa",
+                            Description = "ამ სასტუმროში სტუმრები სარგებლობენ საოცარი სანაპიროს ხედებით.",
                             Fasi = 50,
-                            Lokacia = "AntarqtidaHotel",
-                            Name = "Antarqtida Luxury Suites",
+                            Lokacia = "ბათუმი",
+                            Name = "ბათუმი რეზორტი",
                             Tviseba_Id = 2,
-                            gmail = "antarqtida@gmail.com",
+                            gmail = "batumi@gmail.com",
                             image_name = "2.jpg"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.",
+                            Description = "სასტუმრო გთავაზობთ კომფორტულ პირობებს და შესანიშნავ სამზარეულოს.",
                             Fasi = 75,
-                            Lokacia = "TbilisiHotel",
-                            Name = "Tbilisi City Hotel",
+                            Lokacia = "ქუთაისი",
+                            Name = "ქუთაისი  სასტუმრო",
                             Tviseba_Id = 3,
-                            gmail = "tbilisi@gmail.com",
+                            gmail = "kutaisi@gmail.com",
                             image_name = "3.jpg"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.",
+                            Description = "სასტუმრო წარმოადგენს ისტორიულ და კულტურულ გარემოს.",
                             Fasi = 60,
-                            Lokacia = "KutaisiHotel",
-                            Name = "Kutaisi Boutique Hotel",
+                            Lokacia = "მცხეთა",
+                            Name = "მცხეთა ჰერიტიჯ სასტუმრო",
                             Tviseba_Id = 4,
-                            gmail = "kutaisi@gmail.com",
+                            gmail = "mtskheta@gmail.com",
                             image_name = "4.webp"
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.",
+                            Description = "ცენტრალური ადგილმდებარეობა, ახლოს სამრეწველო და კულტურული ატრაქციონებთან.",
                             Fasi = 80,
-                            Lokacia = "BatumiHotel",
-                            Name = "Batumi Beach Resort",
+                            Lokacia = "ზუგდიდი",
+                            Name = "ზუგდიდი პარკ სასტუმრო",
                             Tviseba_Id = 5,
-                            gmail = "batumi@gmail.com",
+                            gmail = "zugdidi@gmail.com",
                             image_name = "5.jpg"
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.",
+                            Description = "მომსახურება მაღალი ხარისხის, მყუდრო ატმოსფერო და თანამედროვე ოთახები.",
                             Fasi = 40,
-                            Lokacia = "MtskhetaHotel",
-                            Name = "Mtskheta Heritage Inn",
+                            Lokacia = "გორი",
+                            Name = "გორი ფორტეს სასტუმრო",
                             Tviseba_Id = 6,
-                            gmail = "mtskheta@gmail.com",
+                            gmail = "gori@gmail.com",
                             image_name = "6.jpg"
                         },
                         new
                         {
                             Id = 7,
-                            Description = "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja",
+                            Description = "თელავში მდებარე მყუდრო სასტუმრო, რომელიც გთავაზობთ შესანიშნავ მომსახურებას.",
                             Fasi = 30,
-                            Lokacia = "ZugdidiHotel",
-                            Name = "Zugdidi Park Hotel",
+                            Lokacia = "თელავი",
+                            Name = "თელავი უაინ ჰოტელი",
                             Tviseba_Id = 7,
-                            gmail = "zugdidi@gmail.com",
+                            gmail = "telavi@gmail.com",
                             image_name = "7.jpg"
                         },
                         new
                         {
                             Id = 8,
-                            Description = "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.",
+                            Description = "სასტუმრო მაღალი ხარისხის მომსახურებითა და ლამაზი ხედებით.",
                             Fasi = 45,
-                            Lokacia = "GoriHotel",
-                            Name = "Gori Fortress Hotel",
+                            Lokacia = "სიღნაღი",
+                            Name = "სიღნაღი ჰილტოპ სასტუმრო",
                             Tviseba_Id = 8,
-                            gmail = "gori@gmail.com",
+                            gmail = "signagi@gmail.com",
                             image_name = "8.jpg"
                         },
                         new
                         {
                             Id = 9,
-                            Description = "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.",
+                            Description = "სასტუმრო მშვიდ გარემოში და სრულყოფილი მყუდროებით.",
                             Fasi = 55,
-                            Lokacia = "TelaviHotel",
-                            Name = "Telavi Wine Hotel",
+                            Lokacia = "რაჭა",
+                            Name = "რაჭა რეზორტი",
                             Tviseba_Id = 9,
-                            gmail = "telavi@gmail.com",
+                            gmail = "racha@gmail.com",
                             image_name = "9.jpg"
                         },
                         new
                         {
                             Id = 10,
-                            Description = "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.",
+                            Description = "ვარძი ჰოტელი გთავაზობთ თანამედროვე ფასის ოპციებს და განსაცვიფრებელ გარემოს.",
                             Fasi = 65,
-                            Lokacia = "SignagiHotel",
-                            Name = "Signagi Hilltop Hotel",
+                            Lokacia = "ვარძი",
+                            Name = "ვარძი რეზორტი",
                             Tviseba_Id = 10,
-                            gmail = "signagi@gmail.com",
+                            gmail = "vardzi@gmail.com",
                             image_name = "10.jpg"
                         });
                 });
@@ -561,7 +561,7 @@ namespace TravelTo.Migrations
 
                     b.HasIndex("Turebi_Id");
 
-                    b.ToTable("Sastumrodaturebi");
+                    b.ToTable("SastumroebiDaTurebi");
 
                     b.HasData(
                         new
@@ -658,7 +658,7 @@ namespace TravelTo.Migrations
                         {
                             id = 1,
                             Company_Id = 1,
-                            Description = "ანტარქტიდა — დედამიწის ყველაზე მაღალი კონტინენტია, რომლის ზედაპირის საშუალო სიმაღლე ზღვის დონიდან შეადგენს 2000 მეტრზე მეტს, ხოლო კონტინენტის ცენტრში აღწევს 4000 მეტრს.",
+                            Description = "ანტარქტიდა დედამიწის ყველაზე სამხრეთული კონტინენტია, სადაც არ არსებობს მუდმივი მოსახლეობა, მხოლოდ მკვლევარები.",
                             Name = "ანტარქტიდა",
                             Price = 999.99000000000001,
                             image_name = "antarqtida.jpg"
@@ -667,7 +667,7 @@ namespace TravelTo.Migrations
                         {
                             id = 2,
                             Company_Id = 3,
-                            Description = "თბილისი კავკასიის რეგიონის მნიშვნელოვანი ინდუსტრიული, სოციალური და კულტურული ცენტრია და ბოლო დროს ერთ-ერთი უმნიშვნელოვანესი სატრანსპორტო კვანძი ხდება გლობალური ენერგომატარებლებისა და სავაჭრო პროექტებისთვის (იხ. ბაქო-თბილისი-ჯეიჰანის ნავთობსადენი და ბაქო-თბილისი-ერზერუმის გაზსადენი). ქალაქი ისტორიული აბრეშუმის დიდი გზის ერთ-ერთ მარშრუტზე მდებარეობს და მნიშვნელოვანი სავაჭრო/სატრანზიტო ცენტრის პოზიცია უჭირავს რუსეთის ჩრდილო კავკასიას, თურქეთსა და ტრანსკავკასიის სომხეთისა და აზერბაიჯანის რესპუბლიკების გადაკვეთაზე სტრატეგიული მდებარეობით.",
+                            Description = "თბილისი საქართველოს დედაქალაქია, ცნობილია თავისი ისტორიული ძველი უბნებით და კულტურული მნიშვნელობით.",
                             Name = "თბილისი",
                             Price = 500.99000000000001,
                             image_name = "Tbilisi.jpg"
@@ -676,7 +676,7 @@ namespace TravelTo.Migrations
                         {
                             id = 3,
                             Company_Id = 2,
-                            Description = "ქუთაისი — ქალაქი და მუნიციპალიტეტი საქართველოში, იმერეთის მხარის ადმინისტრაციული ცენტრი, სიდიდით მეოთხე ქალაქი საქართველოში, საქართველოს სამეფოს ისტორიული დედაქალაქი, ქუთაისის საეპისკოპოსოს ისტორიული ცენტრი. მდებარეობს მდინარე რიონზე. მოსახლეობა 130 400 ადამიანი (2023). ",
+                            Description = "ქუთაისი საქართველოს ისტორიული ქალაქია, გალიას საკათედრო ტაძრითა და მსოფლიოს ერთ-ერთი ძველი უნივერსიტეტით.",
                             Name = "ქუთაისი",
                             Price = 799.99000000000001,
                             image_name = "7012519385_f7e92b8d8e_z.jpg"
@@ -685,16 +685,16 @@ namespace TravelTo.Migrations
                         {
                             id = 4,
                             Company_Id = 4,
-                            Description = "პარიზი (ფრანგ. Paris [paˈʁi] პაღი) — საფრანგეთის დედაქალაქი და ქვეყნის უდიდესი ქალაქია, ასევე ადმინისტრაციული ცენტრი ილ-დე-ფრანსის რეგიონის, რომელიც მოიცავს პარიზსა და მის შემოგარენს. პარიზი ევროპის წამყვანი კულტურული, ბიზნეს და პოლიტიკური ცენტრია, დამახასიათებელი ნეოკლასიკური არქიტექტურითა და მისი გავლენით მოდასა და ხელოვნებაზე. მეტსახელად „სინათლის ქალაქი“ (la Ville Lumière), პარიზი XIX საუკუნიდან მოყოლებული ყველაზე რომანტიკული ქალაქის რეპუტაციით სარგებლობს. ",
+                            Description = "პარიზი საფრანგეთის დედაქალაქია, ცნობილია აიფელის კოშკით და ლუვრის მუზეუმით.",
                             Name = "პარიზი",
                             Price = 1999.99,
-                            image_name = "Los-AngelesCa.jfif"
+                            image_name = "Spain.jfif"
                         },
                         new
                         {
                             id = 5,
                             Company_Id = 1,
-                            Description = "ბათუმი — ქალაქი და მუნიციპალიტეტი[5] საქართველოში, არის აჭარის ავტონომიური რესპუბლიკის ადმინისტრაციული ცენტრი. ბათუმი არის მოსახლეობის რაოდენობით მეორე ქალაქი საქართველოში, მსხვილი საერთაშორისო ნავსადგური შავი ზღვის სამხრეთ-აღმოსავლეთ სანაპიროზე, მნიშვნელოვანი სამრეწველო, კულტურული და ტურისტული ცენტრი საქართველოში. ",
+                            Description = "ბათუმი შავი ზღვის სანაპიროზე მდებარე ქალაქია, ცნობილი თავისი სანაპირო პარკებით და კურორტებით.",
                             Name = "ბათუმი",
                             Price = 999.99000000000001,
                             image_name = "Batumi.jpg"
@@ -703,7 +703,7 @@ namespace TravelTo.Migrations
                         {
                             id = 6,
                             Company_Id = 2,
-                            Description = "მაიამი (ინგლ. Miami) — ქალაქი აშშ-ში, ფლორიდის შტატში. მდებარეობს შტატის სამხრეთ-აღმოსავლეთ ნაწილში, ატლანტის ოკეანის სანაპიროზე. 2013 წლის მონაცემებით მოსახლეობა 417,650 კაცი. ფორბსი მაიამი მოწინავე ქალაქია ფინანსების, კომერციის, კულტურის, მედიის, ხელოვნებისა და საერთაშორისო ვაჭრობის სექტორებში. მაიამის პორტი ცნობილია როგორც „მსოფლიოს კრუიზული დედაქალაქი“.[1] მაიამის პორტს ჰყავს მსოფლიოში ყველაზე მეტი კრუიზული ხაზი და მგზავრები.[2] 2010 წელს მაიამი შეფასდა როგორც მეშვიდე ყველაზე მნიშვნელოვანი ქალაქი აშშ-ში და 33-ე მსოფლიოში. 2008 წელს მაიამი ფორბსის მიერ შეფასდა როგორც „ამერიკის უსუფთავესი ქალაქი“. 2009 წელს ცნობილმა შვეიცარიულმა ბანკმა იუ-ბი-ესმა შეისწავლა მსოფლიოს 73 უმდიდრესი ქალაქი და მაიამი შეაფასა როგორც ყველაზე მდიდარი ქალაქი აშშ-ში, ხოლო მეთხუთმეტე უმდიდრესი ქალაქი მსოფლიოში.[3] ",
+                            Description = "მაიამი, აშშ-ის ფლორიდაში მდებარე ქალაქია, ცნობილი თავისი ფინანსური, კულტურული და სავაჭრო ცენტრის როლით.",
                             Name = "მაიამი",
                             Price = 1999.99,
                             image_name = "Brazil.jfif"
@@ -712,7 +712,7 @@ namespace TravelTo.Migrations
                         {
                             id = 7,
                             Company_Id = 4,
-                            Description = "გორი — ქალაქი საქართველოში, შიდა ქართლის მხარეში, გორის მუნიციპალიტეტისა და შიდა ქართლის მხარის ადმინისტრაციული ცენტრი. მდებარეობს მდინარეების მტკვრისა და ლიახვის შესართავთან, ძირითად სატრანსპორტო გზების გზასაყარზე, თბილისიდან 76-ე კილომეტრში (რკინიგზით).",
+                            Description = "გორი ქალაქია საქართველოში, ცნობილია თავისი ისტორიული მნიშვნელობით და გორის ციხით.",
                             Name = "გორი",
                             Price = 500.99000000000001,
                             image_name = "Denmark.jfif"
@@ -721,10 +721,10 @@ namespace TravelTo.Migrations
                         {
                             id = 8,
                             Company_Id = 3,
-                            Description = "მთელავი — ქალაქი საქართველოში, კახეთის მხარისა და თელავის მუნიციპალიტეტის ადმინისტრაციული ცენტრი. მოსახლეობა 19 629 (2014 წ.) ადამიანი. ",
+                            Description = "თელავი ქალაქია კახეთში, ცნობილი თავისი ღვინის კულტურით და ისტორიული ძეგლებით.",
                             Name = "თელავი",
                             Price = 999.99000000000001,
-                            image_name = "Spain.jfif"
+                            image_name = "Los-AngelesCa.jfif"
                         });
                 });
 
@@ -736,55 +736,55 @@ namespace TravelTo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Tviseba_Id"));
 
-                    b.Property<string>("Shinauri_cxovelebis_dashveba")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ufaso_avtosadgomi")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Wifi")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("bagi")
+                    b.Property<string>("ბარი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("bari")
+                    b.Property<string>("ბაღი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("daxuruli_auzi")
+                    b.Property<string>("ბილიარდი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("kino_darbasi")
+                    b.Property<string>("კინოდარბაზი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("otaxi_aramweveltaTvis")
+                    b.Property<string>("ოთახი_არამწეველებისთვის")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("resotrani")
+                    b.Property<string>("რესტორანი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("sabavsho_otaxi")
+                    b.Property<string>("საბავშო_ოთახი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("sabiliardo")
+                    b.Property<string>("საკონფერენციო_დარბაზი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("sakonferencio_darbazi")
+                    b.Property<string>("სამრეცხაო")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("samrecxao")
+                    b.Property<string>("საუნა")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("sauna")
+                    b.Property<string>("სპა_ცენტრი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("spa_centri")
+                    b.Property<string>("სპორტული_დარბაზი")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("sportdarbazi")
+                    b.Property<string>("ტერასა")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("terasa")
+                    b.Property<string>("უფასო_ავტოსადგომი")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("უფასო_წყალი")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("შინაური_ცხოვრების_დაშვება")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Tviseba_Id");
@@ -795,212 +795,212 @@ namespace TravelTo.Migrations
                         new
                         {
                             Tviseba_Id = 1,
-                            Shinauri_cxovelebis_dashveba = "YES",
-                            Ufaso_avtosadgomi = "NO",
                             Wifi = "YES",
-                            bagi = "YES",
-                            bari = "YES",
-                            daxuruli_auzi = "NO",
-                            kino_darbasi = "NO",
-                            otaxi_aramweveltaTvis = "NO",
-                            resotrani = "NO",
-                            sabavsho_otaxi = "YES",
-                            sabiliardo = "NO",
-                            sakonferencio_darbazi = "NO",
-                            samrecxao = "YES",
-                            sauna = "YES",
-                            spa_centri = "NO",
-                            sportdarbazi = "YES",
-                            terasa = "NO"
+                            ბარი = "YES",
+                            ბაღი = "YES",
+                            ბილიარდი = "NO",
+                            კინოდარბაზი = "NO",
+                            ოთახი_არამწეველებისთვის = "NO",
+                            რესტორანი = "NO",
+                            საბავშო_ოთახი = "YES",
+                            საკონფერენციო_დარბაზი = "NO",
+                            სამრეცხაო = "YES",
+                            საუნა = "YES",
+                            სპა_ცენტრი = "NO",
+                            სპორტული_დარბაზი = "YES",
+                            ტერასა = "NO",
+                            უფასო_ავტოსადგომი = "NO",
+                            უფასო_წყალი = "NO",
+                            შინაური_ცხოვრების_დაშვება = "YES"
                         },
                         new
                         {
                             Tviseba_Id = 2,
-                            Shinauri_cxovelebis_dashveba = "NO",
-                            Ufaso_avtosadgomi = "YES",
                             Wifi = "NO",
-                            bagi = "NO",
-                            bari = "NO",
-                            daxuruli_auzi = "YES",
-                            kino_darbasi = "YES",
-                            otaxi_aramweveltaTvis = "YES",
-                            resotrani = "YES",
-                            sabavsho_otaxi = "NO",
-                            sabiliardo = "YES",
-                            sakonferencio_darbazi = "YES",
-                            samrecxao = "NO",
-                            sauna = "NO",
-                            spa_centri = "YES",
-                            sportdarbazi = "NO",
-                            terasa = "YES"
+                            ბარი = "NO",
+                            ბაღი = "NO",
+                            ბილიარდი = "YES",
+                            კინოდარბაზი = "YES",
+                            ოთახი_არამწეველებისთვის = "YES",
+                            რესტორანი = "YES",
+                            საბავშო_ოთახი = "NO",
+                            საკონფერენციო_დარბაზი = "YES",
+                            სამრეცხაო = "NO",
+                            საუნა = "NO",
+                            სპა_ცენტრი = "YES",
+                            სპორტული_დარბაზი = "NO",
+                            ტერასა = "YES",
+                            უფასო_ავტოსადგომი = "YES",
+                            უფასო_წყალი = "YES",
+                            შინაური_ცხოვრების_დაშვება = "NO"
                         },
                         new
                         {
                             Tviseba_Id = 3,
-                            Shinauri_cxovelebis_dashveba = "YES",
-                            Ufaso_avtosadgomi = "NO",
                             Wifi = "YES",
-                            bagi = "YES",
-                            bari = "YES",
-                            daxuruli_auzi = "NO",
-                            kino_darbasi = "YES",
-                            otaxi_aramweveltaTvis = "NO",
-                            resotrani = "NO",
-                            sabavsho_otaxi = "YES",
-                            sabiliardo = "NO",
-                            sakonferencio_darbazi = "NO",
-                            samrecxao = "YES",
-                            sauna = "YES",
-                            spa_centri = "NO",
-                            sportdarbazi = "YES",
-                            terasa = "NO"
+                            ბარი = "YES",
+                            ბაღი = "YES",
+                            ბილიარდი = "NO",
+                            კინოდარბაზი = "YES",
+                            ოთახი_არამწეველებისთვის = "NO",
+                            რესტორანი = "NO",
+                            საბავშო_ოთახი = "YES",
+                            საკონფერენციო_დარბაზი = "NO",
+                            სამრეცხაო = "YES",
+                            საუნა = "YES",
+                            სპა_ცენტრი = "NO",
+                            სპორტული_დარბაზი = "YES",
+                            ტერასა = "NO",
+                            უფასო_ავტოსადგომი = "NO",
+                            უფასო_წყალი = "NO",
+                            შინაური_ცხოვრების_დაშვება = "YES"
                         },
                         new
                         {
                             Tviseba_Id = 4,
-                            Shinauri_cxovelebis_dashveba = "NO",
-                            Ufaso_avtosadgomi = "YES",
                             Wifi = "YES",
-                            bagi = "NO",
-                            bari = "NO",
-                            daxuruli_auzi = "NO",
-                            kino_darbasi = "NO",
-                            otaxi_aramweveltaTvis = "NO",
-                            resotrani = "YES",
-                            sabavsho_otaxi = "YES",
-                            sabiliardo = "YES",
-                            sakonferencio_darbazi = "YES",
-                            samrecxao = "YES",
-                            sauna = "YES",
-                            spa_centri = "YES",
-                            sportdarbazi = "NO",
-                            terasa = "YES"
+                            ბარი = "NO",
+                            ბაღი = "NO",
+                            ბილიარდი = "YES",
+                            კინოდარბაზი = "NO",
+                            ოთახი_არამწეველებისთვის = "NO",
+                            რესტორანი = "YES",
+                            საბავშო_ოთახი = "YES",
+                            საკონფერენციო_დარბაზი = "YES",
+                            სამრეცხაო = "YES",
+                            საუნა = "YES",
+                            სპა_ცენტრი = "YES",
+                            სპორტული_დარბაზი = "NO",
+                            ტერასა = "YES",
+                            უფასო_ავტოსადგომი = "YES",
+                            უფასო_წყალი = "NO",
+                            შინაური_ცხოვრების_დაშვება = "NO"
                         },
                         new
                         {
                             Tviseba_Id = 5,
-                            Shinauri_cxovelebis_dashveba = "YES",
-                            Ufaso_avtosadgomi = "NO",
                             Wifi = "NO",
-                            bagi = "YES",
-                            bari = "YES",
-                            daxuruli_auzi = "YES",
-                            kino_darbasi = "YES",
-                            otaxi_aramweveltaTvis = "YES",
-                            resotrani = "NO",
-                            sabavsho_otaxi = "YES",
-                            sabiliardo = "YES",
-                            sakonferencio_darbazi = "NO",
-                            samrecxao = "NO",
-                            sauna = "NO",
-                            spa_centri = "NO",
-                            sportdarbazi = "YES",
-                            terasa = "YES"
+                            ბარი = "YES",
+                            ბაღი = "YES",
+                            ბილიარდი = "YES",
+                            კინოდარბაზი = "YES",
+                            ოთახი_არამწეველებისთვის = "YES",
+                            რესტორანი = "NO",
+                            საბავშო_ოთახი = "YES",
+                            საკონფერენციო_დარბაზი = "NO",
+                            სამრეცხაო = "NO",
+                            საუნა = "NO",
+                            სპა_ცენტრი = "NO",
+                            სპორტული_დარბაზი = "YES",
+                            ტერასა = "YES",
+                            უფასო_ავტოსადგომი = "NO",
+                            უფასო_წყალი = "YES",
+                            შინაური_ცხოვრების_დაშვება = "YES"
                         },
                         new
                         {
                             Tviseba_Id = 6,
-                            Shinauri_cxovelebis_dashveba = "YES",
-                            Ufaso_avtosadgomi = "YES",
                             Wifi = "YES",
-                            bagi = "NO",
-                            bari = "YES",
-                            daxuruli_auzi = "NO",
-                            kino_darbasi = "YES",
-                            otaxi_aramweveltaTvis = "NO",
-                            resotrani = "YES",
-                            sabavsho_otaxi = "NO",
-                            sabiliardo = "NO",
-                            sakonferencio_darbazi = "NO",
-                            samrecxao = "YES",
-                            sauna = "YES",
-                            spa_centri = "NO",
-                            sportdarbazi = "YES",
-                            terasa = "NO"
+                            ბარი = "YES",
+                            ბაღი = "NO",
+                            ბილიარდი = "NO",
+                            კინოდარბაზი = "YES",
+                            ოთახი_არამწეველებისთვის = "NO",
+                            რესტორანი = "YES",
+                            საბავშო_ოთახი = "NO",
+                            საკონფერენციო_დარბაზი = "NO",
+                            სამრეცხაო = "YES",
+                            საუნა = "YES",
+                            სპა_ცენტრი = "NO",
+                            სპორტული_დარბაზი = "YES",
+                            ტერასა = "NO",
+                            უფასო_ავტოსადგომი = "YES",
+                            უფასო_წყალი = "NO",
+                            შინაური_ცხოვრების_დაშვება = "YES"
                         },
                         new
                         {
                             Tviseba_Id = 7,
-                            Shinauri_cxovelebis_dashveba = "NO",
-                            Ufaso_avtosadgomi = "NO",
                             Wifi = "NO",
-                            bagi = "YES",
-                            bari = "NO",
-                            daxuruli_auzi = "NO",
-                            kino_darbasi = "NO",
-                            otaxi_aramweveltaTvis = "YES",
-                            resotrani = "YES",
-                            sabavsho_otaxi = "YES",
-                            sabiliardo = "YES",
-                            sakonferencio_darbazi = "YES",
-                            samrecxao = "YES",
-                            sauna = "NO",
-                            spa_centri = "YES",
-                            sportdarbazi = "NO",
-                            terasa = "YES"
+                            ბარი = "NO",
+                            ბაღი = "YES",
+                            ბილიარდი = "YES",
+                            კინოდარბაზი = "NO",
+                            ოთახი_არამწეველებისთვის = "YES",
+                            რესტორანი = "YES",
+                            საბავშო_ოთახი = "YES",
+                            საკონფერენციო_დარბაზი = "YES",
+                            სამრეცხაო = "YES",
+                            საუნა = "NO",
+                            სპა_ცენტრი = "YES",
+                            სპორტული_დარბაზი = "NO",
+                            ტერასა = "YES",
+                            უფასო_ავტოსადგომი = "NO",
+                            უფასო_წყალი = "NO",
+                            შინაური_ცხოვრების_დაშვება = "NO"
                         },
                         new
                         {
                             Tviseba_Id = 8,
-                            Shinauri_cxovelebis_dashveba = "NO",
-                            Ufaso_avtosadgomi = "YES",
                             Wifi = "YES",
-                            bagi = "NO",
-                            bari = "YES",
-                            daxuruli_auzi = "NO",
-                            kino_darbasi = "YES",
-                            otaxi_aramweveltaTvis = "NO",
-                            resotrani = "NO",
-                            sabavsho_otaxi = "YES",
-                            sabiliardo = "YES",
-                            sakonferencio_darbazi = "NO",
-                            samrecxao = "YES",
-                            sauna = "YES",
-                            spa_centri = "YES",
-                            sportdarbazi = "NO",
-                            terasa = "NO"
+                            ბარი = "YES",
+                            ბაღი = "NO",
+                            ბილიარდი = "YES",
+                            კინოდარბაზი = "YES",
+                            ოთახი_არამწეველებისთვის = "NO",
+                            რესტორანი = "NO",
+                            საბავშო_ოთახი = "YES",
+                            საკონფერენციო_დარბაზი = "NO",
+                            სამრეცხაო = "YES",
+                            საუნა = "YES",
+                            სპა_ცენტრი = "YES",
+                            სპორტული_დარბაზი = "NO",
+                            ტერასა = "NO",
+                            უფასო_ავტოსადგომი = "YES",
+                            უფასო_წყალი = "NO",
+                            შინაური_ცხოვრების_დაშვება = "NO"
                         },
                         new
                         {
                             Tviseba_Id = 9,
-                            Shinauri_cxovelebis_dashveba = "YES",
-                            Ufaso_avtosadgomi = "NO",
                             Wifi = "NO",
-                            bagi = "YES",
-                            bari = "NO",
-                            daxuruli_auzi = "YES",
-                            kino_darbasi = "YES",
-                            otaxi_aramweveltaTvis = "YES",
-                            resotrani = "YES",
-                            sabavsho_otaxi = "NO",
-                            sabiliardo = "NO",
-                            sakonferencio_darbazi = "YES",
-                            samrecxao = "YES",
-                            sauna = "NO",
-                            spa_centri = "NO",
-                            sportdarbazi = "YES",
-                            terasa = "YES"
+                            ბარი = "NO",
+                            ბაღი = "YES",
+                            ბილიარდი = "NO",
+                            კინოდარბაზი = "YES",
+                            ოთახი_არამწეველებისთვის = "YES",
+                            რესტორანი = "YES",
+                            საბავშო_ოთახი = "NO",
+                            საკონფერენციო_დარბაზი = "YES",
+                            სამრეცხაო = "YES",
+                            საუნა = "NO",
+                            სპა_ცენტრი = "NO",
+                            სპორტული_დარბაზი = "YES",
+                            ტერასა = "YES",
+                            უფასო_ავტოსადგომი = "NO",
+                            უფასო_წყალი = "YES",
+                            შინაური_ცხოვრების_დაშვება = "YES"
                         },
                         new
                         {
                             Tviseba_Id = 10,
-                            Shinauri_cxovelebis_dashveba = "NO",
-                            Ufaso_avtosadgomi = "YES",
                             Wifi = "YES",
-                            bagi = "NO",
-                            bari = "YES",
-                            daxuruli_auzi = "YES",
-                            kino_darbasi = "YES",
-                            otaxi_aramweveltaTvis = "NO",
-                            resotrani = "NO",
-                            sabavsho_otaxi = "YES",
-                            sabiliardo = "YES",
-                            sakonferencio_darbazi = "NO",
-                            samrecxao = "YES",
-                            sauna = "NO",
-                            spa_centri = "YES",
-                            sportdarbazi = "NO",
-                            terasa = "NO"
+                            ბარი = "YES",
+                            ბაღი = "NO",
+                            ბილიარდი = "YES",
+                            კინოდარბაზი = "YES",
+                            ოთახი_არამწეველებისთვის = "NO",
+                            რესტორანი = "NO",
+                            საბავშო_ოთახი = "YES",
+                            საკონფერენციო_დარბაზი = "NO",
+                            სამრეცხაო = "YES",
+                            საუნა = "NO",
+                            სპა_ცენტრი = "YES",
+                            სპორტული_დარბაზი = "NO",
+                            ტერასა = "NO",
+                            უფასო_ავტოსადგომი = "YES",
+                            უფასო_წყალი = "YES",
+                            შინაური_ცხოვრების_დაშვება = "NO"
                         });
                 });
 

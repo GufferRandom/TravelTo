@@ -44,6 +44,23 @@ namespace TravelTo.Controllers
         }
         public IActionResult Index()
         {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                if (Request.Cookies["USERID"] == null)
+            { 
+                CookieOptions options = new CookieOptions()
+                {
+                    Expires = DateTime.Now.AddDays(2),
+                    Path = "/",
+                    HttpOnly = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.Strict,
+                    Secure = true
+                };
+            string USERID = Guid.NewGuid().ToString();
+            Response.Cookies.Append("USERID", USERID, options);
+                }
+            }
             var turebi = _context.Turebis.ToList();
             var sastumroebi = _context.Sastumroebis.ToList();
             var sastumroandturebi = new SastumroebiAndTurebi();
@@ -55,7 +72,9 @@ namespace TravelTo.Controllers
                 var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
                                       .Select(u => u.turebi)
                                       .ToList().Count();
-                ViewBag.howmany = get_user_favs;
+                var get_user_fav_sastumroebi= _context.userAndSastumroebis.Where(u => u.User_Id == userid).Select(u => u.sastumroebi).ToList().Count();
+                var cnt = get_user_favs + get_user_fav_sastumroebi;
+                HttpContext.Session.SetString("howmany", cnt.ToString());
             }
             return View(sastumroandturebi);
         }
@@ -112,6 +131,8 @@ namespace TravelTo.Controllers
             var Yvela_tur = _context.Turebis.ToList();
             Yvela_tur.Remove(get_turi);
             ViewBag.Yvela_tur = Yvela_tur;
+            var sastumroebi = _context.SastumroebiDaTurebi.Where(x => x.Turebi_Id == id).Select(x => x.Sastumroebi).ToList();
+            ViewBag.Sastumroebi = sastumroebi;
             return View(get_turi);
         }
         [HttpGet, DisplayName("Edit")]
@@ -400,6 +421,7 @@ namespace TravelTo.Controllers
                                        .Any(u => u.id == id))
                 {
                     TempData["Error"] = "ტური უკვე არი დამატებული კალათაში";
+                    return Redirect(Request.Headers["Referer"].ToString());
 
                 }
                 else
@@ -414,6 +436,8 @@ namespace TravelTo.Controllers
                 TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
                 return Redirect(Request.Headers["Referer"].ToString());
             }
+            int cnt = int.Parse(HttpContext.Session.GetString("howmany")) + 1;
+            HttpContext.Session.SetString("howmany", cnt.ToString());
             return Redirect(Request.Headers["Referer"].ToString());
         }
         public IActionResult AmoshlaKalatidan(int id)

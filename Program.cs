@@ -44,6 +44,7 @@ internal class Program
         
 		builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDataContext>();
         builder.Services.AddRazorPages();
+     
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

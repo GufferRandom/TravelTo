@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class change : Migration
+    public partial class hel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -113,22 +113,22 @@ namespace TravelTo.Migrations
                     Tviseba_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Wifi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ufaso_avtosadgomi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    otaxi_aramweveltaTvis = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    resotrani = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    daxuruli_auzi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sauna = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sportdarbazi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sabiliardo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    spa_centri = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    kino_darbasi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sakonferencio_darbazi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    bari = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    sabavsho_otaxi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    terasa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    bagi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    samrecxao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Shinauri_cxovelebis_dashveba = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    უფასო_ავტოსადგომი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ოთახი_არამწეველებისთვის = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    რესტორანი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    უფასო_წყალი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    საუნა = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    სპორტული_დარბაზი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ბილიარდი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    სპა_ცენტრი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    კინოდარბაზი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    საკონფერენციო_დარბაზი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ბარი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    საბავშო_ოთახი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ტერასა = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ბაღი = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    სამრეცხაო = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    შინაური_ცხოვრების_დაშვება = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -419,19 +419,19 @@ namespace TravelTo.Migrations
 
             migrationBuilder.InsertData(
                 table: "TvisebebiDaSastumroebi",
-                columns: new[] { "Tviseba_Id", "Shinauri_cxovelebis_dashveba", "Ufaso_avtosadgomi", "Wifi", "bagi", "bari", "daxuruli_auzi", "kino_darbasi", "otaxi_aramweveltaTvis", "resotrani", "sabavsho_otaxi", "sabiliardo", "sakonferencio_darbazi", "samrecxao", "sauna", "spa_centri", "sportdarbazi", "terasa" },
+                columns: new[] { "Tviseba_Id", "Wifi", "ბარი", "ბაღი", "ბილიარდი", "კინოდარბაზი", "ოთახი_არამწეველებისთვის", "რესტორანი", "საბავშო_ოთახი", "საკონფერენციო_დარბაზი", "სამრეცხაო", "საუნა", "სპა_ცენტრი", "სპორტული_დარბაზი", "ტერასა", "უფასო_ავტოსადგომი", "უფასო_წყალი", "შინაური_ცხოვრების_დაშვება" },
                 values: new object[,]
                 {
-                    { 1, "YES", "NO", "YES", "YES", "YES", "NO", "NO", "NO", "NO", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "NO" },
-                    { 2, "NO", "YES", "NO", "NO", "NO", "YES", "YES", "YES", "YES", "NO", "YES", "YES", "NO", "NO", "YES", "NO", "YES" },
-                    { 3, "YES", "NO", "YES", "YES", "YES", "NO", "YES", "NO", "NO", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "NO" },
-                    { 4, "NO", "YES", "YES", "NO", "NO", "NO", "NO", "NO", "YES", "YES", "YES", "YES", "YES", "YES", "YES", "NO", "YES" },
-                    { 5, "YES", "NO", "NO", "YES", "YES", "YES", "YES", "YES", "NO", "YES", "YES", "NO", "NO", "NO", "NO", "YES", "YES" },
-                    { 6, "YES", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "YES", "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO" },
-                    { 7, "NO", "NO", "NO", "YES", "NO", "NO", "NO", "YES", "YES", "YES", "YES", "YES", "YES", "NO", "YES", "NO", "YES" },
-                    { 8, "NO", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "YES", "YES", "NO", "NO" },
-                    { 9, "YES", "NO", "NO", "YES", "NO", "YES", "YES", "YES", "YES", "NO", "NO", "YES", "YES", "NO", "NO", "YES", "YES" },
-                    { 10, "NO", "YES", "YES", "NO", "YES", "YES", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "NO" }
+                    { 1, "YES", "YES", "YES", "NO", "NO", "NO", "NO", "YES", "NO", "YES", "YES", "NO", "YES", "NO", "NO", "NO", "YES" },
+                    { 2, "NO", "NO", "NO", "YES", "YES", "YES", "YES", "NO", "YES", "NO", "NO", "YES", "NO", "YES", "YES", "YES", "NO" },
+                    { 3, "YES", "YES", "YES", "NO", "YES", "NO", "NO", "YES", "NO", "YES", "YES", "NO", "YES", "NO", "NO", "NO", "YES" },
+                    { 4, "YES", "NO", "NO", "YES", "NO", "NO", "YES", "YES", "YES", "YES", "YES", "YES", "NO", "YES", "YES", "NO", "NO" },
+                    { 5, "NO", "YES", "YES", "YES", "YES", "YES", "NO", "YES", "NO", "NO", "NO", "NO", "YES", "YES", "NO", "YES", "YES" },
+                    { 6, "YES", "YES", "NO", "NO", "YES", "NO", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "YES" },
+                    { 7, "NO", "NO", "YES", "YES", "NO", "YES", "YES", "YES", "YES", "YES", "NO", "YES", "NO", "YES", "NO", "NO", "NO" },
+                    { 8, "YES", "YES", "NO", "YES", "YES", "NO", "NO", "YES", "NO", "YES", "YES", "YES", "NO", "NO", "YES", "NO", "NO" },
+                    { 9, "NO", "NO", "YES", "NO", "YES", "YES", "YES", "NO", "YES", "YES", "NO", "NO", "YES", "YES", "NO", "YES", "YES" },
+                    { 10, "YES", "YES", "NO", "YES", "YES", "NO", "NO", "YES", "NO", "YES", "NO", "YES", "NO", "NO", "YES", "YES", "NO" }
                 });
 
             migrationBuilder.InsertData(
@@ -439,16 +439,16 @@ namespace TravelTo.Migrations
                 columns: new[] { "Id", "Description", "Fasi", "Lokacia", "Name", "Nomer", "Owner", "Tviseba_Id", "gmail", "image_name" },
                 values: new object[,]
                 {
-                    { 1, "es sastumro mdebareobs dedamiwis mwervalze romelzedac iyo guini", 100, "RobotiqsiHotel", "Robotiqsi Grand Hotel", null, null, 1, "gmail@gmail.com", "1.jpeg" },
-                    { 2, "Es sastumro mdebareobs msoflios yvelaze civ wertislhi wesit esaaa", 50, "AntarqtidaHotel", "Antarqtida Luxury Suites", null, null, 2, "antarqtida@gmail.com", "2.jpg" },
-                    { 3, "Tbilisi tbilisi tbilisi uni uni uni btu ilia japan tsu.", 75, "TbilisiHotel", "Tbilisi City Hotel", null, null, 3, "tbilisi@gmail.com", "3.jpg" },
-                    { 4, "Kutaisi kutaisi kutaisi ratqmaunda kutasisi rogorc yoveltvbis kutaisi.", 60, "KutaisiHotel", "Kutaisi Boutique Hotel", null, null, 4, "kutaisi@gmail.com", "4.webp" },
-                    { 5, "Batumi bautmi bautmi zfgva zgva zgva meti meti meti.", 80, "BatumiHotel", "Batumi Beach Resort", null, null, 5, "batumi@gmail.com", "5.jpg" },
-                    { 6, "Mtskheta es xom mcxetaa mcxetaa azrze ar var ra davwero amaze.", 40, "MtskhetaHotel", "Mtskheta Heritage Inn", null, null, 6, "mtskheta@gmail.com", "6.jpg" },
-                    { 7, "Zugdidi es xom zugdidia yvelaze didi farti romelic daixarja", 30, "ZugdidiHotel", "Zugdidi Park Hotel", null, null, 7, "zugdidi@gmail.com", "7.jpg" },
-                    { 8, "Gori gori gori amis meti ra unda vtqva es xom goria gorta shoris.", 45, "GoriHotel", "Gori Fortress Hotel", null, null, 8, "gori@gmail.com", "8.jpg" },
-                    { 9, "Telavi telavi telavi azrze ar var ra davwero amashi mara telaviaMountains.", 55, "TelaviHotel", "Telavi Wine Hotel", null, null, 9, "telavi@gmail.com", "9.jpg" },
-                    { 10, "Signagi signagi signagi es xom signagia azrze ar var ra davwero amazec amitomac signagi signagia.", 65, "SignagiHotel", "Signagi Hilltop Hotel", null, null, 10, "signagi@gmail.com", "10.jpg" }
+                    { 1, "ეს სასტუმრო წარმოადგენს სამგზის ლუქსს და თანამედროვე მომსახურებას.", 100, "თბილისი", "თბილისის ცენტრალური სასტუმრო", null, null, 1, "tbilisi@gmail.com", "1.jpeg" },
+                    { 2, "ამ სასტუმროში სტუმრები სარგებლობენ საოცარი სანაპიროს ხედებით.", 50, "ბათუმი", "ბათუმი რეზორტი", null, null, 2, "batumi@gmail.com", "2.jpg" },
+                    { 3, "სასტუმრო გთავაზობთ კომფორტულ პირობებს და შესანიშნავ სამზარეულოს.", 75, "ქუთაისი", "ქუთაისი  სასტუმრო", null, null, 3, "kutaisi@gmail.com", "3.jpg" },
+                    { 4, "სასტუმრო წარმოადგენს ისტორიულ და კულტურულ გარემოს.", 60, "მცხეთა", "მცხეთა ჰერიტიჯ სასტუმრო", null, null, 4, "mtskheta@gmail.com", "4.webp" },
+                    { 5, "ცენტრალური ადგილმდებარეობა, ახლოს სამრეწველო და კულტურული ატრაქციონებთან.", 80, "ზუგდიდი", "ზუგდიდი პარკ სასტუმრო", null, null, 5, "zugdidi@gmail.com", "5.jpg" },
+                    { 6, "მომსახურება მაღალი ხარისხის, მყუდრო ატმოსფერო და თანამედროვე ოთახები.", 40, "გორი", "გორი ფორტეს სასტუმრო", null, null, 6, "gori@gmail.com", "6.jpg" },
+                    { 7, "თელავში მდებარე მყუდრო სასტუმრო, რომელიც გთავაზობთ შესანიშნავ მომსახურებას.", 30, "თელავი", "თელავი უაინ ჰოტელი", null, null, 7, "telavi@gmail.com", "7.jpg" },
+                    { 8, "სასტუმრო მაღალი ხარისხის მომსახურებითა და ლამაზი ხედებით.", 45, "სიღნაღი", "სიღნაღი ჰილტოპ სასტუმრო", null, null, 8, "signagi@gmail.com", "8.jpg" },
+                    { 9, "სასტუმრო მშვიდ გარემოში და სრულყოფილი მყუდროებით.", 55, "რაჭა", "რაჭა რეზორტი", null, null, 9, "racha@gmail.com", "9.jpg" },
+                    { 10, "ვარძი ჰოტელი გთავაზობთ თანამედროვე ფასის ოპციებს და განსაცვიფრებელ გარემოს.", 65, "ვარძი", "ვარძი რეზორტი", null, null, 10, "vardzi@gmail.com", "10.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -456,14 +456,14 @@ namespace TravelTo.Migrations
                 columns: new[] { "id", "Company_Id", "Description", "Name", "Price", "image_name" },
                 values: new object[,]
                 {
-                    { 1, 1, "ანტარქტიდა — დედამიწის ყველაზე მაღალი კონტინენტია, რომლის ზედაპირის საშუალო სიმაღლე ზღვის დონიდან შეადგენს 2000 მეტრზე მეტს, ხოლო კონტინენტის ცენტრში აღწევს 4000 მეტრს.", "ანტარქტიდა", 999.99000000000001, "antarqtida.jpg" },
-                    { 2, 3, "თბილისი კავკასიის რეგიონის მნიშვნელოვანი ინდუსტრიული, სოციალური და კულტურული ცენტრია და ბოლო დროს ერთ-ერთი უმნიშვნელოვანესი სატრანსპორტო კვანძი ხდება გლობალური ენერგომატარებლებისა და სავაჭრო პროექტებისთვის (იხ. ბაქო-თბილისი-ჯეიჰანის ნავთობსადენი და ბაქო-თბილისი-ერზერუმის გაზსადენი). ქალაქი ისტორიული აბრეშუმის დიდი გზის ერთ-ერთ მარშრუტზე მდებარეობს და მნიშვნელოვანი სავაჭრო/სატრანზიტო ცენტრის პოზიცია უჭირავს რუსეთის ჩრდილო კავკასიას, თურქეთსა და ტრანსკავკასიის სომხეთისა და აზერბაიჯანის რესპუბლიკების გადაკვეთაზე სტრატეგიული მდებარეობით.", "თბილისი", 500.99000000000001, "Tbilisi.jpg" },
-                    { 3, 2, "ქუთაისი — ქალაქი და მუნიციპალიტეტი საქართველოში, იმერეთის მხარის ადმინისტრაციული ცენტრი, სიდიდით მეოთხე ქალაქი საქართველოში, საქართველოს სამეფოს ისტორიული დედაქალაქი, ქუთაისის საეპისკოპოსოს ისტორიული ცენტრი. მდებარეობს მდინარე რიონზე. მოსახლეობა 130 400 ადამიანი (2023). ", "ქუთაისი", 799.99000000000001, "7012519385_f7e92b8d8e_z.jpg" },
-                    { 4, 4, "პარიზი (ფრანგ. Paris [paˈʁi] პაღი) — საფრანგეთის დედაქალაქი და ქვეყნის უდიდესი ქალაქია, ასევე ადმინისტრაციული ცენტრი ილ-დე-ფრანსის რეგიონის, რომელიც მოიცავს პარიზსა და მის შემოგარენს. პარიზი ევროპის წამყვანი კულტურული, ბიზნეს და პოლიტიკური ცენტრია, დამახასიათებელი ნეოკლასიკური არქიტექტურითა და მისი გავლენით მოდასა და ხელოვნებაზე. მეტსახელად „სინათლის ქალაქი“ (la Ville Lumière), პარიზი XIX საუკუნიდან მოყოლებული ყველაზე რომანტიკული ქალაქის რეპუტაციით სარგებლობს. ", "პარიზი", 1999.99, "Los-AngelesCa.jfif" },
-                    { 5, 1, "ბათუმი — ქალაქი და მუნიციპალიტეტი[5] საქართველოში, არის აჭარის ავტონომიური რესპუბლიკის ადმინისტრაციული ცენტრი. ბათუმი არის მოსახლეობის რაოდენობით მეორე ქალაქი საქართველოში, მსხვილი საერთაშორისო ნავსადგური შავი ზღვის სამხრეთ-აღმოსავლეთ სანაპიროზე, მნიშვნელოვანი სამრეწველო, კულტურული და ტურისტული ცენტრი საქართველოში. ", "ბათუმი", 999.99000000000001, "Batumi.jpg" },
-                    { 6, 2, "მაიამი (ინგლ. Miami) — ქალაქი აშშ-ში, ფლორიდის შტატში. მდებარეობს შტატის სამხრეთ-აღმოსავლეთ ნაწილში, ატლანტის ოკეანის სანაპიროზე. 2013 წლის მონაცემებით მოსახლეობა 417,650 კაცი. ფორბსი მაიამი მოწინავე ქალაქია ფინანსების, კომერციის, კულტურის, მედიის, ხელოვნებისა და საერთაშორისო ვაჭრობის სექტორებში. მაიამის პორტი ცნობილია როგორც „მსოფლიოს კრუიზული დედაქალაქი“.[1] მაიამის პორტს ჰყავს მსოფლიოში ყველაზე მეტი კრუიზული ხაზი და მგზავრები.[2] 2010 წელს მაიამი შეფასდა როგორც მეშვიდე ყველაზე მნიშვნელოვანი ქალაქი აშშ-ში და 33-ე მსოფლიოში. 2008 წელს მაიამი ფორბსის მიერ შეფასდა როგორც „ამერიკის უსუფთავესი ქალაქი“. 2009 წელს ცნობილმა შვეიცარიულმა ბანკმა იუ-ბი-ესმა შეისწავლა მსოფლიოს 73 უმდიდრესი ქალაქი და მაიამი შეაფასა როგორც ყველაზე მდიდარი ქალაქი აშშ-ში, ხოლო მეთხუთმეტე უმდიდრესი ქალაქი მსოფლიოში.[3] ", "მაიამი", 1999.99, "Brazil.jfif" },
-                    { 7, 4, "გორი — ქალაქი საქართველოში, შიდა ქართლის მხარეში, გორის მუნიციპალიტეტისა და შიდა ქართლის მხარის ადმინისტრაციული ცენტრი. მდებარეობს მდინარეების მტკვრისა და ლიახვის შესართავთან, ძირითად სატრანსპორტო გზების გზასაყარზე, თბილისიდან 76-ე კილომეტრში (რკინიგზით).", "გორი", 500.99000000000001, "Denmark.jfif" },
-                    { 8, 3, "მთელავი — ქალაქი საქართველოში, კახეთის მხარისა და თელავის მუნიციპალიტეტის ადმინისტრაციული ცენტრი. მოსახლეობა 19 629 (2014 წ.) ადამიანი. ", "თელავი", 999.99000000000001, "Spain.jfif" }
+                    { 1, 1, "ანტარქტიდა დედამიწის ყველაზე სამხრეთული კონტინენტია, სადაც არ არსებობს მუდმივი მოსახლეობა, მხოლოდ მკვლევარები.", "ანტარქტიდა", 999.99000000000001, "antarqtida.jpg" },
+                    { 2, 3, "თბილისი საქართველოს დედაქალაქია, ცნობილია თავისი ისტორიული ძველი უბნებით და კულტურული მნიშვნელობით.", "თბილისი", 500.99000000000001, "Tbilisi.jpg" },
+                    { 3, 2, "ქუთაისი საქართველოს ისტორიული ქალაქია, გალიას საკათედრო ტაძრითა და მსოფლიოს ერთ-ერთი ძველი უნივერსიტეტით.", "ქუთაისი", 799.99000000000001, "7012519385_f7e92b8d8e_z.jpg" },
+                    { 4, 4, "პარიზი საფრანგეთის დედაქალაქია, ცნობილია აიფელის კოშკით და ლუვრის მუზეუმით.", "პარიზი", 1999.99, "Spain.jfif" },
+                    { 5, 1, "ბათუმი შავი ზღვის სანაპიროზე მდებარე ქალაქია, ცნობილი თავისი სანაპირო პარკებით და კურორტებით.", "ბათუმი", 999.99000000000001, "Batumi.jpg" },
+                    { 6, 2, "მაიამი, აშშ-ის ფლორიდაში მდებარე ქალაქია, ცნობილი თავისი ფინანსური, კულტურული და სავაჭრო ცენტრის როლით.", "მაიამი", 1999.99, "Brazil.jfif" },
+                    { 7, 4, "გორი ქალაქია საქართველოში, ცნობილია თავისი ისტორიული მნიშვნელობით და გორის ციხით.", "გორი", 500.99000000000001, "Denmark.jfif" },
+                    { 8, 3, "თელავი ქალაქია კახეთში, ცნობილი თავისი ღვინის კულტურით და ისტორიული ძეგლებით.", "თელავი", 999.99000000000001, "Los-AngelesCa.jfif" }
                 });
 
             migrationBuilder.InsertData(

@@ -78,7 +78,9 @@
                                             }
                                         }
                                         <label class="form-check-label" for="checkbox-@ViewBag.tvisebebi[i]">
-                                            @ViewBag.tvisebebi[i]
+                                           
+                                            @string.Join(" ",ViewBag.tvisebebi[i].Split("_"))
+
                                         </label>
                                     </div>
                                 }

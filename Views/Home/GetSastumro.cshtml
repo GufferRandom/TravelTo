@@ -142,7 +142,7 @@
                 var icon = j == "YES" ? "bi-check-circle text-success" : "bi-x-circle text-danger";
                 var text = j == "YES" ? "კი" : "არა";
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span class="fw-bold">@ViewBag.tvisebasaxeli[index]</span>
+                    <span class="fw-bold">@string.Join(" ",ViewBag.tvisebasaxeli[index].Split("_"))</span>
                     <span class="badge @icon" style="font-size: 1.5em;">
                         @text
                     </span>
@@ -178,7 +178,6 @@
         </div>
     </div>
 </section>
-
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <h2 class="fw-bolder mb-4">მსგავსი სასტუმროები</h2>

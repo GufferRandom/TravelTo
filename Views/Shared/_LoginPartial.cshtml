@@ -2,12 +2,12 @@
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-
+@inject IHttpContextAccessor HttpContextAccessor
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
         <span>
-            @ViewBag.howmany
+            @HttpContextAccessor.HttpContext.Session.GetString("howmany")
         </span>
        
         <li class="nav-item">
