@@ -56,9 +56,13 @@ namespace TravelTo.Controllers
                     IsEssential = true,
                     SameSite = SameSiteMode.Strict,
                     Secure = true
-                };
+                };      
             string USERID = Guid.NewGuid().ToString();
             Response.Cookies.Append("USERID", USERID, options);
+             var cnt = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
+                    HttpContext.Session.SetString("howmany", cnt.ToString());
+
+
                 }
             }
             var turebi = _context.Turebis.ToList();
@@ -416,24 +420,29 @@ namespace TravelTo.Controllers
                 var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var new_enty = new UserAndTurebiMap { Turebi_Id = id, User_Id = userid };
-                if (_context.UserAndTurebi.Where(u => u.User_Id == userid)
-                                      .Select(u => u.turebi)
-                                       .Any(u => u.id == id))
+                if (_context.UserAndTurebi.Any(x => x.User_Id == userid&& x.Turebi_Id == id))
                 {
                     TempData["Error"] = "ტური უკვე არი დამატებული კალათაში";
                     return Redirect(Request.Headers["Referer"].ToString());
 
                 }
-                else
-                {
+              
                     _context.UserAndTurebi.Add(new_enty);
                     _context.SaveChanges();
                     TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
-                }
             }
             else
             {
-                TempData["Failed"] = "გთხოვთ დარეგისტრილდით,რათა დაამატოთ კალათაში";
+                var USERID = Request.Cookies["USERID"];
+                var UserCookieTurebi = new UserCookieTurebi { Turebi_Id = id, User_Id = USERID };
+                if(_context.userCookieTurebis.Any(x => x.User_Id == USERID && x.Turebi_Id == id))
+                {
+                    TempData["Error"] = "ტური უკვე არის დამატებული კალათაში";
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
+                _context.Add(UserCookieTurebi);
+                _context.SaveChanges();
+                TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
                 return Redirect(Request.Headers["Referer"].ToString());
             }
             int cnt = int.Parse(HttpContext.Session.GetString("howmany")) + 1;
@@ -1039,7 +1048,7 @@ namespace TravelTo.Controllers
             capitacity.CurrentCapacity++;
             _context.Update(capitacity);
             _context.SaveChanges();
-            TempData["Success"] = "წარმატებით დაიჯავშნა სასტუმრო .მოგვიანებით დაგიკავშირდებით";
+            TempData["Success"] = "წარმატებით დაიჯავშნა სასტუმრო.მოგვიანებით დაგიკავშირდებით";
             return Redirect(Request.Headers["Referer"].ToString());
         }
     }

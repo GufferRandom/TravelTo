@@ -23,5 +23,6 @@ namespace TravelTo.Models
         public Company? Company { get; set; }
         public ICollection<UserAndTurebiMap>? UserAndTurebiMapT { get; }
         public ICollection<SastumroebiDaTurebi>? Sastumroebi { get; set; }
+        public ICollection<UserCookieTurebi>? UserCookieTurebi { get; set; }
     }
 }

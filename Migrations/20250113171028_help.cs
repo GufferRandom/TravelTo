@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class hel : Migration
+    public partial class help : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -133,6 +133,18 @@ namespace TravelTo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TvisebebiDaSastumroebi", x => x.Tviseba_Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCookie",
+                columns: table => new
+                {
+                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    expires_in = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCookie", x => x.User_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,6 +327,30 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "userCookieTurebis",
+                columns: table => new
+                {
+                    User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Turebi_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userCookieTurebis", x => new { x.Turebi_Id, x.User_Id });
+                    table.ForeignKey(
+                        name: "FK_userCookieTurebis_Turebis_Turebi_Id",
+                        column: x => x.Turebi_Id,
+                        principalTable: "Turebis",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_userCookieTurebis_UserCookie_User_Id",
+                        column: x => x.User_Id,
+                        principalTable: "UserCookie",
+                        principalColumn: "User_Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SastumroCapitacity",
                 columns: table => new
                 {
@@ -335,7 +371,7 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sastumrodaturebi",
+                name: "SastumroebiDaTurebi",
                 columns: table => new
                 {
                     Sastumro_Id = table.Column<int>(type: "int", nullable: false),
@@ -343,15 +379,15 @@ namespace TravelTo.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sastumrodaturebi", x => new { x.Sastumro_Id, x.Turebi_Id });
+                    table.PrimaryKey("PK_SastumroebiDaTurebi", x => new { x.Sastumro_Id, x.Turebi_Id });
                     table.ForeignKey(
-                        name: "FK_Sastumrodaturebi_Sastumroebis_Sastumro_Id",
+                        name: "FK_SastumroebiDaTurebi_Sastumroebis_Sastumro_Id",
                         column: x => x.Sastumro_Id,
                         principalTable: "Sastumroebis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Sastumrodaturebi_Turebis_Turebi_Id",
+                        name: "FK_SastumroebiDaTurebi_Turebis_Turebi_Id",
                         column: x => x.Turebi_Id,
                         principalTable: "Turebis",
                         principalColumn: "id",
@@ -484,7 +520,7 @@ namespace TravelTo.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Sastumrodaturebi",
+                table: "SastumroebiDaTurebi",
                 columns: new[] { "Sastumro_Id", "Turebi_Id" },
                 values: new object[,]
                 {
@@ -545,8 +581,8 @@ namespace TravelTo.Migrations
                 filter: "[Sastumro_Id] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sastumrodaturebi_Turebi_Id",
-                table: "Sastumrodaturebi",
+                name: "IX_SastumroebiDaTurebi_Turebi_Id",
+                table: "SastumroebiDaTurebi",
                 column: "Turebi_Id");
 
             migrationBuilder.CreateIndex(
@@ -573,6 +609,11 @@ namespace TravelTo.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserAndTurebi_User_Id",
                 table: "UserAndTurebi",
+                column: "User_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_userCookieTurebis_User_Id",
+                table: "userCookieTurebis",
                 column: "User_Id");
         }
 
@@ -601,7 +642,7 @@ namespace TravelTo.Migrations
                 name: "SastumroCapitacity");
 
             migrationBuilder.DropTable(
-                name: "Sastumrodaturebi");
+                name: "SastumroebiDaTurebi");
 
             migrationBuilder.DropTable(
                 name: "SastumtroAndDajavshna");
@@ -611,6 +652,9 @@ namespace TravelTo.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserAndTurebi");
+
+            migrationBuilder.DropTable(
+                name: "userCookieTurebis");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -626,6 +670,9 @@ namespace TravelTo.Migrations
 
             migrationBuilder.DropTable(
                 name: "Turebis");
+
+            migrationBuilder.DropTable(
+                name: "UserCookie");
 
             migrationBuilder.DropTable(
                 name: "TvisebebiDaSastumroebi");

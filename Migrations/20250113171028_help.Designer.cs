@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20250111082957_kidekaco")]
-    partial class kidekaco
+    [Migration("20250113171028_help")]
+    partial class help
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1111,6 +1111,34 @@ namespace TravelTo.Migrations
                     b.ToTable("UserAndTurebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.UserCookie", b =>
+                {
+                    b.Property<string>("User_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("expires_in")
+                        .HasColumnType("int");
+
+                    b.HasKey("User_Id");
+
+                    b.ToTable("UserCookie");
+                });
+
+            modelBuilder.Entity("TravelTo.Models.UserCookieTurebi", b =>
+                {
+                    b.Property<int?>("Turebi_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("User_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Turebi_Id", "User_Id");
+
+                    b.HasIndex("User_Id");
+
+                    b.ToTable("userCookieTurebis");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1267,6 +1295,25 @@ namespace TravelTo.Migrations
                     b.Navigation("turebi");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.UserCookieTurebi", b =>
+                {
+                    b.HasOne("TravelTo.Models.Turebi", "Turebi")
+                        .WithMany("UserCookieTurebi")
+                        .HasForeignKey("Turebi_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelTo.Models.UserCookie", "UserCookie")
+                        .WithMany("UserCookieTurebis")
+                        .HasForeignKey("User_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Turebi");
+
+                    b.Navigation("UserCookie");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Company", b =>
                 {
                     b.Navigation("Turebi");
@@ -1293,6 +1340,8 @@ namespace TravelTo.Migrations
                     b.Navigation("Sastumroebi");
 
                     b.Navigation("UserAndTurebiMapT");
+
+                    b.Navigation("UserCookieTurebi");
                 });
 
             modelBuilder.Entity("TravelTo.Models.TvisebebiSastumroebis", b =>
@@ -1306,6 +1355,11 @@ namespace TravelTo.Migrations
                     b.Navigation("UserAndTurebiMapU");
 
                     b.Navigation("user_sastumroebi");
+                });
+
+            modelBuilder.Entity("TravelTo.Models.UserCookie", b =>
+                {
+                    b.Navigation("UserCookieTurebis");
                 });
 #pragma warning restore 612, 618
         }
