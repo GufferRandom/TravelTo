@@ -22,9 +22,10 @@ namespace TravelTo.Data
         public DbSet<SastumroebiDaTurebi> Sastumrodaturebi { get; set; }
         public DbSet<SastumtroAndDajavshna> SastumtroAndDajavshna { get; set; }
         public DbSet<SastumroCapitacity> SastumroCapitacity { get; set; }
-
         public DbSet<SastumroebiDaTurebi> SastumroebiDaTurebi { get; set; }
+        public DbSet<UserCookie> userCookies { get; set; }
         public DbSet<UserCookieTurebi> userCookieTurebis { get; set; }
+        public DbSet<UserSastumroebiCookies> userSastumroebiCookies { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -534,7 +535,6 @@ namespace TravelTo.Data
                 CurrentCapacity = 0,
             }
             );
-
             modelBuilder.Entity<UserAndTurebiMap>().HasKey(u => new { u.Turebi_Id, u.User_Id });
             modelBuilder.Entity<Turebi>().HasOne(u => u.Company).WithMany(u => u.Turebi).HasForeignKey(u => u.Company_Id);
             modelBuilder.Entity<UserAndTurebiMap>().HasOne(u => u.turebi).WithMany(u => u.UserAndTurebiMapT).HasForeignKey(u => u.Turebi_Id);
@@ -553,6 +553,10 @@ namespace TravelTo.Data
             modelBuilder.Entity<UserCookieTurebi>().HasKey(u => new { u.Turebi_Id, u.User_Id});
             modelBuilder.Entity<UserCookieTurebi>().HasOne(u => u.Turebi).WithMany(u => u.UserCookieTurebi).HasForeignKey(u => u.Turebi_Id);
             modelBuilder.Entity<UserCookieTurebi>().HasOne(u => u.UserCookie).WithMany(u => u.UserCookieTurebis).HasForeignKey(u => u.User_Id);
+            modelBuilder.Entity<UserSastumroebiCookies>().HasKey(u => new { u.Sastumro_Id, u.User_Id } );
+            modelBuilder.Entity<UserSastumroebiCookies>().HasOne(u=>u.Sastumroebi).WithMany(u=>u.sastumroAndCookies).HasForeignKey(u=> u.Sastumro_Id);
+            modelBuilder.Entity<UserSastumroebiCookies>().HasOne(u=>u.UserCookie).WithMany(u=>u.UserSastumroebiCookies).HasForeignKey(u => u.User_Id);
+
         }
 
     }

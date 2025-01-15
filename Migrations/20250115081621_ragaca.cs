@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelTo.Migrations
 {
     /// <inheritdoc />
-    public partial class help : Migration
+    public partial class ragaca : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -140,7 +140,7 @@ namespace TravelTo.Migrations
                 columns: table => new
                 {
                     User_Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    expires_in = table.Column<int>(type: "int", nullable: false)
+                    expires_in = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {

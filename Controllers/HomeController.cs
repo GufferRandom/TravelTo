@@ -29,6 +29,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Net.Http.Headers;
+using NuGet.Protocol.Core.Types;
 namespace TravelTo.Controllers
 {
     public class HomeController : Controller
@@ -47,22 +48,23 @@ namespace TravelTo.Controllers
             if (!_signInManager.IsSignedIn(User))
             {
                 if (Request.Cookies["USERID"] == null)
-            { 
-                CookieOptions options = new CookieOptions()
                 {
-                    Expires = DateTime.Now.AddDays(2),
-                    Path = "/",
-                    HttpOnly = true,
-                    IsEssential = true,
-                    SameSite = SameSiteMode.Strict,
-                    Secure = true
-                };      
-            string USERID = Guid.NewGuid().ToString();
-            Response.Cookies.Append("USERID", USERID, options);
-             var cnt = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
+                    CookieOptions options = new CookieOptions()
+                    {
+                        Expires = DateTime.Now.AddDays(2),
+                        Path = "/",
+                        HttpOnly = true,
+                        IsEssential = true,
+                        SameSite = SameSiteMode.Strict,
+                        Secure = true
+                    };
+                    string USERID = Guid.NewGuid().ToString();
+                    Response.Cookies.Append("USERID", USERID, options);
+                    var cnt = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
                     HttpContext.Session.SetString("howmany", cnt.ToString());
-
-
+                    UserCookie usercook = new UserCookie() { User_Id = USERID, expires_in = DateOnly.FromDateTime(DateTime.Now).AddDays(7) };
+                    _context.Add(usercook);
+                    _context.SaveChanges();
                 }
             }
             var turebi = _context.Turebis.ToList();
@@ -76,7 +78,7 @@ namespace TravelTo.Controllers
                 var get_user_favs = _context.UserAndTurebi.Where(u => u.User_Id == userid)
                                       .Select(u => u.turebi)
                                       .ToList().Count();
-                var get_user_fav_sastumroebi= _context.userAndSastumroebis.Where(u => u.User_Id == userid).Select(u => u.sastumroebi).ToList().Count();
+                var get_user_fav_sastumroebi = _context.userAndSastumroebis.Where(u => u.User_Id == userid).Select(u => u.sastumroebi).ToList().Count();
                 var cnt = get_user_favs + get_user_fav_sastumroebi;
                 HttpContext.Session.SetString("howmany", cnt.ToString());
             }
@@ -409,6 +411,15 @@ namespace TravelTo.Controllers
                 ViewBag.sastumroebi = get_user_fav_sastumroebi;
                 return View(get_user_favs);
             }
+            else
+            {
+                var USERID = Request.Cookies["USERID"];
+                List<Turebi> user_favs = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).ToList();
+                List<Sastumroebi> sastumroebis = _context.userSastumroebiCookies.Where(x => x.User_Id == USERID).Select(x => x.Sastumroebi).ToList();
+                ViewBag.sastumroebi = sastumroebis;
+                return View(user_favs);
+
+            }
             return View();
         }
         [HttpPost]
@@ -420,22 +431,21 @@ namespace TravelTo.Controllers
                 var getting = _context.Turebis.Where(u => u.id == id).FirstOrDefault();
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var new_enty = new UserAndTurebiMap { Turebi_Id = id, User_Id = userid };
-                if (_context.UserAndTurebi.Any(x => x.User_Id == userid&& x.Turebi_Id == id))
+                if (_context.UserAndTurebi.Any(x => x.User_Id == userid && x.Turebi_Id == id))
                 {
                     TempData["Error"] = "ტური უკვე არი დამატებული კალათაში";
                     return Redirect(Request.Headers["Referer"].ToString());
 
                 }
-              
-                    _context.UserAndTurebi.Add(new_enty);
-                    _context.SaveChanges();
-                    TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
+                _context.UserAndTurebi.Add(new_enty);
+                _context.SaveChanges();
+                TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
             }
             else
             {
                 var USERID = Request.Cookies["USERID"];
                 var UserCookieTurebi = new UserCookieTurebi { Turebi_Id = id, User_Id = USERID };
-                if(_context.userCookieTurebis.Any(x => x.User_Id == USERID && x.Turebi_Id == id))
+                if (_context.userCookieTurebis.Any(x => x.User_Id == USERID && x.Turebi_Id == id))
                 {
                     TempData["Error"] = "ტური უკვე არის დამატებული კალათაში";
                     return Redirect(Request.Headers["Referer"].ToString());
@@ -451,6 +461,9 @@ namespace TravelTo.Controllers
         }
         public IActionResult AmoshlaKalatidan(int id)
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+
             var get_tur = _context.Turebis.Where(u => u.id == id).Select(u => u.id).FirstOrDefault();
             var user_Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var kide_get = _context.UserAndTurebi.Where(u => u.User_Id == user_Id && u.Turebi_Id == u.Turebi_Id).FirstOrDefault();
@@ -464,6 +477,21 @@ namespace TravelTo.Controllers
             _context.SaveChanges();
             TempData["sec"] = "ტური წარმატებით ამოიშალა";
             return Redirect(Request.Headers["Referer"].ToString());
+            }
+            else
+            {
+                var get_turi = _context.Turebis.FirstOrDefault(u => u.id == id);
+                var USERID = Request.Cookies["USERID"];
+                var get_user_cookues = _context.userCookieTurebis.FirstOrDefault(x => x.User_Id == USERID && x.Turebi_Id == id);
+                if (get_user_cookues == null) {
+                    TempData["SomeKindOfError"] = "სამწუხაროდ,რაღაც ერრორია მალე გამოსწორდება";
+                    return RedirectToAction("index");
+                }
+                _context.userCookieTurebis.Remove(get_user_cookues);
+                _context.SaveChanges();
+                TempData["sec"] = "ტური წარმატებით ამოიშალა";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
 
         }
         public IActionResult FasiZrda()
@@ -527,9 +555,9 @@ namespace TravelTo.Controllers
             HttpContext.Session.SetString("Chveneba", chveneba);
             return RedirectToAction("Sastumroebi");
         }
-        public IActionResult Sastumroebi(string? sax,int page_id = 1)
+        public IActionResult Sastumroebi(string? sax, int page_id = 1)
         {
-            if(sax is not null)
+            if (sax is not null)
             {
                 HttpContext.Session.Remove("Chveneba");
                 HttpContext.Session.Remove("lokaciebi");
@@ -558,16 +586,16 @@ namespace TravelTo.Controllers
             switch (get_http_ses)
             {
                 case "FasiZrdaCompania":
-                    if(HttpContext.Session.GetString("pasuxebi") is not null)
+                    if (HttpContext.Session.GetString("pasuxebi") is not null)
                     {
-                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderBy(u=>u.Fasi).ToList();
-                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count/ (double)tito_size);
+                        skiP = JsonConvert.DeserializeObject<List<Sastumroebi>>(HttpContext.Session.GetString("pasuxebi")).OrderBy(u => u.Fasi).ToList();
+                        var ramdeni_gverdi1 = Math.Ceiling(skiP.Count / (double)tito_size);
                         ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
-                        return View(skiP); 
+                        return View(skiP);
                     }
                     else
                     {
-                    skiP = skiP.OrderBy(u => u.Fasi).ToList();
+                        skiP = skiP.OrderBy(u => u.Fasi).ToList();
                     }
                     break;
                 case "FasiKlebadobaCompania":
@@ -621,20 +649,20 @@ namespace TravelTo.Controllers
         public IActionResult GetSastumro(int id)
         {
             var sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
-            var get_turebi = _context.Sastumrodaturebi.Where(x => x.Sastumro_Id == id).Select(x=>x.Turebi_Id).ToList();
+            var get_turebi = _context.Sastumrodaturebi.Where(x => x.Sastumro_Id == id).Select(x => x.Turebi_Id).ToList();
             var load_turebi = _context.Turebis.Where(x => get_turebi.Contains(x.id)).ToList();
             ViewBag.loadturebi = load_turebi;
-          var tvisebebi = _context.TvisebebiDaSastumroebi.FirstOrDefault(x => x.Tviseba_Id ==sastumro.Tviseba_Id);
+            var tvisebebi = _context.TvisebebiDaSastumroebi.FirstOrDefault(x => x.Tviseba_Id == sastumro.Tviseba_Id);
             var tvisebebis_saxeli = new TvisebebiSastumroebis();
             var tvisebasaxeli = tvisebebis_saxeli.GetType().GetProperties().Select(x => x.Name).ToList();
             ViewBag.tvisebebi = tvisebebi;
-            ViewBag.tvisebasaxeli= tvisebasaxeli;
+            ViewBag.tvisebasaxeli = tvisebasaxeli;
             ViewBag.Yvelasastumro = _context.Sastumroebis.Where(x => x.Id != id).ToList();
             SastumtroAndDajavshna sastumtroo = new SastumtroAndDajavshna();
             sastumtroo.Sastumroebi = sastumro;
             var capitacity = _context.SastumroCapitacity.FirstOrDefault(x => x.Sastumro_Id == id);
-            ViewBag.CurrCapitacity=capitacity.CurrentCapacity;
-            ViewBag.MaxCapitacity=capitacity.MaxCapitacity;
+            ViewBag.CurrCapitacity = capitacity.CurrentCapacity;
+            ViewBag.MaxCapitacity = capitacity.MaxCapitacity;
             return View(sastumtroo);
         }
         public IActionResult FasiZrdaCompania()
@@ -680,11 +708,27 @@ namespace TravelTo.Controllers
                 return Redirect(Request.Headers["Referer"].ToString());
 
             }
-            TempData["NotRegirted"] = "დამატებისთვის საწიროა რომ დარეგისტრილდეთ";
-            return Redirect(Request.Headers["Referer"].ToString());
+            else
+            {
+                var USERID = Request.Cookies["USERID"];
+                if (_context.userSastumroebiCookies.Any(x => x.User_Id == USERID && x.Sastumro_Id == id))
+                {
+                    TempData["Sastumroexists"] = "სასტუმრო უკვე კალათაშია";
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
+                var get_sastumro = _context.Sastumroebis.FirstOrDefault(x => x.Id == id);
+                var get_new_user = new UserSastumroebiCookies() { Sastumro_Id = id, User_Id = USERID };
+                _context.Add(get_new_user);
+                _context.SaveChanges();
+                TempData["SastumroSuc"] = "სასტუმრო წარმატებით დაემატა კალათაში";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
         }
         public IActionResult Kalatidan_Washla(int id)
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+
             var user_id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var get_sastumro = _context.userAndSastumroebis.Where(u => u.User_Id == user_id
                                                     && u.Sastumorebi_Id == id).FirstOrDefault();
@@ -697,6 +741,20 @@ namespace TravelTo.Controllers
             }
             TempData["SastumroWashlaError"] = "რაღაც ერორია";
             return Redirect(Request.Headers["Referer"].ToString());
+            }
+            var USERID =Request.Cookies["USERID"];
+            var sascook= _context.userSastumroebiCookies.FirstOrDefault(u => u.User_Id == USERID && u.Sastumro_Id == id);
+            if ( sascook== null)
+            {
+                TempData["SomeKindOfError"] = "სამწუხაროდ,რაღაც ერრორია მალე გამოსწორდება";
+                return RedirectToAction("index");
+            }
+            _context.userSastumroebiCookies.Remove(sascook);
+            _context.SaveChanges();
+            TempData["SastumroWaishala"] = "სასტუმრო წარმატებით წაიშალა";
+
+            return Redirect(Request.Headers["Referer"].ToString());
+
         }
         public IActionResult SastumroebiFilteri(string names, string lokacia, string sasumtrosaxeli, List<string> archeuli, int page_id = 1)
         {
@@ -718,7 +776,7 @@ namespace TravelTo.Controllers
             {
                 if (!userPick.ContainsKey(i))
                 {
-                userPick.Add(i, "YES");
+                    userPick.Add(i, "YES");
 
                 }
             } //aqamde
@@ -765,7 +823,7 @@ namespace TravelTo.Controllers
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
-                    var skap = pasuxisaboloo.Where(x=>x.Description.ToLower().Contains(names.ToLower()) || 
+                    var skap = pasuxisaboloo.Where(x => x.Description.ToLower().Contains(names.ToLower()) ||
                     x.Name.ToLower().Contains(names.ToLower())).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
                     {
@@ -776,20 +834,20 @@ namespace TravelTo.Controllers
                 }
                 if (lokacia == null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty()
                 )
-            {
-                    HttpContext.Session.SetString("archeuli",JsonConvert.SerializeObject(archeuli));
+                {
+                    HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
                     ViewBag.archeulilist = archeuli;
-                 var sizesab = pasuxisaboloo.Count();
-                var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
-                ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
-                var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    var sizesab = pasuxisaboloo.Count();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = pasuxisaboloo.Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                         NullValueHandling = NullValueHandling.Ignore
                     }));
                     return View("Sastumroebi", skap);
-            }
+                }
                 if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
                     HttpContext.Session.SetString("lokacia", lokacia);
@@ -801,7 +859,7 @@ namespace TravelTo.Controllers
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
-                    var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&(x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()) )).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia && (x.Description.ToLower().Contains(names.ToLower()) || x.Name.ToLower().Contains(names.ToLower()))).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -812,7 +870,7 @@ namespace TravelTo.Controllers
                 if (lokacia != null && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
                     HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
-                    HttpContext.Session.SetString("lokacia", lokacia); 
+                    HttpContext.Session.SetString("lokacia", lokacia);
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
@@ -840,31 +898,31 @@ namespace TravelTo.Controllers
                     }));
                     return View("Sastumroebi", skap);
                 }
-                if (lokacia==null && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
-                 {
+                if (lokacia == null && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
+                {
                     HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
                     HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
                     var sizesab = pasuxisaboloo.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
-                    var skap = pasuxisaboloo.Where(x => x.Name== sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    var skap = pasuxisaboloo.Where(x => x.Name == sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                         NullValueHandling = NullValueHandling.Ignore
                     }));
                     return View("Sastumroebi", skap);
-                } 
+                }
                 if (lokacia != null && !sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
                     HttpContext.Session.SetString("archeuli", JsonConvert.SerializeObject(archeuli));
                     HttpContext.Session.SetString("lokacia", lokacia);
                     HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
                     var sizesab = pasuxisaboloo.Count();
-                var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
-                ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
-                var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&
-                x.Name==sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
+                    var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
+                    ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
+                    var skap = pasuxisaboloo.Where(x => x.Lokacia == lokacia &&
+                    x.Name == sasumtrosaxeli).Skip((page_id - 1) * tito_size_sab).Take(tito_size_sab).ToList();
                     HttpContext.Session.SetString("pasuxebi", JsonConvert.SerializeObject(skap, new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -942,8 +1000,8 @@ namespace TravelTo.Controllers
                     }));
                     return View("Sastumroebi", skap);
                 }
-                if (!sasumtrosaxeli.IsNullOrEmpty() && 
-                    !lokacia.IsNullOrEmpty() &&names.IsNullOrEmpty())
+                if (!sasumtrosaxeli.IsNullOrEmpty() &&
+                    !lokacia.IsNullOrEmpty() && names.IsNullOrEmpty())
                 {
                     HttpContext.Session.SetString("lokacia", lokacia);
                     HttpContext.Session.SetString("sastumrosaxeli", sasumtrosaxeli);
@@ -960,7 +1018,7 @@ namespace TravelTo.Controllers
                     }));
                     return View("Sastumroebi", skap);
                 }
-                if (!lokacia.IsNullOrEmpty() && 
+                if (!lokacia.IsNullOrEmpty() &&
                     sasumtrosaxeli.IsNullOrEmpty() && !names.IsNullOrEmpty())
                 {
                     HttpContext.Session.SetString("lokacia", lokacia);
@@ -978,11 +1036,11 @@ namespace TravelTo.Controllers
                     return View("Sastumroebi", skap);
                 }
                 if (!lokacia.IsNullOrEmpty() && sasumtrosaxeli.IsNullOrEmpty() && names.IsNullOrEmpty())
-            {
+                {
                     HttpContext.Session.SetString("lokacia", lokacia);
                     var quer = sastumroebi_lsit
                         .Where(x => x.Lokacia == lokacia);
-                    var sizesab =quer.Count();
+                    var sizesab = quer.Count();
                     var ramdeni_gverdi1 = Math.Ceiling(sizesab / (double)tito_size_sab);
                     ViewBag.ramdeni_gverdi = ramdeni_gverdi1;
                     var skap = quer
@@ -1027,7 +1085,7 @@ namespace TravelTo.Controllers
                     }));
                     return View("Sastumroebi", skap);
                 }
-            }   
+            }
             var sizesaba = sastumroebi_lsit.Count();
             var ramdeni_gverdi2 = Math.Ceiling(sizesaba / (double)tito_size_sab);
             ViewBag.ramdeni_gverdi = ramdeni_gverdi2;
@@ -1044,7 +1102,7 @@ namespace TravelTo.Controllers
             sas.Sastumroebi = _context.Sastumroebis.FirstOrDefault(x => x.Id == sastumro_id);
             sas.sastumroDajavshna = piri.sastumroDajavshna;
             _context.Add(sas);
-            var capitacity = _context.SastumroCapitacity.FirstOrDefault(x=>x.Sastumro_Id == sastumro_id);
+            var capitacity = _context.SastumroCapitacity.FirstOrDefault(x => x.Sastumro_Id == sastumro_id);
             capitacity.CurrentCapacity++;
             _context.Update(capitacity);
             _context.SaveChanges();

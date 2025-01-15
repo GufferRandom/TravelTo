@@ -12,8 +12,8 @@ using TravelTo.Data;
 namespace TravelTo.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20250113171028_help")]
-    partial class help
+    [Migration("20250115091759_xalp")]
+    partial class xalp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1116,12 +1116,12 @@ namespace TravelTo.Migrations
                     b.Property<string>("User_Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("expires_in")
-                        .HasColumnType("int");
+                    b.Property<DateOnly>("expires_in")
+                        .HasColumnType("date");
 
                     b.HasKey("User_Id");
 
-                    b.ToTable("UserCookie");
+                    b.ToTable("userCookies");
                 });
 
             modelBuilder.Entity("TravelTo.Models.UserCookieTurebi", b =>
@@ -1137,6 +1137,21 @@ namespace TravelTo.Migrations
                     b.HasIndex("User_Id");
 
                     b.ToTable("userCookieTurebis");
+                });
+
+            modelBuilder.Entity("TravelTo.Models.UserSastumroebiCookies", b =>
+                {
+                    b.Property<int?>("Sastumro_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("User_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Sastumro_Id", "User_Id");
+
+                    b.HasIndex("User_Id");
+
+                    b.ToTable("userSastumroebiCookies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1314,6 +1329,25 @@ namespace TravelTo.Migrations
                     b.Navigation("UserCookie");
                 });
 
+            modelBuilder.Entity("TravelTo.Models.UserSastumroebiCookies", b =>
+                {
+                    b.HasOne("TravelTo.Models.Sastumroebi", "Sastumroebi")
+                        .WithMany("sastumroAndCookies")
+                        .HasForeignKey("Sastumro_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelTo.Models.UserCookie", "UserCookie")
+                        .WithMany("UserSastumroebiCookies")
+                        .HasForeignKey("User_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sastumroebi");
+
+                    b.Navigation("UserCookie");
+                });
+
             modelBuilder.Entity("TravelTo.Models.Company", b =>
                 {
                     b.Navigation("Turebi");
@@ -1327,6 +1361,8 @@ namespace TravelTo.Migrations
             modelBuilder.Entity("TravelTo.Models.Sastumroebi", b =>
                 {
                     b.Navigation("SastumroAndDajavshna");
+
+                    b.Navigation("sastumroAndCookies");
 
                     b.Navigation("sastumroCapitacity");
 
@@ -1360,6 +1396,8 @@ namespace TravelTo.Migrations
             modelBuilder.Entity("TravelTo.Models.UserCookie", b =>
                 {
                     b.Navigation("UserCookieTurebis");
+
+                    b.Navigation("UserSastumroebiCookies");
                 });
 #pragma warning restore 612, 618
         }
