@@ -60,12 +60,14 @@ namespace TravelTo.Controllers
                     };
                     string USERID = Guid.NewGuid().ToString();
                     Response.Cookies.Append("USERID", USERID, options);
-                    var cnt = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
-                    HttpContext.Session.SetString("howmany", cnt.ToString());
                     UserCookie usercook = new UserCookie() { User_Id = USERID, expires_in = DateOnly.FromDateTime(DateTime.Now).AddDays(7) };
                     _context.Add(usercook);
                     _context.SaveChanges();
                 }
+                string usr_id = Request.Cookies["USERID"];
+                int cnt = _context.userCookieTurebis.Where(x => x.User_Id == usr_id ).Select(x => x.Turebi).Count();
+                int cnt2 = _context.userSastumroebiCookies.Where(x => x.User_Id == usr_id).Select(x => x.Sastumroebi).Count();
+                HttpContext.Session.SetString("howmany", (cnt+cnt2).ToString());
             }
             var turebi = _context.Turebis.ToList();
             var sastumroebi = _context.Sastumroebis.ToList();
@@ -453,6 +455,9 @@ namespace TravelTo.Controllers
                 _context.Add(UserCookieTurebi);
                 _context.SaveChanges();
                 TempData["Success"] = "ტური წარმატებით დაემატა კალათაში";
+                int cnt1 = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
+                int cnt2 = _context.userSastumroebiCookies.Where(x => x.User_Id == USERID).Select(x => x.Sastumroebi).Count();
+                HttpContext.Session.SetString("howmany", (cnt1+cnt2).ToString());
                 return Redirect(Request.Headers["Referer"].ToString());
             }
             int cnt = int.Parse(HttpContext.Session.GetString("howmany")) + 1;
@@ -490,6 +495,9 @@ namespace TravelTo.Controllers
                 _context.userCookieTurebis.Remove(get_user_cookues);
                 _context.SaveChanges();
                 TempData["sec"] = "ტური წარმატებით ამოიშალა";
+                int cnt1 = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
+                int cnt2 = _context.userSastumroebiCookies.Where(x => x.User_Id == USERID).Select(x => x.Sastumroebi).Count();
+                HttpContext.Session.SetString("howmany", (cnt1+cnt2).ToString());
                 return Redirect(Request.Headers["Referer"].ToString());
             }
 
@@ -721,6 +729,9 @@ namespace TravelTo.Controllers
                 _context.Add(get_new_user);
                 _context.SaveChanges();
                 TempData["SastumroSuc"] = "სასტუმრო წარმატებით დაემატა კალათაში";
+                int cnt1 = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
+                int cnt2 = _context.userSastumroebiCookies.Where(x => x.User_Id == USERID).Select(x => x.Sastumroebi).Count();
+                HttpContext.Session.SetString("howmany",(cnt1+cnt2).ToString());
                 return Redirect(Request.Headers["Referer"].ToString());
             }
         }
@@ -752,7 +763,9 @@ namespace TravelTo.Controllers
             _context.userSastumroebiCookies.Remove(sascook);
             _context.SaveChanges();
             TempData["SastumroWaishala"] = "სასტუმრო წარმატებით წაიშალა";
-
+            int cnt1 = _context.userCookieTurebis.Where(x => x.User_Id == USERID).Select(x => x.Turebi).Count();
+            int cnt2 = _context.userSastumroebiCookies.Where(x => x.User_Id == USERID).Select(x => x.Sastumroebi).Count();
+            HttpContext.Session.SetString("howmany", (cnt1 + cnt2).ToString());
             return Redirect(Request.Headers["Referer"].ToString());
 
         }

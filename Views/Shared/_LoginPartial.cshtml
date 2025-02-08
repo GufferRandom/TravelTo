@@ -1,32 +1,75 @@
 ﻿@using Microsoft.AspNetCore.Identity
-
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @inject IHttpContextAccessor HttpContextAccessor
+
+<style>
+    .cart-container {
+        position: relative;
+        display: inline-block;
+    }
+    .cart-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: yellow;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .cart-icon {
+        font-size: 25px;
+    }
+</style>
+
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-        <span>
-            @HttpContextAccessor.HttpContext.Session.GetString("howmany")
-        </span>
-       
+    @if (SignInManager.IsSignedIn(User))
+    {
         <li class="nav-item">
-            <a asp-controller="Home" asp-action="ShoppingCart"> <i class="bi bi-cart2" style="font-size:25px"></i></a>
+            <a class="nav-link" asp-controller="Home" asp-action="ShoppingCart">
+                <div class="cart-container">
+                    <i class="bi bi-cart2 cart-icon"></i>
+                    <span class="cart-badge">@HttpContextAccessor.HttpContext.Session.GetString("howmany")</span>
+                </div>
+            </a>
+        </li>   
+        <li class="nav-item">
+            <a id="manage"
+               class="nav-link text-dark"
+               asp-area="Identity"
+               asp-page="/Account/Manage/Index"
+               title="Manage">
+                Hello @UserManager.GetUserName(User)!
+            </a>
         </li>
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-    </li>
-}
-else
-{
-       <li class="nav-item">
-            <a asp-controller="Home" asp-action="ShoppingCart"> <i class="bi bi-cart2" style="font-size:25px;color:g"></i></a>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Home" asp-action="ShoppingCart">
+                <div class="cart-container">
+                    <i class="bi bi-cart2 cart-icon"></i>
+                    <span class="cart-badge">@HttpContextAccessor.HttpContext.Session.GetString("howmany")</span>
+                </div>
+            </a>
         </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+        <li class="nav-item">
+            <a class="nav-link text-dark"
+               id="register"
+               asp-area="Identity"
+               asp-page="/Account/Register">
+                Register
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark"
+               id="login"
+               asp-area="Identity"
+               asp-page="/Account/Login">
+                Login
+            </a>
+        </li>
+    }
 </ul>

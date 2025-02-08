@@ -146,7 +146,7 @@ namespace TravelTo.Data
                     Fasi = 100,
                     Description = "ეს სასტუმრო წარმოადგენს სამგზის ლუქსს და თანამედროვე მომსახურებას.",
                     gmail = "tbilisi@gmail.com",
-                    Name = "თბილისის ცენტრალური სასტუმრო",
+                    Name = "თბილისის  სასტუმრო",
                     image_name = "1.jpeg",
                     Tviseba_Id = 1
                 },
