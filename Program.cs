@@ -20,6 +20,10 @@ internal class Program
         var useSqlite = builder.Configuration.GetConnectionString("UseSqlite"); 
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
+         var dbhost=Environment.GetEnvironmentVariable("DB_HOST") ?? "DESKTOP\\SQLEXPRESS";
+        var dbname = Environment.GetEnvironmentVariable("DBNAME") ?? "travelto";
+        var pwd = Environment.GetEnvironmentVariable("DB_SA_PASS") ?? "nagazi2@";
+        builder.Configuration["ConnectionStrings:DefaultConnection"] = $"Data Source={dbhost};Initial Catalog={dbname};User Id=sa;Password={pwd};TrustServerCertificate=True";
         builder.Services.AddDbContext<ApplicationDataContext>(options =>
         {
             if (useSqlite=="true")
@@ -66,7 +70,11 @@ internal class Program
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapRazorPages();
-
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDataContext>();
+            db.Database.Migrate(); 
+        }
         using (var scope = app.Services.CreateScope())
         {
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
